@@ -10,7 +10,8 @@ let imagePath = `${basePath}img`;
 export default {
   // Routes
   basePath: basePath,
-  addParcel: 'addParcel',
+  homePage: basePath,
+  addParcelPage: 'addParcel',
 
   // Other assets
   imagePath,
