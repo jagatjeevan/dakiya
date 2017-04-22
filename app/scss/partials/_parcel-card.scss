@@ -1,0 +1,63 @@
+$name-card-background: darken(map-get($brand-colors, quinary), 5%);
+$name-card-padding: map-get($spacer, spacer-10);
+$name-card-image-spacing: $name-card-padding;
+$name-card-name-phone-number-spacing: $name-card-padding 0 0;
+
+.parcel-card-container {
+  @extend %flex-styles;
+  justify-content: flex-start;
+  margin: $app-spacer;
+  @media screen and (max-width: 550px) {
+    justify-content: center;
+    .name-card {
+      margin-right: 0;
+      width: 100%;
+    }
+  }
+}
+.name-card {
+  background: $name-card-background;
+  border: $box-border;
+  margin: 0 $app-spacer $app-spacer 0;
+  min-width: 240px;
+  overflow: hidden;
+  padding: $box-padding;
+  position: relative;
+  .status {
+    @extend %tag;
+    .icon-ok{
+      color: green;
+      position: relative;
+      z-index: 2;
+    }
+  }
+}
+.reciever-detail {
+  @extend %flex-styles;
+  margin-bottom: 10px;
+  .profile-image {
+    margin-right: $name-card-image-spacing;
+    img{
+      border-radius: 50%;
+      border: $box-border;
+    }
+  }
+  .name-and-phone-number {
+    span{
+      display: block;
+      padding: $name-card-name-phone-number-spacing;
+    }
+  }
+}
+.sender-detail {
+  border-bottom: 1px solid #eee;
+  display: flex;
+  font-size: 0.8em;
+  margin-bottom: 10px;
+  padding-bottom: 5px;
+  span,
+  b {
+    flex-grow: 1;
+    width: 50%;
+  }
+}

@@ -1,0 +1,25 @@
+// SlideUp
+@keyframes slideUp {
+  from {
+    display: block;
+    height: auto;
+  }
+  to {
+    display: none;
+    height: 0;
+    overflow: hidden;
+  }
+}
+
+// SlideDown
+@keyframes slideDown {
+  from {
+    display: none;
+    height: 0;
+    overflow: hidden;
+  }
+  to {
+    display: block;
+    height: auto;
+  }
+}

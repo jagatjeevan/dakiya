@@ -1,0 +1,13 @@
+%max-100 {
+  max-width: 100%;
+  width: 100%;
+}
+%flex-styles {
+  display: flex;
+  flex-wrap: wrap;
+}
+%input-styles {
+  border: 0;
+  padding: map_get($spacer, spacer-10);
+  width: 100%;
+}

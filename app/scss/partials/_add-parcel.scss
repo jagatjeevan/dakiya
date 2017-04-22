@@ -1,0 +1,34 @@
+$add-parcel-background: darken(map-get($brand-colors, quinary), 5%);
+
+.add-parcel-container{
+  background: $add-parcel-background;
+  margin: $app-spacer auto;
+  max-width: 770px;
+  padding: $app-spacer;
+  header {
+    border-bottom: $box-border;
+    border-bottom: 1px solid #eee;
+    font-size: $header-font-size;
+    font-weight: bold;
+    margin-bottom: $app-spacer;
+    padding-bottom: map_get($spacer, spacer-5);
+  }
+  footer {
+    padding-top: $app-spacer;
+    text-align: right;
+  }
+}
+.form-container {
+  margin: 0 5px $app-spacer;
+  min-width: 230px;
+}
+.add-parcel-form {
+  @extend %flex-styles;
+  justify-content: space-between;
+  input[type='text'],
+  input[type='email'],
+  input[type='number'] {
+    display: block;
+    margin: 5px 0;
+  }
+}

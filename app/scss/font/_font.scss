@@ -1,0 +1,20 @@
+$PT_Sans-Narrow-Regular: $font + 'PT_Sans_Narrow/PT_Sans-Narrow-Web-Regular.ttf';
+$PT_Sans-Narrow-Bold: $font + 'PT_Sans_Narrow/PT_Sans-Narrow-Web-Bold.ttf';
+
+@font-face {
+  font-family: 'PT_Sans-Narrow';
+  font-weight: normal;
+  src: url($PT_Sans-Narrow-Regular);
+}
+
+@font-face {
+  font-family: 'PT_Sans-Narrow';
+  font-weight: bold;
+  src: url($PT_Sans-Narrow-Bold);
+}
+
+// Font
+$body-font-size: 18px;
+$header-font-size: 26px;
+$sub-header-font-size: 21px;
+

@@ -1,0 +1,29 @@
+$search-bar-background-color: map-get($brand-colors, primary);
+.search-bar{
+  background: lighten($search-bar-background-color, 10%);
+  color: #fff;
+  padding: $app-spacer;
+}
+
+.search-component{
+  display: flex;
+  margin-bottom: 15px;
+  input[type='text'] {
+    border: #666 solid 1px;
+    color: #666;
+    flex-grow: 1;
+    padding: 10px 15px;
+  }
+  button {
+    .icon-search{
+      margin-right: 5px;
+    }
+  }
+}
+
+.filters{
+  display: flex;
+  .filter {
+    padding-right: 30px;
+  }
+}

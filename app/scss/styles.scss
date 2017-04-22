@@ -1,0 +1,68 @@
+// Variables
+@import './variables';
+@import './mixins/mixins';
+
+// Font
+@import './font/font';
+
+// Vendor Styles
+@import '~node-normalize-scss/normalize';
+
+// Animations
+@import './animations/animation';
+
+// Custom Styles
+@import './partials/partials';
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  height: 100%;
+}
+
+body {
+  background-color: $body-background-color;
+  font-family: 'PT_Sans-Narrow';
+  font-size: $body-font-size;
+}
+
+a {
+  text-decoration: none;
+}
+
+ul,
+li {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+
+select {
+  @extend %input-styles;
+}
+
+input {
+  &[type='text'],
+  &[type='email'],
+  [type='number'] {
+    @extend %input-styles;
+  }
+}
+
+[class^='icon'] {
+  cursor: pointer;
+}
+
+$button-text-color: #fff;
+
+button,
+.button {
+  background-color: map-get($brand-colors, primary);
+  border: 0;
+  color: $button-text-color;
+  min-width: 110px;
+  padding: 10px 15px;
+}

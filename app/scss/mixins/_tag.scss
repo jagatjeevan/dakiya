@@ -1,0 +1,15 @@
+$tag-background: map-get($brand-colors, 'quaternary');
+%tag {
+  bottom: 0;
+  position: absolute;
+  right: 0;
+  &:before {
+    background: $tag-background;
+    content: '';
+    height: 300%;
+    position: absolute;
+    transform: rotate(45deg) translateY(10px);
+    width: 430%;
+    z-index: 1;
+  }
+}
