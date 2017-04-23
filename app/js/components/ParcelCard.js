@@ -1,5 +1,5 @@
 import React from 'react';
-import AppPaths from '../appConfig';
+import urls from '../urls';
 
 export default class ParcelCard extends React.Component {
   render() {
@@ -11,7 +11,7 @@ export default class ParcelCard extends React.Component {
           </div>
           <div className='reciever-detail'>
             <div className='profile-image'>
-              <img src={`${AppPaths.imagePath}/logo.png`}  width='70' height='70' className='img-circle' />
+              <img src={`${urls.imagePath}/logo.png`} width='70' height='70' className='img-circle' />
             </div>
             <div className='name-and-phone-number'>
               <span><b>Jagat Jeevan Sahoo</b></span>
@@ -37,7 +37,7 @@ export default class ParcelCard extends React.Component {
           </div>
           <div className='reciever-detail'>
             <div className='profile-image'>
-              <img src={`${AppPaths.imagePath}/logo.png`}  width='70' height='70' className='img-circle' />
+              <img src={`${urls.imagePath}/logo.png`} width='70' height='70' className='img-circle' />
             </div>
             <div className='name-and-phone-number'>
               <span><b>Jagat Jeevan Sahoo</b></span>

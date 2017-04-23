@@ -1,9 +1,4 @@
-$add-parcel-background: darken(map-get($brand-colors, quinary), 5%);
-
 .add-parcel-container{
-  background: $add-parcel-background;
-  margin: $app-spacer auto;
-  max-width: 770px;
   padding: $app-spacer;
   header {
     border-bottom: $box-border;

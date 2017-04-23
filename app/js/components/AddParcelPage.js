@@ -1,9 +1,8 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
+import { Component } from 'react';
 
 import Header from '../components/header';
 
-export default class AddParcel extends React.Component {
+export default class AddParcel extends Component {
   render() {
     return(
       <div>

@@ -1,8 +1,7 @@
 {
   "app" : {
-    "welcome": "Bonjour",
-    "greeting_message": "Dire bonjour à",
-    "greet_page_link": "Accéder à la page Greet",
-    "home_page_link": "Aller à la page d'accueil"
+    "openParcelHeading": "Parcelles ouvertes",
+    "allParcelDelivered": "Tous les colis livrés",
+    "noOpenedParcel": "Toutes les colis sont livrés"
   }
 }

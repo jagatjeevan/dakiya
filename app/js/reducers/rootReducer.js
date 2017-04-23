@@ -1,8 +1,10 @@
 import { combineReducers } from 'redux';
-import updateStoreWithUserInput from './updateStoreWithUserInput';
+import closedParcels from'./updateClosedParcels';
+import openParcels from './updateOpenParcels';
 
 const rootReducer = combineReducers({
-  updateStoreWithUserInput: updateStoreWithUserInput
+  closedParcels,
+  openParcels
 });
 
 export default rootReducer;

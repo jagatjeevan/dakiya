@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router';
-import AppPaths from '../appConfig.js';
+import urls from '../urls';
 
 export default class Header extends React.Component {
   constructor() {
@@ -21,20 +21,20 @@ export default class Header extends React.Component {
     return (
       <header id='header'>
         <div className='logo-container'>
-          <img src={`${AppPaths.imagePath}/logo.png`} />
+          <img src={`${urls.imagePath}/logo.png`} />
           <i className={iconMenuClass} onClick={this.toggleNavbar}></i>
           <div className='menu-links'>
-            <Link to={AppPaths.homePage} activeClassName='active'>List Parcels</Link>
-            <Link to={AppPaths.addParcelPage} activeClassName='active'>Add Parcel</Link>
+            <Link to={urls.homePage} activeClassName='active'>List Parcels</Link>
+            <Link to={urls.addParcelPage} activeClassName='active'>Add Parcel</Link>
           </div>
         </div>
         <nav className={navbarClassName}>
           <ul>
             <li key='home'>
-              <Link to={AppPaths.homePage} activeClassName='active'>List Parcels</Link>
+              <Link to={urls.homePage} activeClassName='active'>List Parcels</Link>
             </li>
             <li key='about'>
-              <Link to={AppPaths.addParcelPage} activeClassName='active'>Add Parcel</Link>
+              <Link to={urls.addParcelPage} activeClassName='active'>Add Parcel</Link>
             </li>
           </ul>
         </nav>

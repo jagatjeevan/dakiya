@@ -3,7 +3,7 @@ import React from 'react';
 import { Route, Router, IndexRoute, browserHistory } from 'react-router';
 
 // Configs
-import AppConfig from './appConfig';
+import urls from './urls';
 
 // Components for the Router
 import App from './pages/App';
@@ -12,9 +12,9 @@ import AddParcel from './components/AddParcelPage';
 
 export default (
   <Router history={browserHistory}>
-    <Route path={AppConfig.basePath} component={App}>
+    <Route path={urls.basePath} component={App}>
       <IndexRoute component={ListParcel} />
     </Route>
-    <Route path={AppConfig.addParcelPage} component={AddParcel} />
+    <Route path={urls.addParcelPage} component={AddParcel} />
   </Router>
 );
