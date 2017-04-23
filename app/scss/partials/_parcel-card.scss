@@ -6,7 +6,6 @@ $name-card-name-phone-number-spacing: $name-card-padding 0 0;
 .parcel-card-container {
   @extend %flex-styles;
   justify-content: flex-start;
-  margin: $app-spacer;
   @media screen and (max-width: 550px) {
     justify-content: center;
     .name-card {
@@ -59,5 +58,6 @@ $name-card-name-phone-number-spacing: $name-card-padding 0 0;
   b {
     flex-grow: 1;
     width: 50%;
+    word-wrap: break-word;
   }
 }

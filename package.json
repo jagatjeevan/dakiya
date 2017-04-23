@@ -64,9 +64,9 @@
     "redux": "^3.6.0"
   },
   "scripts": {
-    "start": "webpack-dev-server --open",
+    "start": "webpack-dev-server --open --config webpack.config.babel.js",
     "lint": "eslint .eslintrc.json",
-    "build": "webpack",
+    "build": "webpack --config webpack.config.babel.prod.js",
     "prebuild": "npm run clean",
     "clean": "rimraf -rf build"
   }

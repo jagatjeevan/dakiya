@@ -57,14 +57,25 @@ module.exports = {
     ],
   },
   plugins: [
+    new webpack.optimize.CommonsChunkPlugin({
+        name: 'vendor',
+        filename: 'vendor.[hash].js',
+        minChunks: Infinity,
+      }),
+    new webpack.optimize.UglifyJsPlugin({
+        compress: {
+          screw_ie8: true,
+          warnings: false
+        },
+      }),
+    new webpack.optimize.AggressiveMergingPlugin(),
     new CopyWebpackPlugin([
       { from: 'app/assets/locale/', to: 'locale' },
       { from: 'app/assets/favicon/', to: 'favicon' },
       { from: 'app/assets/font/', to: 'font' },
       { from: 'app/assets/icons/fontello/css/', to: 'icons/fontello/css'},
       { from: 'app/assets/icons/fontello/font/', to: 'icons/fontello/font'},
-      { from: 'app/assets/img/', to: 'img' },
-      { from: 'app/server', to: 'server' }
+      { from: 'app/assets/img/', to: 'img' }
     ]),
     new HtmlWebpackPlugin({template: 'app/index.html'}),
     new VisualizerPlugin({filename: statsPath})
@@ -72,7 +83,8 @@ module.exports = {
   devServer: {
     contentBase: path.join(__dirname, "build"),
     port: 2222,
-    compress: true
+    compress: true,
+    hot: true
   },
   devtool: "source-map"
 };

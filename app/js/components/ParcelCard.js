@@ -1,11 +1,25 @@
 import React from 'react';
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
+
 import urls from '../urls';
 
-export default class ParcelCard extends React.Component {
-  render() {
-    return(
-      <div className='parcel-card-container'>
-        <div className='name-card'>
+function mapStateToProps(state) {
+  return {
+    openParcels: state.openParcels,
+  };
+}
+
+export class ParcelCard extends React.Component {
+  constructor() {
+    super();
+    this.viewParcels = this.viewParcels.bind(this);
+  }
+
+  viewParcels() {
+    return this.props.openParcels.map((parcel) => {
+      return (
+        <div className='name-card' key={parcel.id}>
           <div className='status'>
             <i></i>
           </div>
@@ -14,50 +28,34 @@ export default class ParcelCard extends React.Component {
               <img src={`${urls.imagePath}/logo.png`} width='70' height='70' className='img-circle' />
             </div>
             <div className='name-and-phone-number'>
-              <span><b>Jagat Jeevan Sahoo</b></span>
-              <span>+91 - 9740970977</span>
+              <span><b>{ parcel.owner.name }</b></span>
+              <span>{ parcel.owner.phone_no }</span>
             </div>
           </div>
           <div className='sender-detail'>
-            <span>Packet No.: </span> <b>Y1M2E1748</b>
+            <span>Packet No.: </span> <b>{parcel.id}</b>
           </div>
           <div className='sender-detail'>
-            <span>Date dispatched: </span> <b>Not Dispatched</b>
+            <span>Date dispatched: </span> <b>{parcel.received_date}</b>
           </div>
           <div className='sender-detail'>
-            <span>Date recieved: </span> <b>10<sup>th</sup> April 2016</b>
+            <span>Date recieved: </span> <b>Not Recieved</b>
           </div>
           <div className='sender-detail'>
-            <span>Name: </span> <b>Amazon</b>
+            <span>Name: </span> <b>{parcel.dealer.name}</b>
           </div>
         </div>
-        <div className='name-card'>
-          <div className='status'>
-            <i className='icon-ok'></i>
-          </div>
-          <div className='reciever-detail'>
-            <div className='profile-image'>
-              <img src={`${urls.imagePath}/logo.png`} width='70' height='70' className='img-circle' />
-            </div>
-            <div className='name-and-phone-number'>
-              <span><b>Jagat Jeevan Sahoo</b></span>
-              <span>+91 - 9740970977</span>
-            </div>
-          </div>
-          <div className='sender-detail'>
-            <span>Packet No.: </span> <b>Y1M2E1748</b>
-          </div>
-          <div className='sender-detail'>
-            <span>Date dispatched: </span> <b>20<sup>th</sup> April 2016</b>
-          </div>
-          <div className='sender-detail'>
-            <span>Date recieved: </span> <b>10<sup>th</sup> April 2016</b>
-          </div>
-          <div className='sender-detail'>
-            <span>Name: </span> <b>Flipkart</b>
-          </div>
-        </div>
+      );
+    });
+  }
+
+  render() {
+    return(
+      <div className="parcel-card-container">
+        { this.viewParcels() }
       </div>
     );
   }
 }
+
+export default connect(mapStateToProps)(ParcelCard);

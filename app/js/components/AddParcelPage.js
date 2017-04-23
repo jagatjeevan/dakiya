@@ -1,6 +1,6 @@
 import { Component } from 'react';
 
-import Header from '../components/header';
+import Header from './AppHeader';
 
 export default class AddParcel extends Component {
   render() {

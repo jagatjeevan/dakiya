@@ -4,7 +4,7 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
 // Components
-import Header from './Header';
+import Header from './AppHeader';
 import SearchBar from './SearchBar';
 import ParcelCard from './ParcelCard';
 
@@ -50,7 +50,7 @@ export class ListParcel extends React.Component {
       return (
         <div className="add-parcel-container">
           <h2>{translator.translate('app.openParcelHeading')}</h2>
-          <ParcelCard data={this.props.openParcels}/>
+          <ParcelCard />
         </div>
       );
     } else {
@@ -74,4 +74,4 @@ export class ListParcel extends React.Component {
   }
 }
 
-export default connect(mapStateToProps ,dispatchActionToProps)(ListParcel);
+export default connect(mapStateToProps, dispatchActionToProps)(ListParcel);
