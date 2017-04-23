@@ -1,4 +1,4 @@
-import React, { Component, PropTypes } from 'react';
+import React, { Component } from 'react';
 
 class App extends Component {
   render() {
@@ -9,9 +9,5 @@ class App extends Component {
     );
   }
 }
-
-App.propTypes = {
-  children: PropTypes.element.isRequired,
-};
 
 export default App;

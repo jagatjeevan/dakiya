@@ -3,12 +3,14 @@ if(window.location.hostname.includes('github')){
   basePath= '/mailapp/';
 }else{
   basePath='/';
+  // Setting localStorage for dummy data.
+  localStorage.setItem('getFromServer', true);
 }
 
 let imagePath = `${basePath}img`;
 let search, openParcels, closedParcels;
 
-if(localStorage.getItem('getFromServer')) {
+if(!localStorage.getItem('getFromServer')) {
   search = 'http://mailbox-1.eastus.cloudapp.azure.com/api/users/search?q=';
   openParcels = 'http://mailbox-1.eastus.cloudapp.azure.com/api/parcels/open';
   closedParcels = 'http://mailbox-1.eastus.cloudapp.azure.com/api/parcels/closed';
