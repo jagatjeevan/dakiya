@@ -1,10 +1,8 @@
 import { combineReducers } from 'redux';
-import closedParcels from'./updateClosedParcels';
-import openParcels from './updateOpenParcels';
+import packages from './packages';
 
 const rootReducer = combineReducers({
-  closedParcels,
-  openParcels
+  packages,
 });
 
 export default rootReducer;

@@ -6,7 +6,7 @@ import urls from '../urls';
 
 function mapStateToProps(state) {
   return {
-    openParcels: state.openParcels,
+    packages: state.packages.items,
   };
 }
 
@@ -17,9 +17,9 @@ export class ParcelCard extends React.Component {
   }
 
   viewParcels() {
-    return this.props.openParcels.map((parcel) => {
+    return this.props.packages.map((parcel) => {
       return (
-        <div className='name-card' key={parcel.id}>
+        <div className='name-card' key={parcel.objectId}>
           <div className='status'>
             <i></i>
           </div>
@@ -29,14 +29,14 @@ export class ParcelCard extends React.Component {
             </div>
             <div className='name-and-phone-number'>
               <span><b>{ parcel.owner.name }</b></span>
-              <span>{ parcel.owner.phone_no }</span>
+              <span>{ parcel.owner.phoneNumber }</span>
             </div>
           </div>
           <div className='sender-detail'>
-            <span>Packet No.: </span> <b>{parcel.id}</b>
+            <span>Packet No.: </span> <b>{parcel.packageId}</b>
           </div>
           <div className='sender-detail'>
-            <span>Date dispatched: </span> <b>{parcel.received_date}</b>
+            <span>Date dispatched: </span> <b>{parcel.createdAt}</b>
           </div>
           <div className='sender-detail'>
             <span>Date recieved: </span> <b>Not Recieved</b>

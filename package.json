@@ -62,11 +62,14 @@
     "babel-cli": "^6.22.2",
     "express": "^4.15.2",
     "global": "^4.3.1",
+    "parse": "^1.9.2",
+    "prop-types": "^15.5.8",
     "react": "^15.4.2",
     "redux": "^3.6.0"
   },
   "scripts": {
     "start": "node index.js",
+    "dev": "webpack-dev-server --open --config webpack.config.babel.js",
     "lint": "eslint .eslintrc.json",
     "build": "webpack --config webpack.config.babel.prod.js",
     "prebuild": "npm run clean",
