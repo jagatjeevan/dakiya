@@ -1,4 +1,4 @@
-let basePath='';
+let basePath='/c-desk';
 let imagePath = `${basePath}img`;
 
 export default {
