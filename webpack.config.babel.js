@@ -63,8 +63,7 @@ module.exports = {
       { from: 'app/assets/font/', to: 'font' },
       { from: 'app/assets/icons/fontello/css/', to: 'icons/fontello/css'},
       { from: 'app/assets/icons/fontello/font/', to: 'icons/fontello/font'},
-      { from: 'app/assets/img/', to: 'img' },
-      { from: 'app/server', to: 'server' }
+      { from: 'app/assets/img/', to: 'img' }
     ]),
     new HtmlWebpackPlugin({template: 'app/index.html'}),
     new VisualizerPlugin({filename: statsPath})
