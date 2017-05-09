@@ -12,7 +12,7 @@ import AddParcel from './components/AddParcelPage';
 
 export default (
   <Router history={browserHistory}>
-    <Route path={urls.basePath} component={App}>
+    <Route path={urls.homePage} component={App}>
       <IndexRoute component={ListParcel} />
     </Route>
     <Route path={urls.addParcelPage} component={AddParcel} />
