@@ -12,11 +12,21 @@ import translator from '../util/i18n.js';
 
 // actions
 import { fetchPackages } from '../actions/packages';
+import { logout } from '../actions/auth';
 
 class ListParcel extends Component {
 
+  constructor(props) {
+    super(props);
+    this.onLogout = this.onLogout.bind(this);
+  }
+
   componentDidMount() {
     this.props.fetchPackages();
+  }
+
+  onLogout() {
+    this.props.logout();
   }
 
   getParcels() {
@@ -41,6 +51,10 @@ class ListParcel extends Component {
         <div className="add-parcel-container">
           <h2>{translator.translate('app.openParcelHeading')}</h2>
           <ParcelCard />
+          <button
+            onClick={this.onLogout}>
+            Logout
+          </button>
         </div>
       </div>
     );
@@ -51,11 +65,13 @@ ListParcel.propTypes = {
   packages: PropTypes.arrayOf(PropTypes.object),
   dispatch: PropTypes.func,
   fetchPackages: PropTypes.func,
+  logout: PropTypes.func,
 };
 
 function dispatchActionToProps(dispatch) {
   return {
     fetchPackages: () => dispatch(fetchPackages()),
+    logout: () => dispatch(logout()),
   }
 }
 
