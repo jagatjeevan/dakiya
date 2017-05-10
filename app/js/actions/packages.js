@@ -21,19 +21,30 @@ function receivePackages(packages) {
 	};
 }
 
-const qp = { useMasterKey: true }
+const qp = { useMasterKey: true };
 const mapper = o => o.toJSON();
 let Package = Parse.Object.extend('Package');
+let Employee = Parse.Object.extend('Employee');
 
-export function fetchPackages() {
+export const fetchPackages = (searchToken = '') =>  {
 	return dispatch => {
-		dispatch(requestPackages())
+		dispatch(requestPackages());
 		var query = new Parse.Query(Package);
+		if(searchToken.length > 3) {
+		  const ownerMatches = new Parse.Query(Package);
+      ownerMatches.contains('owner.name', searchToken)
+
+      const packageIdMatches = new Parse.Query(Package);
+      packageIdMatches.contains('packageId', searchToken);
+      query = Parse.Query.or(ownerMatches, packageIdMatches);
+    }
 		query.include("owner");
 		query.include("dealer");
 		query.find(qp).then(result => {
-			var data = result.map(mapper)
+			var data = result.map(mapper);
 			dispatch(receivePackages(data))
 		});
 	}
 }
+
+

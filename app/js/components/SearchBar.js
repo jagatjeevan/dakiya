@@ -1,8 +1,21 @@
 import React from 'react';
-import axios from 'axios';
-import appConfig from '../appConfig';
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
 
-export default class SearchBar extends React.Component {
+// actions
+import { fetchPackages } from '../actions/packages';
+
+function dispatchActionToProps(dispatch) {
+  return {
+    fetchPackages: bindActionCreators(fetchPackages, dispatch),
+  }
+}
+
+function mapStateToProps() {
+  return{};
+}
+
+export class SearchBar extends React.Component {
   constructor() {
     super();
     this.state = {
@@ -11,7 +24,7 @@ export default class SearchBar extends React.Component {
       errorMsg: ''
     };
     this.updateSearchInput = this.updateSearchInput.bind(this);
-    this.initiateSearch = this.initiateSearch.bind(this);
+    this.search = this.search.bind(this);
     this.getError = this.getError.bind(this);
     this.setError = this.setError.bind(this);
   }
@@ -24,6 +37,7 @@ export default class SearchBar extends React.Component {
     this.setState({
       searchName: e.target.value
     });
+    this.search();
   }
 
   setError(err, msg='') {
@@ -33,14 +47,10 @@ export default class SearchBar extends React.Component {
     });
   }
 
-  initiateSearch() {
+  search() {
     if(this.state.searchName.split('').length > 3) {
       this.setError(false);
-      const url = appConfig.search + this.state.searchName;
-      axios.get(url)
-        .then((res) => {
-          console.log('response', res);
-        });
+      this.props.fetchPackages(this.state.searchName);
       return;
     }
     this.setError(true, 'Please enter more than 3 characters');
@@ -51,7 +61,7 @@ export default class SearchBar extends React.Component {
       <div className='search-bar'>
         <div className='search-component'>
           <input type='text' value={ this.state.searchName } placeholder='Type in to search ...' onChange={this.updateSearchInput} />
-          <button onClick={this.initiateSearch}>
+          <button onClick={this.search}>
             <i className='icon-search'></i>
             Search
           </button>
@@ -68,3 +78,5 @@ export default class SearchBar extends React.Component {
     );
   }
 }
+
+export default connect(mapStateToProps, dispatchActionToProps)(SearchBar);

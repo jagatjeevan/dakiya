@@ -22,7 +22,7 @@ export default function packages(state = initialState, action) {
 				{
 					isFetching: false,
 					items: action.packages
-				})
+				});
 		default:
 			return state;
 	}
