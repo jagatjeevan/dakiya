@@ -52,6 +52,8 @@ export class SearchBar extends React.Component {
       this.setError(false);
       this.props.fetchPackages(this.state.searchName);
       return;
+    } else {
+      this.props.fetchPackages('');
     }
     this.setError(true, 'Please enter more than 3 characters');
   }

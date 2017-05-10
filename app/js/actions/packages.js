@@ -26,18 +26,31 @@ const mapper = o => o.toJSON();
 let Package = Parse.Object.extend('Package');
 let Employee = Parse.Object.extend('Employee');
 
-export const fetchPackages = (searchToken = '') =>  {
+export const fetchPackages = (searchToken = '') => {
 	return dispatch => {
 		dispatch(requestPackages());
 		var query = new Parse.Query(Package);
-		if(searchToken.length > 3) {
-		  const ownerMatches = new Parse.Query(Package);
-      ownerMatches.contains('owner.name', searchToken)
+		if (searchToken.length > 3) {
 
-      const packageIdMatches = new Parse.Query(Package);
-      packageIdMatches.contains('packageId', searchToken);
-      query = Parse.Query.or(ownerMatches, packageIdMatches);
-    }
+			var ownerNameQuery = new Parse.Query(Employee);
+			ownerNameQuery.contains("name", searchToken)
+
+			var ownerEmailQuery = new Parse.Query(Employee);
+			ownerEmailQuery.contains("email", searchToken)
+
+			var ownerPhoneQuery = new Parse.Query(Employee);
+			ownerPhoneQuery.contains("phoneNumber", searchToken)
+
+			var compoundOwnerQuery = Parse.Query.or(ownerNameQuery, ownerEmailQuery, ownerPhoneQuery);
+
+			const packageIdQuery = new Parse.Query(Package);
+			packageIdQuery.contains('packageId', searchToken);
+
+			const ownerQuery = new Parse.Query(Package);
+			ownerQuery.matchesQuery('owner', compoundOwnerQuery);
+
+			query = Parse.Query.or(ownerQuery, packageIdQuery);
+		}
 		query.include("owner");
 		query.include("dealer");
 		query.find(qp).then(result => {
