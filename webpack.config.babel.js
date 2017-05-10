@@ -70,7 +70,7 @@ module.exports = {
   ],
   devServer: {
     contentBase: path.join(__dirname, "build"),
-    port: 2222,
+    port: 3000,
     compress: true,
     setup: app => {
       app.get('/configvars.js', function(req, res) {

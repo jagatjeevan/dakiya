@@ -80,11 +80,5 @@ module.exports = {
     new HtmlWebpackPlugin({template: 'app/index.html'}),
     new VisualizerPlugin({filename: statsPath})
   ],
-  devServer: {
-    contentBase: path.join(__dirname, "build"),
-    port: 2222,
-    compress: true,
-    hot: true
-  },
   devtool: "source-map"
 };
