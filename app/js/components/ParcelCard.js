@@ -2,7 +2,7 @@ import React from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
-import urls from '../urls';
+import appConfig from '../appConfig';
 
 function mapStateToProps(state) {
   return {
@@ -25,7 +25,7 @@ export class ParcelCard extends React.Component {
           </div>
           <div className='reciever-detail'>
             <div className='profile-image'>
-              <img src={`${urls.imagePath}/logo.png`} width='70' height='70' className='img-circle' />
+              <img src={`${appConfig.imagePath}/logo.png`} width='70' height='70' className='img-circle' />
             </div>
             <div className='name-and-phone-number'>
               <span><b>{ parcel.owner.name }</b></span>

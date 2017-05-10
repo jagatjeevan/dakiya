@@ -1,7 +1,7 @@
 import i18next from 'i18next';
 import i18nextXhr from 'i18next-xhr-backend';
 import i18nextLangDetector from 'i18next-browser-languagedetector';
-import urls from '../urls';
+import appConfig from '../appConfig';
 import Cookie from 'js-cookie';
 
 const supportedlanguages = [
@@ -26,7 +26,7 @@ class I18nTranslator {
         .init({
           fallbackLng: 'en',
           backend: {
-            loadPath: `${urls.translationFolder}/${langToDisplay}/translation.json`,
+            loadPath: `${appConfig.translationFolder}/${langToDisplay}/translation.json`,
           },
           detection: {
             order: ['cookie'],

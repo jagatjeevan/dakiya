@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import axios from 'axios';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
@@ -14,8 +13,20 @@ import translator from '../util/i18n.js';
 import { fetchPackages } from '../actions/packages';
 import { logout } from '../actions/auth';
 
-class ListParcel extends Component {
+function dispatchActionToProps(dispatch) {
+  return {
+    fetchPackages: bindActionCreators(fetchPackages, dispatch),
+    logout: bindActionCreators(logout, dispatch),
+  }
+}
 
+function mapStateToProps(state) {
+  return {
+    packages: state.packages,
+  };
+}
+
+class ListParcel extends Component {
   constructor(props) {
     super(props);
     this.onLogout = this.onLogout.bind(this);
@@ -30,8 +41,7 @@ class ListParcel extends Component {
   }
 
   getParcels() {
-    const { packages } = this.props;
-    if (packages.length > 0) {
+    if (this.props.packages.items.length > 0) {
       return (
         <div className="add-parcel-container">
           <p>{translator.translate('app.allParcelDelivered')}</p>
@@ -43,7 +53,7 @@ class ListParcel extends Component {
   }
 
   render() {
-    const { packages } = this.props;
+    console.log(this.props.packages);
     return (
       <div>
         <Header />
@@ -62,23 +72,10 @@ class ListParcel extends Component {
 }
 
 ListParcel.propTypes = {
-  packages: PropTypes.arrayOf(PropTypes.object),
+  packages: PropTypes.object,
   dispatch: PropTypes.func,
   fetchPackages: PropTypes.func,
   logout: PropTypes.func,
 };
-
-function dispatchActionToProps(dispatch) {
-  return {
-    fetchPackages: () => dispatch(fetchPackages()),
-    logout: () => dispatch(logout()),
-  }
-}
-
-function mapStateToProps(state) {
-  return {
-    packages: Object.keys(state.packages.items).map(objectId => state.packages.items[objectId]),
-  };
-}
 
 export default connect(mapStateToProps, dispatchActionToProps)(ListParcel);

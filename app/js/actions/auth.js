@@ -1,4 +1,4 @@
-import Constants from '../constants';
+import Constants from '../appConfig';
 var Parse = require('parse');
 
 Parse.initialize(Constants.XParseApplicationId);

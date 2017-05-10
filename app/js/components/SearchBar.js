@@ -1,6 +1,6 @@
 import React from 'react';
 import axios from 'axios';
-import urls from '../urls';
+import appConfig from '../appConfig';
 
 export default class SearchBar extends React.Component {
   constructor() {
@@ -36,7 +36,7 @@ export default class SearchBar extends React.Component {
   initiateSearch() {
     if(this.state.searchName.split('').length > 3) {
       this.setError(false);
-      const url = urls.search + this.state.searchName;
+      const url = appConfig.search + this.state.searchName;
       axios.get(url)
         .then((res) => {
           console.log('response', res);

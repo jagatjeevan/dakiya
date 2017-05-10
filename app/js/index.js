@@ -3,23 +3,20 @@ import React, { Component } from 'react';
 import ReactDom from 'react-dom';
 import { Provider } from 'react-redux';
 import thunk from 'redux-thunk';
-import { applyMiddleware, createStore } from 'redux';
+import { applyMiddleware, compose, createStore } from 'redux';
 
 // Translator
 import i18N from './util/i18n';
 import * as language from './util/language';
 
-// Reducers
-import reducers from './reducers/rootReducer';
-
 // Routes
 import routes from './routes';
+import { configureStore } from './reduxStore';
 
 // Scss
 import '../scss/styles.scss';
 
-const middleWare = applyMiddleware(thunk);
-const store = createStore(reducers, middleWare, window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__());
+const store = configureStore();
 language.getLanguage();
 
 export default class App extends Component {
