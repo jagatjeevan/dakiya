@@ -1,13 +1,13 @@
-let basePath = (window.basePath) ? window.basePath : '/';
-let imagePath = `${basePath}img`;
+let mountPath = window.config.mountPath;
+let imagePath = `${mountPath}img`;
 
 export default {
-  ApiBaseURL: 'https://dakya.sameerazazi.com/api',
-  XParseApplicationId: 'oidulxirU3OBEXImbVWVHk6Gah5Bbdm2',
-  XParseMasterKey: 'pZ7vQNqmK_lKAhWwCDMv29i30gMJk8CnyxTEJ2BfvhQd8nYea_RWC9chz6T5XJCK',
+  ApiBaseURL: window.config.apiBaseURL,
+  XParseApplicationId: window.config.xParseApplicationId,
+  XParseMasterKey: window.config.xParseMasterKey,
 
   // Routes
-  homePage: basePath,
+  homePage: mountPath,
   addParcelPage: 'addParcel',
 
   // Other static assets path

@@ -71,7 +71,18 @@ module.exports = {
   devServer: {
     contentBase: path.join(__dirname, "build"),
     port: 2222,
-    compress: true
+    compress: true,
+    setup: app => {
+      app.get('/configvars.js', function(req, res) {
+        require('fs').readFile('configvars.local.js', 'utf8', function (err,data) {
+          if (err) {
+            return console.log(err);
+          }
+          res.set('Content-Type', 'text/javascript');
+          res.send(data);
+        });
+      });
+    }
   },
   devtool: "source-map"
 };
