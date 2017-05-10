@@ -8,7 +8,7 @@ import {
 // Reducers
 import reducers from './reducers/rootReducer';
 
-export function configureStore(): any {
+export function configureStore() {
   const middleware = applyMiddleware(thunk);
 
   const createStoreWithMiddleware = compose(

@@ -2,7 +2,6 @@
 import React, { Component } from 'react';
 import ReactDom from 'react-dom';
 import { Provider } from 'react-redux';
-import thunk from 'redux-thunk';
 import { applyMiddleware, compose, createStore } from 'redux';
 
 // Translator

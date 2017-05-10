@@ -1,4 +1,4 @@
-let basePath = window.config.basePath;
+let basePath = (window.basePath) ? window.basePath : '/';
 let imagePath = `${basePath}img`;
 
 export default {
