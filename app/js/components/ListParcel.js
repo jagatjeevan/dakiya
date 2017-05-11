@@ -41,15 +41,22 @@ class ListParcel extends Component {
   }
 
   getParcels() {
-    if (this.props.packages.items.length > 0) {
-      return (
-        <div className="add-parcel-container">
-          <p>{translator.translate('app.allParcelDelivered')}</p>
-          <ParcelCard />
-        </div>
-      );
+    console.log("this is what i require", this.props.packages.isFetching);
+    let parcelCardStatus;
+    if (this.props.packages.isFetching) {
+      parcelCardStatus = 'Loading...';
+    } else {
+      if (this.props.packages.items.length > 0) {
+        parcelCardStatus = <ParcelCard />;
+      } else {
+        parcelCardStatus = 'No parcels available';
+      }
     }
-    return null;
+    return (
+      <div>
+        {parcelCardStatus}
+      </div>
+    );
   }
 
   render() {
@@ -60,7 +67,7 @@ class ListParcel extends Component {
         <SearchBar />
         <div className="add-parcel-container">
           <h2>{translator.translate('app.openParcelHeading')}</h2>
-          <ParcelCard />
+          { this.getParcels() }
           <button
             onClick={this.onLogout}>
             Logout
