@@ -16,3 +16,13 @@ yarn dev
 ```
 
 This should open browser in a new tab.
+
+# Word cloud web
+- Package
+  - Delivered
+  - Pending
+- Fetch : from the server
+- Update : update the view on receiving from server.
+
+# Todos
+[These](https://github.com/jagatjeevan/react-setup/#todos-in-setup) are still pending.
