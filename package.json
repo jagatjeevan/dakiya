@@ -44,6 +44,7 @@
     "json-loader": "^0.5.4",
     "node-normalize-scss": "^1.4.0",
     "node-sass": "^4.5.0",
+    "precommit-hook": "^3.0.0",
     "react-dom": "^15.4.2",
     "react-intl": "^2.2.3",
     "react-redux": "^5.0.2",
@@ -74,5 +75,8 @@
     "build": "webpack --config webpack.config.babel.prod.js",
     "prebuild": "npm run clean",
     "clean": "rimraf -rf build"
-  }
+  },
+  "pre-commit": [
+    "lint"
+  ]
 }
