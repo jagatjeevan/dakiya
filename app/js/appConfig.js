@@ -1,5 +1,5 @@
-let mountPath = window.config.mountPath;
-let imagePath = `${mountPath}img`;
+const mountPath = (window.config.mountPath) ? window.config.mountPath : '/';
+const imagePath = `${mountPath}img`;
 
 export default {
   ApiBaseURL: window.config.apiBaseURL,

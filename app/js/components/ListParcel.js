@@ -7,7 +7,7 @@ import { connect } from 'react-redux';
 import Header from './AppHeader';
 import SearchBar from './SearchBar';
 import ParcelCard from './ParcelCard';
-import translator from '../util/i18n.js';
+import translator from '../util/i18n';
 
 // actions
 import { fetchPackages } from '../actions/packages';
@@ -17,7 +17,7 @@ function dispatchActionToProps(dispatch) {
   return {
     fetchPackages: bindActionCreators(fetchPackages, dispatch),
     logout: bindActionCreators(logout, dispatch),
-  }
+  };
 }
 
 function mapStateToProps(state) {
@@ -41,16 +41,13 @@ class ListParcel extends Component {
   }
 
   getParcels() {
-    console.log("this is what i require", this.props.packages.isFetching);
     let parcelCardStatus;
     if (this.props.packages.isFetching) {
       parcelCardStatus = 'Loading...';
+    } else if (this.props.packages.items.length > 0) {
+      parcelCardStatus = <ParcelCard />;
     } else {
-      if (this.props.packages.items.length > 0) {
-        parcelCardStatus = <ParcelCard />;
-      } else {
-        parcelCardStatus = 'No parcels available';
-      }
+      parcelCardStatus = 'No parcels available';
     }
     return (
       <div>
@@ -60,7 +57,6 @@ class ListParcel extends Component {
   }
 
   render() {
-    console.log(this.props.packages);
     return (
       <div>
         <Header />
@@ -69,7 +65,8 @@ class ListParcel extends Component {
           <h2>{translator.translate('app.openParcelHeading')}</h2>
           { this.getParcels() }
           <button
-            onClick={this.onLogout}>
+            onClick={this.onLogout}
+          >
             Logout
           </button>
         </div>
@@ -80,8 +77,7 @@ class ListParcel extends Component {
 
 ListParcel.propTypes = {
   packages: PropTypes.object,
-  dispatch: PropTypes.func,
-  fetchPackages: PropTypes.func,
+  fetchPackages: PropTypes.object,
   logout: PropTypes.func,
 };
 

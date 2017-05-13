@@ -1,13 +1,14 @@
-import React, { Component } from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 
-class App extends Component {
-  render() {
-    return (
-      <div className="full-height">
-        {this.props.children}
-      </div>
-    );
-  }
-}
+export const App = props => (
+  <div className="full-height">
+    { props.children }
+  </div>
+  );
+
+App.propTypes = {
+  children: PropTypes.object,
+};
 
 export default App;

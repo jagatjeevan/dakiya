@@ -1,8 +1,7 @@
 // Framework imports
-import React, { Component } from 'react';
+import React from 'react';
 import ReactDom from 'react-dom';
 import { Provider } from 'react-redux';
-import { applyMiddleware, compose, createStore } from 'redux';
 
 // Translator
 import i18N from './util/i18n';
@@ -18,22 +17,20 @@ import '../scss/styles.scss';
 const store = configureStore();
 language.getLanguage();
 
-export default class App extends Component {
-  render() {
-    return(
-      <Provider store={store}>
-        {routes}
-      </Provider>
-    );
-  }
+export const App = () => (
+  <Provider store={store}>
+    {routes}
+  </Provider>
+  );
+
+function start() {
+  ReactDom.render(<App />, document.getElementById('content'));
 }
 
 function run() {
   i18N.initiateTranslator(start);
 }
 
-function start() {
-  ReactDom.render(<App />, document.getElementById('content'));
-}
-
 window.addEventListener('DOMContentLoaded', run);
+
+export default App;
