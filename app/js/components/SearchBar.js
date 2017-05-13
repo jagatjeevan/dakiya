@@ -83,7 +83,7 @@ export class SearchBar extends React.Component {
 }
 
 SearchBar.propTypes = {
-  fetchPackages: PropTypes.object,
+  fetchPackages: PropTypes.func,
 };
 
 export default connect(mapStateToProps, dispatchActionToProps)(SearchBar);

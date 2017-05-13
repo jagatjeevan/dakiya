@@ -77,7 +77,7 @@ class ListParcel extends Component {
 
 ListParcel.propTypes = {
   packages: PropTypes.object,
-  fetchPackages: PropTypes.object,
+  fetchPackages: PropTypes.func,
   logout: PropTypes.func,
 };
 
