@@ -43,6 +43,7 @@
     "precommit-hook": "^3.0.0",
     "react-intl": "^2.2.3",
     "rimraf": "^2.6.1",
+    "sass-lint": "^1.10.2",
     "sass-loader": "^5.0.0",
     "sasslint-loader": "^0.0.1",
     "style-loader": "^0.13.1",
@@ -73,12 +74,14 @@
     "dev": "webpack-dev-server --open --config webpack.config.babel.js",
     "lint": "eslint .eslintrc.json app/",
     "lint:fix": "eslint .eslintrc.json app/ --fix",
+    "sass-lint": "sass-lint -c ./.sass-lint.yml 'app/**/*.scss' -v -q",
     "build": "webpack --config webpack.config.babel.prod.js",
     "prebuild": "npm run clean",
     "clean": "rimraf -rf build",
     "validate": "npm ls"
   },
   "pre-commit": [
-    "lint"
+    "lint",
+    "sass-lint"
   ]
 }

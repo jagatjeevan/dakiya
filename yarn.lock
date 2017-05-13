@@ -4587,7 +4587,7 @@ sass-graph@^2.1.1:
     scss-tokenizer "^0.2.1"
     yargs "^6.6.0"
 
-sass-lint@^1.2.0:
+sass-lint@^1.10.2, sass-lint@^1.2.0:
   version "1.10.2"
   resolved "https://registry.yarnpkg.com/sass-lint/-/sass-lint-1.10.2.tgz#825bd6b0da79ddd36a42ffae5b6d44ac4922502b"
   dependencies:

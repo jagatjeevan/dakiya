@@ -21,7 +21,7 @@ export const App = () => (
   <Provider store={store}>
     {routes}
   </Provider>
-  );
+);
 
 function start() {
   ReactDom.render(<App />, document.getElementById('content'));
