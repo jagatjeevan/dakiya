@@ -1,0 +1,14 @@
+@import '../variables';
+
+%no-margin {
+  margin: $zero-value;
+}
+
+%no-padding {
+  padding: $zero-value;
+}
+
+%no-margin-padding {
+  margin: $zero-value;
+  padding: $zero-value;
+}

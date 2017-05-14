@@ -35,9 +35,8 @@ a {
 
 ul,
 li {
+  @extend %no-margin-padding;
   list-style-type: none;
-  margin: 0;
-  padding: 0;
 }
 
 select {
