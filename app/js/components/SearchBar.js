@@ -23,6 +23,7 @@ export class SearchBar extends React.Component {
       searchName: '',
       error: false,
       errorMsg: '',
+      timeoutToken: null,
     };
     this.updateSearchInput = this.updateSearchInput.bind(this);
     this.search = this.search.bind(this);
@@ -38,7 +39,12 @@ export class SearchBar extends React.Component {
     this.setState({
       searchName: e.target.value,
     });
-    this.search();
+
+    clearTimeout(this.state.timeoutToken);
+    const token = setTimeout(this.search, 500);
+    this.setState({
+      timeoutToken: token,
+    });
   }
 
   setError(err, msg = '') {
@@ -49,14 +55,15 @@ export class SearchBar extends React.Component {
   }
 
   search() {
-    if (this.state.searchName.split('').length > 3) {
-      this.setError(false);
+    const term = this.state.searchName;
+    const shouldFetch = term.length === 0 || term.length >= 3;
+    this.setError(shouldFetch);
+    if (shouldFetch) {
       this.props.fetchPackages(this.state.searchName);
-      return;
     }
-    this.props.fetchPackages('');
-
-    this.setError(true, 'Please enter more than 3 characters');
+    else {
+      this.setError(true, 'Please enter more than 3 characters');
+    }
   }
 
   render() {

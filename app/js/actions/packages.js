@@ -30,7 +30,7 @@ export const fetchPackages = (searchToken = '') => (
   (dispatch) => {
     dispatch(requestPackages());
     let query = new Parse.Query(Package);
-    if (searchToken.length > 3) {
+    if (searchToken.length > 0) {
       const ownerNameQuery = new Parse.Query(Employee);
       ownerNameQuery.contains('name', searchToken);
 
