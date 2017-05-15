@@ -24,5 +24,9 @@ This should open browser in a new tab.
 - Fetch : from the server
 - Update : update the view on receiving from server.
 
-# Todos
+# Todos about setup
 [These](https://github.com/jagatjeevan/react-setup/#todos-in-setup) are still pending.
+
+# Todos about project
+- Move all search to frontend rather calling from backend.
+- Add parcel functionality.

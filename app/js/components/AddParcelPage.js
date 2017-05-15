@@ -1,9 +1,31 @@
 /* eslint react/prefer-stateless-function: 0 */
 import React, { Component } from 'react';
-
+import Parse from 'parse';
+import Constants from '../appConfig';
 import Header from './AppHeader';
 
+// const qp = { useMasterKey: true };
+// const mapper = o => o.toJSON();
+
+Parse.initialize(Constants.XParseApplicationId);
+Parse.masterKey = Constants.XParseMasterKey;
+Parse.serverURL = Constants.ApiBaseURL;
+
 export default class AddParcel extends Component {
+  // constructor() {
+  //   super();
+  //   // this.fetchEmployee = this.fetchEmployee.bind(this);
+  // }
+
+  // fetchEmployee(e) {
+  //   if (e.target.value.length > 3) {
+  //     const Employee = Parse.Object.extend('Employee');
+  //     const query = new Parse.Query(Employee);
+  //     query.get('')
+  //
+  //   }
+  // }
+
   render() {
     return (
       <div>
@@ -14,7 +36,7 @@ export default class AddParcel extends Component {
             <div className="form-container">
               <label htmlFor="name">
                 Name
-                <input type="text" id="name" placeholder="Name" />
+                <input type="text" id="name" placeholder="Name" onChange={this.fetchEmployee} />
               </label>
             </div>
             <div className="form-container">

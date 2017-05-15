@@ -1,6 +1,6 @@
 // Frameworks
 import React from 'react';
-import { Route, Router, IndexRoute, browserHistory } from 'react-router';
+import { Route, Router, IndexRoute, hashHistory } from 'react-router';
 
 // Configs
 import appConfig from './appConfig';
@@ -11,7 +11,7 @@ import ListParcel from './components/ListParcel';
 import AddParcel from './components/AddParcelPage';
 
 export default (
-  <Router history={browserHistory}>
+  <Router history={hashHistory}>
     <Route path={appConfig.homePage} component={App}>
       <IndexRoute component={ListParcel} />
     </Route>

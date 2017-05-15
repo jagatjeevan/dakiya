@@ -1,6 +1,5 @@
+import Parse from 'parse';
 import Constants from '../appConfig';
-
-const Parse = require('parse');
 
 Parse.initialize(Constants.XParseApplicationId);
 Parse.masterKey = Constants.XParseMasterKey;
