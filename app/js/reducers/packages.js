@@ -1,7 +1,4 @@
-import {
-  REQUEST_PACKAGES,
-  RECEIVE_PACKAGES,
-} from '../actions/packages';
+import * as actionTypes from '../util/actionsTypes';
 
 const initialState = {
   isFetching: false,
@@ -10,9 +7,9 @@ const initialState = {
 
 export default function packages(state = initialState, action) {
   switch (action.type) {
-    case REQUEST_PACKAGES:
+    case actionTypes.REQUEST_PACKAGES:
       return Object.assign({}, state, { isFetching: true });
-    case RECEIVE_PACKAGES:
+    case actionTypes.RECEIVE_PACKAGES:
       return Object.assign(
         {},
         state,

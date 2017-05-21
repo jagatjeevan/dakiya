@@ -1,30 +1,55 @@
-/* eslint react/prefer-stateless-function: 0 */
 import React, { Component } from 'react';
-import Parse from 'parse';
-import Constants from '../appConfig';
+import PropTypes from 'prop-types';
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
+
+// Custom Components
 import Header from './AppHeader';
 
-// const qp = { useMasterKey: true };
-// const mapper = o => o.toJSON();
+// Actions
+import { fetchEmployee, selectedEmployee } from '../actions/employees';
 
-Parse.initialize(Constants.XParseApplicationId);
-Parse.masterKey = Constants.XParseMasterKey;
-Parse.serverURL = Constants.ApiBaseURL;
+function dispatchActionToProps(dispatch) {
+  return {
+    fetchEmployees: bindActionCreators(fetchEmployee, dispatch),
+    selectEmployee: bindActionCreators(selectedEmployee, dispatch),
+  };
+}
 
-export default class AddParcel extends Component {
-  // constructor() {
-  //   super();
-  //   // this.fetchEmployee = this.fetchEmployee.bind(this);
-  // }
+function mapStateToProps(state) {
+  return {
+    employees: state.employees.employees,
+    selectedEmployee: state.employees.selectedEmployee,
+  };
+}
 
-  // fetchEmployee(e) {
-  //   if (e.target.value.length > 3) {
-  //     const Employee = Parse.Object.extend('Employee');
-  //     const query = new Parse.Query(Employee);
-  //     query.get('')
-  //
-  //   }
-  // }
+class AddParcel extends Component {
+  constructor() {
+    super();
+    this.searchEmployee = this.searchEmployee.bind(this);
+    this.showSuggesstions = this.showSuggesstions.bind(this);
+    this.updateSelectedEmployee = this.updateSelectedEmployee.bind(this);
+  }
+
+  searchEmployee(e) {
+    if (e.target.value.length > 3) {
+      this.props.fetchEmployees(e.target.value);
+    } else {
+      this.props.fetchEmployees('');
+    }
+  }
+
+  updateSelectedEmployee(selectedEmp) {
+    this.props.selectEmployee(selectedEmp);
+  }
+
+  showSuggesstions() {
+    return this.props.employees.map(employee => (
+      <div key={employee.employeeId} onClick={() => this.updateSelectedEmployee(employee)}>
+        <b>{employee.name}</b> - {employee.phoneNumber}
+      </div>
+      ));
+  }
 
   render() {
     return (
@@ -36,19 +61,22 @@ export default class AddParcel extends Component {
             <div className="form-container">
               <label htmlFor="name">
                 Name
-                <input type="text" id="name" placeholder="Name" onChange={this.fetchEmployee} />
+                <input type="text" id="name" placeholder="Name" onChange={this.searchEmployee} />
+                <div>
+                  {this.showSuggesstions()}
+                </div>
               </label>
             </div>
             <div className="form-container">
               <label htmlFor="email">
                 Email Address
-                <input type="email" id="email" placeholder="mike@gmail.com" />
+                <input type="email" id="email" placeholder="mike@gmail.com" value={this.props.selectedEmployee.email} />
               </label>
             </div>
             <div className="form-container">
               <label htmlFor="phone">
                 Phone Number
-                <input type="number" id="phone" placeholder="124132758" />
+                <input type="number" id="phone" placeholder="124132758" value={this.props.selectedEmployee.phoneNumber} />
               </label>
             </div>
             <div className="form-container">
@@ -72,3 +100,12 @@ export default class AddParcel extends Component {
     );
   }
 }
+
+AddParcel.propTypes = {
+  fetchEmployees: PropTypes.func,
+  selectEmployee: PropTypes.func,
+  employees: PropTypes.array,
+  selectedEmployee: PropTypes.object,
+};
+
+export default connect(mapStateToProps, dispatchActionToProps)(AddParcel);

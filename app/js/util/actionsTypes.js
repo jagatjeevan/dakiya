@@ -1,0 +1,7 @@
+// Packages
+export const REQUEST_PACKAGES = 'REQUEST_PACKAGES';
+export const RECEIVE_PACKAGES = 'RECEIVE_PACKAGES';
+
+// Employee
+export const FETCH_EMPLOYEE = 'FETCH_EMPLOYEE';
+export const SELECTED_EMPLOYEE = 'SELECTED_EMPLOYEE';

@@ -1,22 +1,20 @@
 import Parse from 'parse';
 import Constants from '../appConfig';
+import * as actionTypes from '../util/actionsTypes';
 
 Parse.initialize(Constants.XParseApplicationId);
 Parse.masterKey = Constants.XParseMasterKey;
 Parse.serverURL = Constants.ApiBaseURL;
 
-export const REQUEST_PACKAGES = 'REQUEST_PACKAGES';
-export const RECEIVE_PACKAGES = 'RECEIVE_PACKAGES';
-
 function requestPackages() {
   return {
-    type: REQUEST_PACKAGES,
+    type: actionTypes.REQUEST_PACKAGES,
   };
 }
 
 function receivePackages(packages) {
   return {
-    type: RECEIVE_PACKAGES,
+    type: actionTypes.RECEIVE_PACKAGES,
     packages,
   };
 }
