@@ -9,6 +9,8 @@ Parse.initialize(Constants.XParseApplicationId);
 Parse.masterKey = Constants.XParseMasterKey;
 Parse.serverURL = Constants.ApiBaseURL;
 
+const qp = { useMasterKey: true };
+
 export function updateEmployee(data) {
   return {
     type: actionTypes.FETCH_EMPLOYEE,
@@ -29,14 +31,9 @@ export function fetchEmployee(searchToken) {
     const query = new Parse.Query(Employee);
     if (searchToken !== '') {
       query.matches('name', searchToken, 'i');
-      query.find({
-        success: (res) => {
-          dispatch(updateEmployee(res.map(mapper)));
-        },
-        error: (res) => {
-          /* eslint no-console: 0 */
-          console.log('error', res);
-        },
+      query.find(qp).then((result) => {
+        const data = result.map(mapper);
+        dispatch(updateEmployee(data));
       });
     } else {
       dispatch(updateEmployee([]));
