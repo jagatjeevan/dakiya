@@ -41,7 +41,7 @@ export class ParcelCard extends React.Component {
           <span>Date recieved: </span> <b>Not Recieved</b>
         </div>
         <div className="sender-detail">
-          <span>Name: </span> <b>{parcel.dealer.name}</b>
+          <span>Name: </span> <b>{parcel.vendor.name}</b>
         </div>
       </div>
       ));

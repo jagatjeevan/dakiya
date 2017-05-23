@@ -49,7 +49,7 @@ export const fetchPackages = (searchToken = '') => (
       query = Parse.Query.or(ownerQuery, packageIdQuery);
     }
     query.include('owner');
-    query.include('dealer');
+    query.include('vendor');
     query.find(qp).then((result) => {
       const data = result.map(mapper);
       dispatch(receivePackages(data));
