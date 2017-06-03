@@ -79,6 +79,7 @@
     "sass-lint": "sass-lint -c ./.sass-lint.yml 'app/**/*.scss' -v -q",
     "build": "webpack --config webpack.config.babel.prod.js",
     "prebuild": "npm run clean",
+    "postbuild": "cp build/index.html .",
     "clean": "rimraf -rf build",
     "validate": "npm ls"
   },
