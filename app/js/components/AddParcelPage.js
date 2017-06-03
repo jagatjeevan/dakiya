@@ -10,6 +10,7 @@ import Header from './AppHeader';
 // Actions
 import { fetchEmployee, selectedEmployee, resetEmployeeList } from '../actions/employees';
 import { savePackageAsync } from '../actions/packages';
+import { fetchVendors } from '../actions/vendors';
 
 function dispatchActionToProps(dispatch) {
   return {
@@ -17,6 +18,7 @@ function dispatchActionToProps(dispatch) {
     selectEmployee: bindActionCreators(selectedEmployee, dispatch),
     resetEmployeeList: bindActionCreators(resetEmployeeList, dispatch),
     savePackageAsync: bindActionCreators(savePackageAsync, dispatch),
+    fetchVendors: bindActionCreators(fetchVendors, dispatch),
   };
 }
 
@@ -24,6 +26,7 @@ function mapStateToProps(state) {
   return {
     employees: state.employees.employees,
     selectedEmployee: state.employees.selectedEmployee,
+    vendors: state.vendors,
   };
 }
 
@@ -42,6 +45,7 @@ class AddParcel extends Component {
       value: '',
       suggestions: this.props.employees,
       awb: '',
+      selectedVendorId: '',
     };
     this.handleSubmit = this.handleSubmit.bind(this);
     this.onChange = this.onChange.bind(this);
@@ -52,6 +56,12 @@ class AddParcel extends Component {
     this.onSuggestionSelected = this.onSuggestionSelected.bind(this);
     this.updateSelectedEmployee = this.updateSelectedEmployee.bind(this);
     this.onAwbChange = this.onAwbChange.bind(this);
+    this.getVendors = this.getVendors.bind(this);
+    this.onVendorSelected = this.onVendorSelected.bind(this);
+  }
+
+  componentWillMount() {
+    this.props.fetchVendors();
   }
 
   componentWillReceiveProps(nextProps) {
@@ -60,6 +70,19 @@ class AddParcel extends Component {
         suggestions: nextProps.employees,
       });
     }
+  }
+
+  getVendors() {
+    if (!this.props.vendors.isFetching && this.props.vendors.items.length) {
+      return this.props.vendors.items.map(vendor => (<option value={vendor.objectId} key={vendor.objectId}>{vendor.name}</option>));
+    }
+    return (<option value="">No Vendors available</option>);
+  }
+
+  onVendorSelected(event) {
+    this.setState({
+      selectedVendorId: event.target.value,
+    });
   }
 
   onAwbChange(e) {
@@ -72,7 +95,7 @@ class AddParcel extends Component {
     event.preventDefault();
     if (this.props.selectedEmployee.objectId) {
       if (this.state.awb !== '') {
-        this.props.savePackageAsync(this.props.selectedEmployee.objectId, 'LLI0V983J3', this.state.awb);
+        this.props.savePackageAsync(this.props.selectedEmployee.objectId, this.state.selectedVendorId, this.state.awb);
       }
       // TODO: JAGAT: give a notification to user about "AWB number" being empty.
       return;
@@ -169,12 +192,8 @@ class AddParcel extends Component {
               <div className="form-container">
                 <label htmlFor="dealer">
                   Dealer
-                  <select id="dealer">
-                    <option>Amazon</option>
-                    <option>Flipkart</option>
-                    <option>Ebay</option>
-                    <option>Snapdeal</option>
-                    <option>Shopclues</option>
+                  <select id="vendor" onChange={this.onVendorSelected}>
+                    {this.getVendors()}
                   </select>
                 </label>
               </div>
@@ -194,7 +213,9 @@ AddParcel.propTypes = {
   selectEmployee: PropTypes.func,
   resetEmployeeList: PropTypes.func,
   savePackageAsync: PropTypes.func,
+  fetchVendors: PropTypes.func,
   employees: PropTypes.array,
+  vendors: PropTypes.object,
   selectedEmployee: PropTypes.object,
 };
 
