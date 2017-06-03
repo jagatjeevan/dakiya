@@ -1,10 +1,5 @@
-import Parse from 'parse';
-import Constants from '../appConfig';
+import Parse from './parseConfig';
 import * as actionTypes from '../util/actionsTypes';
-
-Parse.initialize(Constants.XParseApplicationId);
-Parse.masterKey = Constants.XParseMasterKey;
-Parse.serverURL = Constants.ApiBaseURL;
 
 function requestPackages() {
   return {
@@ -19,10 +14,24 @@ function receivePackages(packages) {
   };
 }
 
+function savePackageBegin() {
+  return {
+    type: actionTypes.SAVE_PACKAGE_BEGIN,
+  };
+}
+
+function savePackageComplete(pkg) {
+  return {
+    type: actionTypes.SAVE_PACKAGE_COMPLETE,
+    pkg,
+  };
+}
+
 const qp = { useMasterKey: true };
 const mapper = o => o.toJSON();
 const Package = Parse.Object.extend('Package');
 const Employee = Parse.Object.extend('Employee');
+const Vendor = Parse.Object.extend('Vendor');
 
 export const fetchPackages = (searchToken = '') => (
   (dispatch) => {
@@ -54,5 +63,63 @@ export const fetchPackages = (searchToken = '') => (
       const data = result.map(mapper);
       dispatch(receivePackages(data));
     });
+  }
+);
+
+export const savePackageAsync = (employeeObjectId, vendorObjectId, awpNo) => (
+  (dispatch) => {
+    dispatch(savePackageBegin());
+
+    const pkg = new Package();
+    pkg.set('owner', Employee.createWithoutData(employeeObjectId)); // Link owner
+    pkg.set('vendor', Vendor.createWithoutData(vendorObjectId)); // Link vendor
+    pkg.set('awpNo', awpNo);
+    pkg.set('status', false);
+
+    pkg.save(null, {
+      success(result) {
+        // Execute any logic that should take place after the object is saved.
+        dispatch(savePackageComplete(result));
+        // TODO: Jagat: Show notification for saving the package successfully.
+
+        // TODO : Jagat : Change the redirect to react-redux-router
+        window.location.href = '/';
+      },
+      error(gameScore, error) {
+        // Execute any logic that should take place if the save fails.
+        // error is a Parse.Error with an error code and message.
+        /* eslint: no-alert:0 */
+        alert(`Failed to create new object, with error code: ${error.message}`);
+      },
+      useMasterKey: true,
+    });
+  }
+);
+
+export const updatePackageAsync = packageObjectId => (
+  (dispatch) => {
+    dispatch(savePackageBegin());
+
+    const query = new Parse.Query(Package);
+    query.get(packageObjectId, qp)
+      .then((p) => {
+        p.set('status', true);
+        p.set('pickupDate', new Date());
+        p.save(null, qp)
+          .then(() => {
+            alert('Package updated succefully.');
+
+            // TODO : Jagat : Change the redirect to react-redux-router
+            window.location.href = '/';
+          })
+          .catch((error) => {
+            /* eslint: no-alert:0 */
+            alert(`Failed to update package, with error code: ${error.message}`);
+          });
+      })
+      .catch((error) => {
+        /* eslint: no-alert:0 */
+        alert(`Failed to get package, with error code: ${error.message}`);
+      });
   }
 );

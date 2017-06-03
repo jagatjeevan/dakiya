@@ -18,6 +18,12 @@ export function updateEmployee(data) {
   };
 }
 
+export function resetEmployeeList() {
+  return {
+    type: actionTypes.RESET_EMPLOYEE_LIST,
+  };
+}
+
 export function selectedEmployee(emp) {
   return {
     type: actionTypes.SELECTED_EMPLOYEE,
@@ -29,14 +35,10 @@ export function fetchEmployee(searchToken) {
   return ((dispatch) => {
     const Employee = Parse.Object.extend('Employee');
     const query = new Parse.Query(Employee);
-    if (searchToken !== '') {
-      query.matches('name', searchToken, 'i');
-      query.find(qp).then((result) => {
-        const data = result.map(mapper);
-        dispatch(updateEmployee(data));
-      });
-    } else {
-      dispatch(updateEmployee([]));
-    }
+    query.matches('name', searchToken, 'i');
+    query.find(qp).then((result) => {
+      const data = result.map(mapper);
+      dispatch(updateEmployee(data));
+    });
   });
 }

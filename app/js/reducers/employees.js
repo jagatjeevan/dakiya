@@ -13,6 +13,9 @@ export default function employees(state = initialState, action) {
     case actionTypes.SELECTED_EMPLOYEE:
       return Object.assign({}, state, { selectedEmployee: action.payload });
 
+    case actionTypes.RESET_EMPLOYEE_LIST:
+      return initialState;
+
     default:
       return initialState;
   }
