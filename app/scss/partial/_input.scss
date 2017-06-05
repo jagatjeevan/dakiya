@@ -1,0 +1,18 @@
+$button-text-color: #fff;
+
+input {
+  &[type='text'],
+  &[type='email'],
+  [type='number'] {
+    @extend %input-styles;
+  }
+}
+
+button,
+.button {
+  background-color: map-get($brand-colors, primary);
+  border: 0;
+  color: $button-text-color;
+  min-width: 130px;
+  padding: 10px 15px;
+}

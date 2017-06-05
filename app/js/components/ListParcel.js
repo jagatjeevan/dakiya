@@ -29,15 +29,11 @@ function mapStateToProps(state) {
 class ListParcel extends Component {
   constructor(props) {
     super(props);
-    this.onLogout = this.onLogout.bind(this);
+    this.getParcels = this.getParcels.bind(this);
   }
 
   componentDidMount() {
     this.props.fetchPackages();
-  }
-
-  onLogout() {
-    this.props.logout();
   }
 
   getParcels() {
@@ -58,17 +54,12 @@ class ListParcel extends Component {
 
   render() {
     return (
-      <div>
+      <div className="full-height">
         <Header />
         <SearchBar />
         <div className="add-parcel-container">
           <h2>{translator.translate('app.openParcelHeading')}</h2>
           { this.getParcels() }
-          <button
-            onClick={this.onLogout}
-          >
-            Logout
-          </button>
         </div>
       </div>
     );
@@ -78,7 +69,6 @@ class ListParcel extends Component {
 ListParcel.propTypes = {
   packages: PropTypes.object,
   fetchPackages: PropTypes.func,
-  logout: PropTypes.func,
 };
 
 export default connect(mapStateToProps, dispatchActionToProps)(ListParcel);
