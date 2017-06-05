@@ -23,6 +23,7 @@ function dispatchActionToProps(dispatch) {
 function mapStateToProps(state) {
   return {
     packages: state.packages,
+    sidebar: state.sidebar,
   };
 }
 
@@ -53,13 +54,16 @@ class ListParcel extends Component {
   }
 
   render() {
+    const isSidebarOpen = (this.props.sidebar.isSidebarOpen) ? 'open' : 'close';
     return (
       <div className="full-height">
         <Header />
-        <SearchBar />
-        <div className="add-parcel-container">
-          <h2>{translator.translate('app.openParcelHeading')}</h2>
-          { this.getParcels() }
+        <div className={`body-container ${isSidebarOpen}`}>
+          <SearchBar />
+          <div className="add-parcel-container">
+            <h2>{translator.translate('app.openParcelHeading')}</h2>
+            { this.getParcels() }
+          </div>
         </div>
       </div>
     );
@@ -69,6 +73,7 @@ class ListParcel extends Component {
 ListParcel.propTypes = {
   packages: PropTypes.object,
   fetchPackages: PropTypes.func,
+  sidebar: PropTypes.object,
 };
 
 export default connect(mapStateToProps, dispatchActionToProps)(ListParcel);
