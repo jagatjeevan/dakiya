@@ -27,6 +27,7 @@ function mapStateToProps(state) {
     employees: state.employees.employees,
     selectedEmployee: state.employees.selectedEmployee,
     vendors: state.vendors,
+    sidebar: state.sidebar,
   };
 }
 
@@ -149,6 +150,7 @@ class AddParcel extends Component {
   }
 
   render() {
+    const isSidebarOpen = (this.props.sidebar.isSidebarOpen) ? 'open' : 'close';
     const { value, suggestions } = this.state;
     const inputProps = {
       placeholder: 'Enter name / phone number',
@@ -158,7 +160,7 @@ class AddParcel extends Component {
     return (
       <div>
         <Header />
-        <div className="add-parcel-container">
+        <div className={`add-parcel-container body-container ${isSidebarOpen}`}>
           <header>Add the Parcel below:</header>
           <AutoSuggest
             suggestions={suggestions}
@@ -217,6 +219,7 @@ AddParcel.propTypes = {
   employees: PropTypes.array,
   vendors: PropTypes.object,
   selectedEmployee: PropTypes.object,
+  sidebar: PropTypes.object,
 };
 
 export default connect(mapStateToProps, dispatchActionToProps)(AddParcel);
