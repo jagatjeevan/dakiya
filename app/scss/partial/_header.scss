@@ -1,0 +1,62 @@
+$navigation-icon-dimension: 30px;
+$app-header-height: 70px;
+$header-background: map-get($brand-colors, 'primary');
+
+.app-header {
+  align-items: center;
+  display: flex;
+  padding: $app-spacer $box-padding;
+  @include background-and-text-color($header-background);
+}
+
+.logo-image {
+  position: relative;
+  z-index: 1;
+}
+
+.navigation-toggle {
+  @extend .logo-image;
+  align-items: center;
+  border-radius: $navigation-icon-dimension/2;
+  display: flex;
+  height: $navigation-icon-dimension;
+  justify-content: center;
+  line-height: $navigation-icon-dimension;
+  width: $navigation-icon-dimension;
+  animation: rotate $app-animation-duration/2 1 linear;
+  .icon-dot-3 {
+    transform: rotate(90deg);
+  }
+  &.close {
+    animation: rotate-reverse $app-animation-duration/2 1 linear;
+  }
+}
+
+.links-container {
+  @include background-and-text-color($header-background);
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: $width-of-sidebar;
+  padding-top: $app-header-height;
+  transition: all $app-animation-duration;
+  box-shadow: 0 0 3px 3px lighten($header-background, 20%);
+  &.close {
+    left: -$width-of-sidebar;
+    box-shadow: 0 0 0 0 $header-background;
+  }
+  &.open {
+    left: 0;
+  }
+  ul {
+    a {
+      display: block;
+      padding: $app-spacer;
+      @include background-and-text-color($header-background);
+    }
+    li.bottom {
+      position: absolute;
+      bottom: 0;
+    }
+  }
+}

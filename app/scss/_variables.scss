@@ -1,14 +1,18 @@
 @import './path';
 
 $brand-colors: (
-  primary: #369,
+  primary: #42484f,
   secondary: #FFAD23,
   teriary: #999,
   quaternary: #ccc,
   quinary: #eee,
   senary: #efefef
 );
-$body-background-color: map-get($brand-colors, 'senary');
+
+$white: #fff;
+$black: #000;
+
+$body-background-color: $white;
 
 $status: (
   error: #c00
@@ -21,19 +25,21 @@ $spacer: (
   spacer-50: 50px,
 );
 
+// Application spacing
 $app-spacer : map-get($spacer, 'spacer-20');
 
-$app-animation-duration: 5ms;
+// Animation timing
+$app-animation-duration: 500ms;
 
 // Box
 $box-background-color: map-get($brand-colors, 'quaternary');
-
 $box-border-color: map-get($brand-colors, 'quaternary');
 $box-border-width: 1px;
 $box-border: $box-border-color solid $box-border-width;
-
 $box-padding: map-get($spacer, 'spacer-10');
-// Box
 
 // Zero Value
 $zero-value: 0;
+
+// Width of sidebar and content moves
+$width-of-sidebar: 180px;

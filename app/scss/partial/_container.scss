@@ -1,0 +1,7 @@
+.body-container {
+  padding: $app-spacer;
+  transition: all $app-animation-duration;
+  &.open {
+    margin-left: $width-of-sidebar;
+  }
+}

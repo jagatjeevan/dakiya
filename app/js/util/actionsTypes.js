@@ -12,3 +12,6 @@ export const SELECTED_EMPLOYEE = 'SELECTED_EMPLOYEE';
 // Vendor
 export const REQUEST_VENDORS = 'REQUEST_VENDORS';
 export const RECEIVE_VENDORS = 'RECEIVE_VENDORS';
+
+// Sidebar
+export const TOGGLE_SIDEBAR = 'TOGGLE_SIDEBAR';
