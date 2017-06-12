@@ -1,7 +1,10 @@
 // Global styles
+@import 'global';
 @import 'input';
 @import 'icons';
+@import 'card';
 
 // Application Partials
-@import 'header';
 @import 'container';
+@import 'header';
+@import 'search-bar';

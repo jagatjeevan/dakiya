@@ -2,6 +2,10 @@
   display: flex;
 }
 
+.search-card-header {
+  display: flex;
+  justify-content: space-between;
+}
 //.search-bar{
 //  background: lighten($search-bar-background-color, 10%);
 //  color: #fff;

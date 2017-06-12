@@ -1,0 +1,26 @@
+.card {
+  display: flex;
+  flex-direction: column;
+  border: $box-border;
+  margin-bottom: $app-spacer;
+}
+
+.card-block {
+  padding: $app-spacer;
+  background-color: $white;
+}
+
+.card-header,
+.card-footer {
+  background-color: map_get($brand-colors, 'senary');
+  padding: $app-spacer;
+}
+
+.card-header {
+  margin-bottom: 0;
+  border-bottom: $box-border;
+}
+
+.card-footer {
+  border-top: $box-border;
+}

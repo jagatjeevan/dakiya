@@ -4,62 +4,60 @@ $navigation-anchor-background-hover: lighten($header-background, 5%);
 $navigation-anchor-background-active: map-get($brand-colors, secondary);
 $navigation-achor-text-color: #fff;
 
-
-
-//#header{
-//  .logo-container{
-//    align-items: center;
-//    background: $header-background;
-//    color: $navigation-achor-text-color;
-//    display: flex;
-//    justify-content: space-between;
-//    padding: $app-spacer;
-//  }
-//  nav {
-//    &.closed {
-//      display: none;
-//    }
-//  }
-//  li{
-//    a {
-//      background: $navigation-anchor-background;
-//      border-bottom: $header-background solid 1px;
-//      border-right: $navigation-anchor-background solid 5px;
-//      display: block;
-//      padding: 10px;
-//      text-align: right;
-//      &:hover {
-//        background: $navigation-anchor-background-hover;
-//        border-right-color: $navigation-anchor-background-hover;
-//      }
-//      &.active {
-//        border-right-color: $navigation-anchor-background-active;
-//      }
-//    }
-//  }
-//  .menu-switch{
-//    display: block;
-//    font-size: 25px;
-//  }
-//  .menu-links {
-//    display: none;
-//    a{
-//      margin-left: 30px;
-//      padding: 5px 0;
-//      &.active {
-//        border-bottom: $navigation-anchor-background-active solid 3px;
-//      }
-//    }
-//  }
-//  @media only screen and (min-width: 700px) {
-//    .menu-links {
-//      display: block;
-//    }
-//    .menu-switch {
-//      display: none;
-//    }
-//  }
-//  a{
-//    color: $navigation-achor-text-color;
-//  }
-//}
+.app-header{
+  .logo-container{
+    align-items: center;
+    background: $header-background;
+    color: $navigation-achor-text-color;
+    display: flex;
+    justify-content: space-between;
+    padding: $app-spacer;
+  }
+  nav {
+    &.closed {
+      display: none;
+    }
+  }
+  li{
+    a {
+      background: $navigation-anchor-background;
+      border-bottom: $header-background solid 1px;
+      border-right: $navigation-anchor-background solid 5px;
+      display: block;
+      padding: 10px;
+      text-align: right;
+      &:hover {
+        background: $navigation-anchor-background-hover;
+        border-right-color: $navigation-anchor-background-hover;
+      }
+      &.active {
+        border-right-color: $navigation-anchor-background-active;
+      }
+    }
+  }
+  .menu-switch{
+    display: block;
+    font-size: 25px;
+  }
+  .menu-links {
+    display: none;
+    a{
+      margin-left: 30px;
+      padding: 5px 0;
+      &.active {
+        border-bottom: $navigation-anchor-background-active solid 3px;
+      }
+    }
+  }
+  @media only screen and (min-width: 700px) {
+    .menu-links {
+      display: block;
+    }
+    .menu-switch {
+      display: none;
+    }
+  }
+  a{
+    color: $navigation-achor-text-color;
+  }
+}

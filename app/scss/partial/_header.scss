@@ -1,21 +1,29 @@
 $navigation-icon-dimension: 30px;
-$app-header-height: 70px;
-$header-background: map-get($brand-colors, 'primary');
+$app-header-height: 60px;
+$header-background: $white;
+$header-text-color: #3e3e3e;
+$header-border-bottom: 1px solid map_get($brand-colors, 'quinary');
+$sidebar-background: map_get($brand-colors, 'secondary');
+$sidebar-active-background-color: map_get($brand-colors, 'tertiary');
+$sidebar-hover-background-color: map_get($brand-colors, 'primary');
 
 .app-header {
   align-items: center;
+  background: $header-background;
+  border-bottom: $header-border-bottom;
+  color: $header-text-color;
   display: flex;
-  padding: $app-spacer $box-padding;
-  @include background-and-text-color($header-background);
+  padding: map_get($spacer, 'spacer-15') $box-padding;
 }
 
 .logo-image {
-  position: relative;
-  z-index: 1;
+  text-transform: uppercase;
+  font-size: 25px;
+  text-shadow: 2px 2px 1px #d2d2d2;
+  font-weight: bold;
 }
 
 .navigation-toggle {
-  @extend .logo-image;
   align-items: center;
   border-radius: $navigation-icon-dimension/2;
   display: flex;
@@ -33,14 +41,12 @@ $header-background: map-get($brand-colors, 'primary');
 }
 
 .links-container {
-  @include background-and-text-color($header-background);
+  background: $sidebar-background;
   position: absolute;
-  top: 0;
+  top: $app-header-height;
   bottom: 0;
   width: $width-of-sidebar;
-  padding-top: $app-header-height;
   transition: all $app-animation-duration;
-  box-shadow: 0 0 3px 3px lighten($header-background, 20%);
   &.close {
     left: -$width-of-sidebar;
     box-shadow: 0 0 0 0 $header-background;
@@ -52,11 +58,19 @@ $header-background: map-get($brand-colors, 'primary');
     a {
       display: block;
       padding: $app-spacer;
-      @include background-and-text-color($header-background);
+      color: $white;
+      &.active {
+        background: $sidebar-active-background-color;
+      }
+      &:hover {
+        background-color: $sidebar-hover-background-color;
+      }
     }
     li.bottom {
       position: absolute;
       bottom: 0;
+      left: 0;
+      right: 0;
     }
   }
 }

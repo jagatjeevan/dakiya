@@ -1,26 +1,30 @@
 @import './path';
 
 $brand-colors: (
-  primary: #42484f,
-  secondary: #FFAD23,
-  teriary: #999,
+  primary: rgb(32, 168, 216),
+  secondary: rgb(38, 50, 56),
+  tertiary: rgb(48, 64, 71),
   quaternary: #ccc,
-  quinary: #eee,
-  senary: #efefef
+  quinary: rgb(207, 216, 220),
+  senary: rgb(236, 239, 241)
 );
 
 $white: #fff;
 $black: #000;
 
-$body-background-color: $white;
+$body-background-color: rgb(228, 229, 230);
+
+$body-text-color: rgba(0, 0, 0, 0.8);
+$app-border-color: map_get($brand-colors, 'quinary');
 
 $status: (
-  error: #c00
+  error: rgb(248, 108, 107)
 );
 
 $spacer: (
   spacer-5: 5px,
   spacer-10: 10px,
+  spacer-15: 15px,
   spacer-20: 20px,
   spacer-50: 50px,
 );
@@ -33,7 +37,7 @@ $app-animation-duration: 500ms;
 
 // Box
 $box-background-color: map-get($brand-colors, 'quaternary');
-$box-border-color: map-get($brand-colors, 'quaternary');
+$box-border-color: map-get($brand-colors, 'quinary');
 $box-border-width: 1px;
 $box-border: $box-border-color solid $box-border-width;
 $box-padding: map-get($spacer, 'spacer-10');

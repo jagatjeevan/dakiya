@@ -67,20 +67,33 @@ export class SearchBar extends React.Component {
 
   render() {
     return (
-      <div className="search-bar">
-        <div className="search-component">
-          <input type="text" value={this.state.searchName} placeholder="Type in to search ..." onChange={this.updateSearchInput} />
-          <button onClick={this.search}>
-            <i className="icon-search" />
-            Search
-          </button>
+      <div>
+        <div className="card">
+          <div className="card-header">
+            <div className="search-card-header">
+              <span>Type in name, phone number or AWB number to search.</span>
+              <span><input type="checkbox" value="delivered" /> Delivered</span>
+            </div>
+
+          </div>
+          <div className="card-block">
+            <div className="search-component">
+              <input type="text" className="form-input" value={this.state.searchName} placeholder="Type in to search ..." onChange={this.updateSearchInput} />
+              <button onClick={this.search}>
+                <i className="icon-search" />
+                Search
+              </button>
+            </div>
+            {this.getError()}
+          </div>
         </div>
-        {this.getError()}
-        <div className="filters">
-          <div className="filter">
-            <label>
-              <input type="checkbox" value="delivered" /> Delivered
-            </label>
+        <div className="search-bar">
+
+
+          <div className="filters">
+            <div className="filter">
+              <label />
+            </div>
           </div>
         </div>
       </div>

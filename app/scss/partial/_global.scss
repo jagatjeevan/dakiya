@@ -1,0 +1,4 @@
+.error-text {
+  padding: map_get($spacer, 'spacer-10') 0;
+  color: map-get($status, 'error');
+}

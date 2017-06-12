@@ -16,6 +16,7 @@
 
 * {
   box-sizing: border-box;
+  transition: all $app-animation-duration;
 }
 
 html,
@@ -30,8 +31,9 @@ body {
 
 body {
   background-color: $body-background-color;
-  font-family: 'PT_Sans-Narrow';
+  font-family: 'PT_Sans-Narrow', sans-serif;
   font-size: $body-font-size;
+  color: $body-text-color;
 }
 
 a {

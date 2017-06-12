@@ -1,8 +1,10 @@
+@import "../variables";
+
 @mixin background-and-text-color($background-color) {
   background: $background-color;
   @if(lightness($background-color) < 50) {
     color: $white;
   } @else {
-    color: $black;
+    color: $body-text-color;
   }
 }
