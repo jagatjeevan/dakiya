@@ -60,9 +60,13 @@ class ListParcel extends Component {
         <Header />
         <div className={`body-container ${isSidebarOpen}`}>
           <SearchBar />
-          <div className="add-parcel-container">
-            <h2>{translator.translate('app.openParcelHeading')}</h2>
-            { this.getParcels() }
+          <div className="card">
+            <div className="card-header">
+              {translator.translate('app.parcelHeading')}
+            </div>
+            <div className="card-block">
+              { this.getParcels() }
+            </div>
           </div>
         </div>
       </div>

@@ -1,0 +1,24 @@
+$table-bg: transparent; 
+$table-border-width: $box-border-width;
+$table-border-color: $box-border-color;
+
+.table {
+  width: 100%;
+  max-width: 100%;
+  margin-bottom: $app-spacer;
+  border-collapse: collapse;
+  background-color: $table-bg;
+
+  th,
+  td {
+    text-align: left;
+    padding: $table-cell-spacer;
+    vertical-align: top;
+    border-bottom: $table-border-width solid $table-border-color;
+  }
+
+  thead th {
+    vertical-align: bottom;
+    border-bottom: (2 * $table-border-width) solid $table-border-color;
+  }
+}

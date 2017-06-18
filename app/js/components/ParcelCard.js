@@ -2,8 +2,6 @@ import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
-import appConfig from '../appConfig';
-
 function mapStateToProps(state) {
   return {
     packages: state.packages.items,
@@ -13,30 +11,18 @@ function mapStateToProps(state) {
 export class ParcelCard extends React.Component {
   constructor() {
     super();
+    this.viewParcel = this.viewParcel.bind(this);
     this.viewParcels = this.viewParcels.bind(this);
   }
 
   viewParcels() {
     return this.props.packages.map(parcel => (
       <div className="name-card" key={parcel.objectId}>
-        <div className="status">
-          <i />
-        </div>
-        <div className="reciever-detail">
-          <div className="profile-image">
-            <img src={`${appConfig.imagePath}/logo.png`} width="70" height="70" className="img-circle" alt={parcel.owner.name} />
-          </div>
-          <div className="name-and-phone-number">
-            <span><b>{ parcel.owner.name }</b></span>
-            <span>{ parcel.owner.phoneNumber }</span>
-          </div>
-        </div>
+        <div className="reciever-detail" />
         <div className="sender-detail">
           <span>Packet No.: </span> <b>{parcel.packageId}</b>
         </div>
-        <div className="sender-detail">
-          <span>Date dispatched: </span> <b>{parcel.createdAt}</b>
-        </div>
+        <div className="sender-detail" />
         <div className="sender-detail">
           <span>Date recieved: </span> <b>Not Recieved</b>
         </div>
@@ -47,10 +33,48 @@ export class ParcelCard extends React.Component {
       ));
   }
 
+  viewParcel() {
+    let pickupDate;
+    return this.props.packages.map((parcel) => {
+      if (parcel.pickupDate) {
+        pickupDate = parcel.pickupDate.iso;
+      } else {
+        pickupDate = 'Not yet picked up';
+      }
+      return (
+        <tr key={parcel.objectId}>
+          <td> <i className="status-icon" /> </td>
+          <td> {parcel.packageId} </td>
+          <td>
+            <div>{ parcel.owner.name }</div>
+            { parcel.owner.phoneNumber }
+          </td>
+          <td> {parcel.createdAt} </td>
+          <td> {pickupDate} </td>
+          <td> {parcel.vendor.name} </td>
+        </tr>
+      );
+    });
+  }
+
   render() {
     return (
       <div className="parcel-card-container">
-        { this.viewParcels() }
+        <table className="table">
+          <thead>
+            <tr>
+              <th>Status</th>
+              <th>Package Number</th>
+              <th>Reciever Details</th>
+              <th>Date of Recieved</th>
+              <th>Pickup Date</th>
+              <th>Sender</th>
+            </tr>
+          </thead>
+          <tbody>
+            { this.viewParcel() }
+          </tbody>
+        </table>
       </div>
     );
   }

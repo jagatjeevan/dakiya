@@ -47,3 +47,6 @@ $zero-value: 0;
 
 // Width of sidebar and content moves
 $width-of-sidebar: 180px;
+
+// Tables
+$table-cell-spacer: map-get($spacer, 'spacer-10');

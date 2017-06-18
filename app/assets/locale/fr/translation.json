@@ -1,5 +1,6 @@
 {
   "app" : {
+    "parcelHeading": "Parcelles",
     "openParcelHeading": "Parcelles ouvertes",
     "allParcelDelivered": "Tous les colis livrés",
     "noOpenedParcel": "Toutes les colis sont livrés"
