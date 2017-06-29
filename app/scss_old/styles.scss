@@ -1,0 +1,53 @@
+// // Variables
+// @import './variables';
+// @import './mixins/mixins';
+//
+// // Font
+// @import './font/font';
+//
+// // Vendor Styles
+// @import '~node-normalize-scss/normalize';
+//
+// // Animations
+// @import './animations/animation';
+//
+// // Custom Styles
+// @import './partial/partials';
+//
+// * {
+//   box-sizing: border-box;
+//   transition: all $app-animation-duration;
+// }
+//
+// html,
+// body {
+//   @extend %no-margin-padding;
+//   height: 100%;
+// }
+//
+// .full-height {
+//   height: 100%;
+// }
+//
+// body {
+//   background-color: $body-background-color;
+//   font-family: 'PT_Sans-Narrow', sans-serif;
+//   font-size: $body-font-size;
+//   color: $body-text-color;
+// }
+//
+// a {
+//   text-decoration: none;
+// }
+//
+// ul,
+// li {
+//   @extend %no-margin-padding;
+//   list-style-type: none;
+// }
+//
+// select {
+//   @extend %input-styles;
+// }
+//
+//

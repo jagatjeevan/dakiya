@@ -1,20 +1,19 @@
-// Frameworks
-import React from 'react';
-import { Route, Router, IndexRoute, hashHistory } from 'react-router';
-
-// Configs
-import appConfig from './appConfig';
-
-// Components for the Router
-import App from './pages/App';
-import ListParcel from './components/ListParcel';
-import AddParcel from './components/AddParcelPage';
-
-export default (
-  <Router history={hashHistory}>
-    <Route path={appConfig.homePage} component={App}>
-      <IndexRoute component={ListParcel} />
-    </Route>
-    <Route path={appConfig.addParcelPage} component={AddParcel} />
-  </Router>
-);
+const routes = {
+  '/': 'Home',
+  '/dashboard': 'Dashboard',
+  '/components': 'Components',
+  '/charts': 'Charts',
+  '/components/buttons': 'Buttons',
+  '/components/social-buttons': 'Buttons',
+  '/components/cards': 'Cards',
+  '/components/forms': 'Forms',
+  '/components/modals': 'Modals',
+  '/components/switches': 'Switches',
+  '/components/tables': 'Tables',
+  '/components/tabs': 'Tabs',
+  '/icons': 'Icons',
+  '/icons/font-awesome': 'Font Awesome',
+  '/icons/simple-line-icons': 'Simple Line Icons',
+  '/widgets': 'Widgets',
+};
+export default routes;

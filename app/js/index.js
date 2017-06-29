@@ -1,36 +1,30 @@
-// Framework imports
 import React from 'react';
-import ReactDom from 'react-dom';
-import { Provider } from 'react-redux';
+import ReactDOM from 'react-dom';
+import { HashRouter, Route, Switch } from 'react-router-dom';
+import { createBrowserHistory } from 'history';
 
-// Translator
-import i18N from './util/i18n';
-import * as language from './util/language';
+// Containers
+import Full from './containers/Full/';
 
-// Routes
-import routes from './routes';
-import { configureStore } from './reduxStore';
+// Views
+import Login from './views/Pages/Login/';
+import Register from './views/Pages/Register/';
+import Page404 from './views/Pages/Page404/';
+import Page500 from './views/Pages/Page500/';
 
-// Scss
-import '../scss/styles.scss';
+// Styles
+import '../scss/style.scss';
 
-const store = configureStore();
-language.getLanguage();
+const history = createBrowserHistory();
 
-export const App = () => (
-  <Provider store={store}>
-    {routes}
-  </Provider>
-);
-
-function start() {
-  ReactDom.render(<App />, document.getElementById('content'));
-}
-
-function run() {
-  i18N.initiateTranslator(start);
-}
-
-window.addEventListener('DOMContentLoaded', run);
-
-export default App;
+ReactDOM.render((
+  <HashRouter history={history}>
+    <Switch>
+      <Route exact path="/login" name="Login Page" component={Login} />
+      <Route exact path="/register" name="Register Page" component={Register} />
+      <Route exact path="/404" name="Page 404" component={Page404} />
+      <Route exact path="/500" name="Page 500" component={Page500} />
+      <Route path="/" name="Home" component={Full} />
+    </Switch>
+  </HashRouter>
+), document.getElementById('root'));
