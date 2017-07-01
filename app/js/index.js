@@ -5,7 +5,7 @@ import { HashRouter, Route, Switch } from 'react-router-dom';
 import { createBrowserHistory } from 'history';
 
 // Store
-import { configureStore } from './reduxStore.js';
+import { configureStore } from './reduxStore';
 
 // Containers
 import Full from './containers/Full/';
