@@ -19,6 +19,8 @@ import Tabs from '../../views/Components/Tabs/';
 import FontAwesome from '../../views/Icons/FontAwesome/';
 import SimpleLineIcons from '../../views/Icons/SimpleLineIcons/';
 
+import ListParcel from '../../components/source/ListParcel';
+
 class Full extends Component {
   render() {
     return (
@@ -30,6 +32,7 @@ class Full extends Component {
             <Breadcrumb />
             <div className="container-fluid">
               <Switch>
+                <Route path="/parcels" name="Parcels" component={ListParcel} />
                 <Route path="/dashboard" name="Dashboard" component={Dashboard} />
                 <Route path="/components/buttons" name="Buttons" component={Buttons} />
                 <Route path="/components/cards" name="Cards" component={Cards} />
