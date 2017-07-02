@@ -20,6 +20,7 @@ import FontAwesome from '../../views/Icons/FontAwesome/';
 import SimpleLineIcons from '../../views/Icons/SimpleLineIcons/';
 
 import ListParcel from '../../components/source/ListParcel';
+import AddParcel from '../../components/source/AddParcelPage';
 
 class Full extends Component {
   render() {
@@ -33,6 +34,7 @@ class Full extends Component {
             <div className="container-fluid">
               <Switch>
                 <Route path="/parcels" name="Parcels" component={ListParcel} />
+                <Route path="/addParcel" name="Parcels" component={AddParcel} />
                 <Route path="/dashboard" name="Dashboard" component={Dashboard} />
                 <Route path="/components/buttons" name="Buttons" component={Buttons} />
                 <Route path="/components/cards" name="Cards" component={Cards} />
@@ -46,7 +48,7 @@ class Full extends Component {
                 <Route path="/icons/simple-line-icons" name="Simple Line Icons" component={SimpleLineIcons} />
                 <Route path="/widgets" name="Widgets" component={Widgets} />
                 <Route path="/charts" name="Charts" component={Charts} />
-                <Redirect from="/" to="/dashboard" />
+                <Redirect from="/" to="/parcels" />
               </Switch>
             </div>
           </main>

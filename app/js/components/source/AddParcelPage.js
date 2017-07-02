@@ -4,13 +4,10 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import AutoSuggest from 'react-autosuggest';
 
-// Custom Components
-import Header from './AppHeader';
-
 // Actions
-import { fetchEmployee, selectedEmployee, resetEmployeeList } from '../actions/employees';
-import { savePackageAsync } from '../actions/packages';
-import { fetchVendors } from '../actions/vendors';
+import { fetchEmployee, selectedEmployee, resetEmployeeList } from '../../actions/employees';
+import { savePackageAsync } from '../../actions/packages';
+import { fetchVendors } from '../../actions/vendors';
 
 function dispatchActionToProps(dispatch) {
   return {
@@ -159,7 +156,6 @@ class AddParcel extends Component {
     };
     return (
       <div>
-        <Header />
         <div className={`add-parcel-container body-container ${isSidebarOpen}`}>
           <header>Add the Parcel below:</header>
           <AutoSuggest
