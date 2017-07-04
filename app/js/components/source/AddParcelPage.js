@@ -24,7 +24,6 @@ function mapStateToProps(state) {
     employees: state.employees.employees,
     selectedEmployee: state.employees.selectedEmployee,
     vendors: state.vendors,
-    sidebar: state.sidebar,
   };
 }
 
@@ -147,59 +146,87 @@ class AddParcel extends Component {
   }
 
   render() {
-    const isSidebarOpen = (this.props.sidebar.isSidebarOpen) ? 'open' : 'close';
     const { value, suggestions } = this.state;
     const inputProps = {
-      placeholder: 'Enter name / phone number',
+      placeholder: 'Enter name / phone number to start search',
       value,
       onChange: this.onChange,
+      className: 'form-control',
     };
     return (
-      <div>
-        <div className={`add-parcel-container body-container ${isSidebarOpen}`}>
-          <header>Add the Parcel below:</header>
-          <AutoSuggest
-            suggestions={suggestions}
-            onSuggestionsFetchRequested={this.onSuggestionsFetchRequested}
-            onSuggestionsClearRequested={this.onSuggestionsClearRequested}
-            getSuggestionValue={getSuggestionValue}
-            renderSuggestion={renderSuggestion}
-            onSuggestionSelected={this.onSuggestionSelected}
-            inputProps={inputProps}
-          />
-          <form onSubmit={this.handleSubmit}>
-            <div className="add-parcel-form">
-              <div className="form-container">
-                <label htmlFor="email">
-                  Email Address
-                  <input type="email" id="email" placeholder="mike@gmail.com" value={this.props.selectedEmployee.email} readOnly />
-                </label>
-              </div>
-              <div className="form-container">
-                <label htmlFor="phone">
-                  Phone Number
-                  <input type="number" id="phone" placeholder="124132758" value={this.props.selectedEmployee.phoneNumber} readOnly />
-                </label>
-              </div>
-              <div className="form-container">
-                <label htmlFor="awb">
-                  AWB Number
-                  <input type="text" id="awb" placeholder="124132758" value={this.state.awb} onChange={this.onAwbChange} />
-                </label>
-              </div>
-              <div className="form-container">
-                <label htmlFor="dealer">
-                  Dealer
-                  <select id="vendor" onChange={this.onVendorSelected}>
-                    {this.getVendors()}
-                  </select>
-                </label>
-              </div>
+      <div className="row">
+        <div className="col-lg-6 offset-lg-3">
+          <div className="card">
+            <div className="card-header">
+              Add the Parcel below:
             </div>
-            <footer>
-              <input type="submit" value="Add Parcel" className="button" />
-            </footer>
-          </form>
+            <div className="card-block">
+              <form onSubmit={this.handleSubmit}>
+                <div className="form-group">
+                  <AutoSuggest
+                    suggestions={suggestions}
+                    onSuggestionsFetchRequested={this.onSuggestionsFetchRequested}
+                    onSuggestionsClearRequested={this.onSuggestionsClearRequested}
+                    getSuggestionValue={getSuggestionValue}
+                    renderSuggestion={renderSuggestion}
+                    onSuggestionSelected={this.onSuggestionSelected}
+                    inputProps={inputProps}
+                  />
+                </div>
+                <div className="row">
+                  <div className="col-lg-12">
+                    <div className="form-group">
+                      <div className="input-group">
+                        <span className="input-group-addon">Name / Phone Number</span>
+                        <input type="text" id="name-phone" name="name-phone" className="form-control"/>
+                        <span className="input-group-addon"><i className="fa fa-asterisk"></i></span>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="col-lg-12">
+                    <div className="form-group">
+                      <div className="input-group">
+                        <span className="input-group-addon">Email Address</span>
+                        <input type="email" id="email" name="email" className="form-control" value={this.props.selectedEmployee.email} />
+                        <span className="input-group-addon"><i className="fa fa-envelope"></i></span>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="col-lg-12">
+                    <div className="form-group">
+                      <div className="input-group">
+                        <span className="input-group-addon">Phone Number</span>
+                        <input type="text" id="phone" name="phone" className="form-control" value={this.props.selectedEmployee.phoneNumber} />
+                        <span className="input-group-addon"><i className="fa fa-phone"></i></span>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="col-lg-12">
+                    <div className="form-group">
+                      <select id="vendor" className="form-control" onChange={this.onVendorSelected}>
+                        {this.getVendors()}
+                      </select>
+                    </div>
+                  </div>
+                  <div className="col-lg-12">
+                    <div className="form-group">
+                      <div className="input-group">
+                        <span className="input-group-addon">AWB Number</span>
+                        <input type="text" id="awb" name="awb" className="form-control" value={this.state.awb}  onChange={this.onAwbChange} />
+                        <span className="input-group-addon"><i className="fa fa-barcode"></i></span>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="col-lg-12">
+                    <div className="form-actions pull-right">
+                      <input type="submit" value="Add Parcel" className="btn btn-primary" />
+                      <input type="reset" value="Clear All" className="btn btn-secondary" />
+                    </div>
+                  </div>
+                </div>
+              </form>
+            </div>
+          </div>
         </div>
       </div>
     );
@@ -215,7 +242,6 @@ AddParcel.propTypes = {
   employees: PropTypes.array,
   vendors: PropTypes.object,
   selectedEmployee: PropTypes.object,
-  sidebar: PropTypes.object,
 };
 
 export default connect(mapStateToProps, dispatchActionToProps)(AddParcel);

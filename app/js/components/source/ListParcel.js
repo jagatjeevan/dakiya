@@ -57,6 +57,7 @@ class ListParcel extends Component {
     const isSidebarOpen = (this.props.sidebar.isSidebarOpen) ? 'open' : 'close';
     return (
       <div className="full-height">
+        <SearchBar />
         { this.getParcels() }
       </div>
     );
