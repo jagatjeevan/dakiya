@@ -154,7 +154,7 @@ class AddParcel extends Component {
       className: 'form-control',
     };
     return (
-      <div className="row">
+      <div className="row add-parcel-form">
         <div className="col-lg-6 offset-lg-3">
           <div className="card">
             <div className="card-header">
