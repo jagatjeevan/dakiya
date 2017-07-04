@@ -178,8 +178,8 @@ class AddParcel extends Component {
                     <div className="form-group">
                       <div className="input-group">
                         <span className="input-group-addon">Name / Phone Number</span>
-                        <input type="text" id="name-phone" name="name-phone" className="form-control"/>
-                        <span className="input-group-addon"><i className="fa fa-asterisk"></i></span>
+                        <input type="text" id="name-phone" name="name-phone" className="form-control" />
+                        <span className="input-group-addon"><i className="fa fa-asterisk" /></span>
                       </div>
                     </div>
                   </div>
@@ -188,7 +188,7 @@ class AddParcel extends Component {
                       <div className="input-group">
                         <span className="input-group-addon">Email Address</span>
                         <input type="email" id="email" name="email" className="form-control" value={this.props.selectedEmployee.email} />
-                        <span className="input-group-addon"><i className="fa fa-envelope"></i></span>
+                        <span className="input-group-addon"><i className="fa fa-envelope" /></span>
                       </div>
                     </div>
                   </div>
@@ -197,7 +197,7 @@ class AddParcel extends Component {
                       <div className="input-group">
                         <span className="input-group-addon">Phone Number</span>
                         <input type="text" id="phone" name="phone" className="form-control" value={this.props.selectedEmployee.phoneNumber} />
-                        <span className="input-group-addon"><i className="fa fa-phone"></i></span>
+                        <span className="input-group-addon"><i className="fa fa-phone" /></span>
                       </div>
                     </div>
                   </div>
@@ -212,8 +212,8 @@ class AddParcel extends Component {
                     <div className="form-group">
                       <div className="input-group">
                         <span className="input-group-addon">AWB Number</span>
-                        <input type="text" id="awb" name="awb" className="form-control" value={this.state.awb}  onChange={this.onAwbChange} />
-                        <span className="input-group-addon"><i className="fa fa-barcode"></i></span>
+                        <input type="text" id="awb" name="awb" className="form-control" value={this.state.awb} onChange={this.onAwbChange} />
+                        <span className="input-group-addon"><i className="fa fa-barcode" /></span>
                       </div>
                     </div>
                   </div>

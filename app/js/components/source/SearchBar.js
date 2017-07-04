@@ -91,7 +91,7 @@ export class SearchBar extends React.Component {
                       </ButtonDropdown>
                     </div>
                     <input type="text" id="input1-group3" name="input1-group3" className="form-control" placeholder="Type in to search ..." onChange={this.updateSearchInput} value={this.state.searchName} />
-                    <span className="input-group-addon" onClick={this.search}><i className="fa fa-search"></i></span>
+                    <span className="input-group-addon" onClick={this.search}><i className="fa fa-search" /></span>
                   </div>
                 </div>
                 {this.getError()}
