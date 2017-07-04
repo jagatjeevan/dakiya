@@ -1,4 +1,5 @@
 // Here you can add other styles
+@import 'react-autosuggest';
 
 .app-header.navbar .navbar-brand.logo-container {
   align-items: center;
@@ -15,4 +16,45 @@
 
 .add-parcel-form .input-group .input-group-addon:first-child {
   min-width: 180px;
+}
+
+.status-icon {
+  color: $brand-danger;
+  &.fa-check {
+    color: $brand-success;
+  }
+}
+
+@keyframes animate-hourglass {
+  0% {
+    transform: rotateY(0deg);
+    content: "\f251";
+  }
+  20% {
+    transform: rotate(0deg);
+    content: "\f252";
+  }
+  45% {
+    transform: rotate(0deg);
+    content: "\f253";
+  }
+  70% {
+    transform: rotate(75deg);
+    content: "\f251";
+  }
+  85% {
+    transform: rotate(90deg);
+    content: "\f251";
+  }
+  100% {
+    transform: rotate(180deg);
+    content: "\f251";
+  }
+}
+.fa {
+  &.fa-hourglass-start {
+    &:before {
+      animation: animate-hourglass infinite 1s;
+    }
+  }
 }

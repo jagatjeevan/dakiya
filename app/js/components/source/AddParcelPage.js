@@ -178,7 +178,7 @@ class AddParcel extends Component {
                     <div className="form-group">
                       <div className="input-group">
                         <span className="input-group-addon">Name / Phone Number</span>
-                        <input type="text" id="name-phone" name="name-phone" className="form-control" />
+                        <input type="text" id="name-phone" name="name-phone" className="form-control" placeholder="Mike" value={this.props.selectedEmployee.name} readOnly />
                         <span className="input-group-addon"><i className="fa fa-asterisk" /></span>
                       </div>
                     </div>
@@ -187,7 +187,7 @@ class AddParcel extends Component {
                     <div className="form-group">
                       <div className="input-group">
                         <span className="input-group-addon">Email Address</span>
-                        <input type="email" id="email" name="email" className="form-control" value={this.props.selectedEmployee.email} />
+                        <input type="email" id="email" name="email" className="form-control" placeholder="mike@gmail.com" value={this.props.selectedEmployee.email} readOnly />
                         <span className="input-group-addon"><i className="fa fa-envelope" /></span>
                       </div>
                     </div>
@@ -196,7 +196,7 @@ class AddParcel extends Component {
                     <div className="form-group">
                       <div className="input-group">
                         <span className="input-group-addon">Phone Number</span>
-                        <input type="text" id="phone" name="phone" className="form-control" value={this.props.selectedEmployee.phoneNumber} />
+                        <input type="text" id="phone" name="phone" className="form-control" placeholder="0987654321" value={this.props.selectedEmployee.phoneNumber} readOnly />
                         <span className="input-group-addon"><i className="fa fa-phone" /></span>
                       </div>
                     </div>

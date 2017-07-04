@@ -41,13 +41,14 @@ export class ParcelCard extends React.Component {
       } else {
         pickupDate = 'Not yet picked up';
       }
+      const statusIcon = (parcel.pickupDate) ? "status-icon fa fa-check" : "status-icon fa fa-hourglass-start";
       return (
         <tr key={parcel.objectId}>
-          <td> <i className="status-icon" /> </td>
+          <td className="icon-container"> <i className={statusIcon} /> </td>
           <td> {parcel.packageId} </td>
           <td>
             <div>{ parcel.owner.name }</div>
-            { parcel.owner.phoneNumber }
+            <span className="text-muted">{ parcel.owner.phoneNumber }</span>
           </td>
           <td> {parcel.createdAt} </td>
           <td> {pickupDate} </td>
@@ -59,22 +60,24 @@ export class ParcelCard extends React.Component {
 
   render() {
     return (
-      <div className="parcel-card-container">
-        <table className="table">
-          <thead>
-            <tr>
-              <th>Status</th>
-              <th>Package Number</th>
-              <th>Reciever Details</th>
-              <th>Date of Recieved</th>
-              <th>Pickup Date</th>
-              <th>Sender</th>
-            </tr>
-          </thead>
-          <tbody>
-            { this.viewParcel() }
-          </tbody>
-        </table>
+      <div className="card">
+        <div className="parcel-card-container">
+          <table className="table">
+            <thead className="thead-default">
+              <tr>
+                <th>Status</th>
+                <th>Package Number</th>
+                <th>Reciever Details</th>
+                <th>Date of Recieved</th>
+                <th>Pickup Date</th>
+                <th>Sender</th>
+              </tr>
+            </thead>
+            <tbody>
+              { this.viewParcel() }
+            </tbody>
+          </table>
+        </div>
       </div>
     );
   }
