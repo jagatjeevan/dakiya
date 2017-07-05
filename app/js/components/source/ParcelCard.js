@@ -48,7 +48,7 @@ export class ParcelCard extends React.Component {
           <td> {parcel.packageId} </td>
           <td>
             <div>{ parcel.owner.name }</div>
-            <span className="text-muted">{ parcel.owner.phoneNumber }</span>
+            <span className="small text-muted">{ parcel.owner.phoneNumber }</span>
           </td>
           <td> {parcel.createdAt} </td>
           <td> {pickupDate} </td>
@@ -62,7 +62,7 @@ export class ParcelCard extends React.Component {
     return (
       <div className="card">
         <div className="parcel-card-container">
-          <table className="table">
+          <table className="table table-hover">
             <thead className="thead-default">
               <tr>
                 <th>Status</th>

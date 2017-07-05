@@ -68,38 +68,27 @@ export class SearchBar extends React.Component {
 
   render() {
     return (
-      <div>
-        <div className="card">
-          <div className="card-header">
-            <div className="search-card-header">
-              <span>Type in name, phone number or AWB number to search.</span>
+      <form className="form-horizontal">
+        <div className="form-group row">
+          <div className="col-md-12">
+            <div className="input-group">
+              <div className="input-group-btn">
+                <ButtonDropdown isOpen={this.state.first} toggle={() => { this.setState({ first: !this.state.first }); }}>
+                  <DropdownToggle caret color="primary">All</DropdownToggle>
+                  <DropdownMenu>
+                    <DropdownItem>Un Delivered</DropdownItem>
+                    <DropdownItem>Delivered</DropdownItem>
+                    <DropdownItem>All</DropdownItem>
+                  </DropdownMenu>
+                </ButtonDropdown>
+              </div>
+              <input type="text" id="input1-group3" name="input1-group3" className="form-control" placeholder="Type in to search your parcel" onChange={this.updateSearchInput} value={this.state.searchName} />
+              <span className="input-group-addon" onClick={this.search}><i className="fa fa-search" /></span>
             </div>
           </div>
-          <div className="card-block">
-            <form className="form-horizontal">
-              <div className="form-group row">
-                <div className="col-md-12">
-                  <div className="input-group">
-                    <div className="input-group-btn">
-                      <ButtonDropdown isOpen={this.state.first} toggle={() => { this.setState({ first: !this.state.first }); }}>
-                        <DropdownToggle caret color="primary">All</DropdownToggle>
-                        <DropdownMenu>
-                          <DropdownItem>Un Delivered</DropdownItem>
-                          <DropdownItem>Delivered</DropdownItem>
-                          <DropdownItem>All</DropdownItem>
-                        </DropdownMenu>
-                      </ButtonDropdown>
-                    </div>
-                    <input type="text" id="input1-group3" name="input1-group3" className="form-control" placeholder="Type in to search ..." onChange={this.updateSearchInput} value={this.state.searchName} />
-                    <span className="input-group-addon" onClick={this.search}><i className="fa fa-search" /></span>
-                  </div>
-                </div>
-                {this.getError()}
-              </div>
-            </form>
-          </div>
+          {this.getError()}
         </div>
-      </div>
+      </form>
     );
   }
 }

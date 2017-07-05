@@ -18,6 +18,10 @@
   min-width: 180px;
 }
 
+.input-group-addon {
+  font-weight: bold;
+}
+
 .status-icon {
   color: $brand-danger;
   &.fa-check {

@@ -55,6 +55,7 @@ class AddParcel extends Component {
     this.onAwbChange = this.onAwbChange.bind(this);
     this.getVendors = this.getVendors.bind(this);
     this.onVendorSelected = this.onVendorSelected.bind(this);
+    this.resetForm = this.resetForm.bind(this);
   }
 
   componentWillMount() {
@@ -67,6 +68,14 @@ class AddParcel extends Component {
         suggestions: nextProps.employees,
       });
     }
+  }
+
+  resetForm() {
+    this.setState({
+      value: '',
+      awb: '',
+      selectedVendorId: '',
+    });
   }
 
   getVendors() {
@@ -148,7 +157,7 @@ class AddParcel extends Component {
   render() {
     const { value, suggestions } = this.state;
     const inputProps = {
-      placeholder: 'Enter name / phone number to start search',
+      placeholder: 'Enter name to start search',
       value,
       onChange: this.onChange,
       className: 'form-control',
@@ -220,7 +229,7 @@ class AddParcel extends Component {
                   <div className="col-lg-12">
                     <div className="form-actions pull-right">
                       <input type="submit" value="Add Parcel" className="btn btn-primary" />
-                      <input type="reset" value="Clear All" className="btn btn-secondary" />
+                      <input type="reset" value="Clear All" className="btn btn-secondary" onClick={this.resetForm} />
                     </div>
                   </div>
                 </div>
