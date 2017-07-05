@@ -36,6 +36,7 @@ export class ParcelCard extends React.Component {
   viewParcel() {
     let pickupDate;
     return this.props.packages.map((parcel) => {
+      const parcelStatus = (parcel.pickupDate) ? "yet-to-deliver" : "delivered";
       if (parcel.pickupDate) {
         pickupDate = parcel.pickupDate.iso;
       } else {
@@ -43,7 +44,7 @@ export class ParcelCard extends React.Component {
       }
       const statusIcon = (parcel.pickupDate) ? "status-icon fa fa-check" : "status-icon fa fa-hourglass-start";
       return (
-        <tr key={parcel.objectId}>
+        <tr key={parcel.objectId} className={parcelStatus}>
           <td className="icon-container"> <i className={statusIcon} /> </td>
           <td> {parcel.packageId} </td>
           <td>
@@ -52,7 +53,7 @@ export class ParcelCard extends React.Component {
           </td>
           <td> {parcel.createdAt} </td>
           <td> {pickupDate} </td>
-          <td> {parcel.vendor.name} </td>
+          <td> <img src={parcel.vendor.icon} alt={parcel.vendor.name} className="vendor-icon" /> </td>
         </tr>
       );
     });

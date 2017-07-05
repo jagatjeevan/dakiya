@@ -52,7 +52,7 @@ class Header extends Component {
           <li className="nav-item">
             <Dropdown isOpen={this.state.dropdownOpen} toggle={this.toggle}>
               <button onClick={this.toggle} className="nav-link dropdown-toggle" data-toggle="dropdown" type="button" aria-haspopup="true" aria-expanded={this.state.dropdownOpen}>
-                <img src={'img/avatars/6.jpg'} className="img-avatar" alt="admin@bootstrapmaster.com" />
+                <img src={'https://scontent-sin6-2.xx.fbcdn.net/v/t1.0-1/p320x320/19554467_10156408251533378_8838470583531429260_n.jpg?oh=86c3bff5d27e5fba72d37469a70ddb40&oe=5A0CF294'} className="img-avatar" alt="admin@bootstrapmaster.com" />
                 <span className="d-md-down-none">admin</span>
               </button>
 

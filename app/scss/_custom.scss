@@ -15,7 +15,7 @@
 }
 
 .add-parcel-form .input-group .input-group-addon:first-child {
-  min-width: 180px;
+  min-width: 187px;
 }
 
 .input-group-addon {
@@ -62,3 +62,16 @@
     }
   }
 }
+
+.vendor-icon {
+  max-width: 36px;
+  max-height: 36px;
+}
+
+// .yet-to-deliver {
+//   color: $brand-danger;
+// }
+//
+// .delivered {
+//   color: $brand-success;
+// }
