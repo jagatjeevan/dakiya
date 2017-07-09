@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { Dropdown, DropdownMenu, DropdownItem, Progress } from 'reactstrap';
+import { Dropdown, DropdownMenu, DropdownItem, Progress, Modal, ModalHeader, ModalBody, ModalFooter, Button } from 'reactstrap';
 
 function mapStateToProps(state) {
   return {
@@ -12,8 +12,14 @@ function mapStateToProps(state) {
 export class ParcelCard extends React.Component {
   constructor() {
     super();
+    
+    this.state = {
+      modal: false
+    };
+
     this.viewParcel = this.viewParcel.bind(this);
     this.viewParcels = this.viewParcels.bind(this);
+    this.toggle = this.toggle.bind(this);
   }
 
   viewParcels() {
@@ -31,13 +37,21 @@ export class ParcelCard extends React.Component {
           <span>Name: </span> <b>{parcel.vendor.name}</b>
         </div>
       </div>
-      ));
+    ));
+  }
+
+  toggle() {
+    this.setState({
+      modal: !this.state.modal
+    });
   }
 
   viewParcel() {
     let pickupDate;
     return this.props.packages.map((parcel) => {
-      const parcelStatus = (parcel.pickupDate) ? (<div><b>Parcel delivered on</b> {parcel.pickupDate.iso}</div>) : (<button className="btn btn-primary">Pick parcel</button>);
+      const parcelStatus = (parcel.pickupDate) 
+        ? (<div><b>Parcel delivered on</b> {parcel.pickupDate.iso}</div>) 
+        : (<button className="btn btn-primary" onClick={this.toggle}>Pick parcel</button>);
 
       return (
         <tr key={parcel.objectId} className={parcelStatus}>
@@ -84,6 +98,21 @@ export class ParcelCard extends React.Component {
             { this.viewParcel() }
           </tbody>
         </table>
+        <Modal isOpen={this.state.modal} toggle={this.toggle} className={this.props.className}>
+          <ModalHeader toggle={this.toggle}>Verify your Parcel</ModalHeader>
+          <ModalBody>
+            <div className="form-group">
+              <div className="input-group">
+                <span className="input-group-addon">PassCode</span>
+                <input type="text" id="parcel-code" name="parcel-code" className="form-control" />
+                <span className="input-group-addon"><i className="fa fa-envelope" /></span>
+              </div>
+            </div>
+          </ModalBody>
+          <ModalFooter>
+            <Button color="primary" onClick={this.toggle}>Verify Parcel</Button>
+          </ModalFooter>
+        </Modal>
       </div>
     );
   }
