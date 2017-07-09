@@ -1,6 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import { Dropdown, DropdownMenu, DropdownItem, Progress } from 'reactstrap';
 
 function mapStateToProps(state) {
   return {
@@ -36,24 +37,30 @@ export class ParcelCard extends React.Component {
   viewParcel() {
     let pickupDate;
     return this.props.packages.map((parcel) => {
-      const parcelStatus = (parcel.pickupDate) ? "yet-to-deliver" : "delivered";
-      if (parcel.pickupDate) {
-        pickupDate = parcel.pickupDate.iso;
-      } else {
-        pickupDate = 'Not yet picked up';
-      }
-      const statusIcon = (parcel.pickupDate) ? "status-icon fa fa-check" : "status-icon fa fa-hourglass-start";
+      const parcelStatus = (parcel.pickupDate) ? (<div><b>Parcel delivered on</b> {parcel.pickupDate.iso}</div>) : (<button className="btn btn-primary">Pick parcel</button>);
+
       return (
         <tr key={parcel.objectId} className={parcelStatus}>
-          <td className="icon-container"> <i className={statusIcon} /> </td>
-          <td> {parcel.packageId} </td>
+          <td className="text-center">
+            <div className="avatar">
+              <img src={'img/avatars/1.jpg'} className="img-avatar" alt="admin@bootstrapmaster.com" />
+              <span className="avatar-status badge-success" />
+            </div>
+          </td>
           <td>
             <div>{ parcel.owner.name }</div>
-            <span className="small text-muted">{ parcel.owner.phoneNumber }</span>
+            <div className="small text-muted">
+              { parcel.owner.phoneNumber }
+            </div>
+          </td>
+          <td className="text-center">
+            <img src={parcel.vendor.icon} alt={parcel.vendor.name} className="vendor-icon" />
           </td>
           <td> {parcel.createdAt} </td>
-          <td> {pickupDate} </td>
-          <td> <img src={parcel.vendor.icon} alt={parcel.vendor.name} className="vendor-icon" /> </td>
+          <td> {parcel.packageId} </td>
+          <td>
+            {parcelStatus}
+          </td>
         </tr>
       );
     });
@@ -61,24 +68,22 @@ export class ParcelCard extends React.Component {
 
   render() {
     return (
-      <div className="card">
-        <div className="parcel-card-container">
-          <table className="table table-hover">
-            <thead className="thead-default">
-              <tr>
-                <th>Status</th>
-                <th>Package Number</th>
-                <th>Reciever Details</th>
-                <th>Date of Recieved</th>
-                <th>Pickup Date</th>
-                <th>Sender</th>
-              </tr>
-            </thead>
-            <tbody>
-              { this.viewParcel() }
-            </tbody>
-          </table>
-        </div>
+      <div className="parcel-card-container">
+        <table className="table table-hover table-outline mb-0 hidden-sm-down">
+          <thead className="thead-default">
+            <tr>
+              <th className="text-center"><i className="icon-people" /></th>
+              <th>Reciever Details</th>
+              <th className="text-center">Vendor</th>
+              <th>Recieved Date</th>
+              <th>Package Number</th>
+              <th className="parcel-status-column">Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            { this.viewParcel() }
+          </tbody>
+        </table>
       </div>
     );
   }
