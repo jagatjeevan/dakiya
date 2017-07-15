@@ -75,6 +75,37 @@
 .parcel-status-column {
   width: 190px;
 }
+
+.notification {
+  align-items: center;
+  background: #fff;
+  box-shadow: #8a8a8a 0 0 24px;
+  display: flex;
+  padding: 10px;
+  position: fixed;
+  right: 10px;
+  transform: translateX(120%);
+  top: 10px;
+  z-index: 9999;
+  opacity: 0;
+  transition: all 0.5s;
+  &.success {
+    background: $brand-success;
+    color: #fff;
+  }
+  &.failure {
+    background: $brand-danger;
+    color: #fff;
+  }
+  &.open {
+    transform: translate(0);
+    opacity: 1;
+  }
+  &
+  .notification-content {
+    margin-right: 10px;
+  }
+}
 // .yet-to-deliver {
 //   color: $brand-danger;
 // }

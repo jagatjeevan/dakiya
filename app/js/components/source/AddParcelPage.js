@@ -8,6 +8,7 @@ import AutoSuggest from 'react-autosuggest';
 import { fetchEmployee, selectedEmployee, resetEmployeeList } from '../../actions/employees';
 import { savePackageAsync } from '../../actions/packages';
 import { fetchVendors } from '../../actions/vendors';
+import { showNotification, hideNotification } from '../../actions/notification';
 
 function dispatchActionToProps(dispatch) {
   return {
@@ -16,6 +17,8 @@ function dispatchActionToProps(dispatch) {
     resetEmployeeList: bindActionCreators(resetEmployeeList, dispatch),
     savePackageAsync: bindActionCreators(savePackageAsync, dispatch),
     fetchVendors: bindActionCreators(fetchVendors, dispatch),
+    showNotification: bindActionCreators(showNotification, dispatch),
+    hideNotification: bindActionCreators(hideNotification, dispatch),
   };
 }
 
@@ -99,9 +102,12 @@ class AddParcel extends Component {
 
   handleSubmit(event) {
     event.preventDefault();
+
     if (this.props.selectedEmployee.objectId) {
       if (this.state.awb !== '') {
         this.props.savePackageAsync(this.props.selectedEmployee.objectId, this.state.selectedVendorId, this.state.awb);
+      } else {
+        alert("put awb number");
       }
       // TODO: JAGAT: give a notification to user about "AWB number" being empty.
       return;
@@ -157,7 +163,7 @@ class AddParcel extends Component {
   render() {
     const { value, suggestions } = this.state;
     const inputProps = {
-      placeholder: 'Enter name to start search',
+      placeholder: 'Enter name to start searching employee',
       value,
       onChange: this.onChange,
       className: 'form-control',
@@ -247,6 +253,8 @@ AddParcel.propTypes = {
   selectEmployee: PropTypes.func,
   resetEmployeeList: PropTypes.func,
   savePackageAsync: PropTypes.func,
+  showNotification: PropTypes.func,
+  hideNotification: PropTypes.func,
   fetchVendors: PropTypes.func,
   employees: PropTypes.array,
   vendors: PropTypes.object,

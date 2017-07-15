@@ -3,9 +3,16 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { Dropdown, DropdownMenu, DropdownItem, Progress, Modal, ModalHeader, ModalBody, ModalFooter, Button } from 'reactstrap';
 
+
 function mapStateToProps(state) {
   return {
     packages: state.packages.items,
+  };
+}
+
+function dispatchActionToProps(dispatch) {
+  return {
+    
   };
 }
 
@@ -20,6 +27,11 @@ export class ParcelCard extends React.Component {
     this.viewParcel = this.viewParcel.bind(this);
     this.viewParcels = this.viewParcels.bind(this);
     this.toggle = this.toggle.bind(this);
+    this.verifyPackage = this.verifyPackage.bind(this);
+  }
+
+  verifyPackage() {
+
   }
 
   viewParcels() {
@@ -98,7 +110,7 @@ export class ParcelCard extends React.Component {
             { this.viewParcel() }
           </tbody>
         </table>
-        <Modal isOpen={this.state.modal} toggle={this.toggle} className={this.props.className}>
+        <Modal isOpen={this.state.modal} toggle={this.toggle}>
           <ModalHeader toggle={this.toggle}>Verify your Parcel</ModalHeader>
           <ModalBody>
             <div className="form-group">
@@ -110,7 +122,7 @@ export class ParcelCard extends React.Component {
             </div>
           </ModalBody>
           <ModalFooter>
-            <Button color="primary" onClick={this.toggle}>Verify Parcel</Button>
+            <Button color="primary" onClick={this.verifyPackage}>Verify Parcel</Button>
           </ModalFooter>
         </Modal>
       </div>
@@ -122,4 +134,4 @@ ParcelCard.propTypes = {
   packages: PropTypes.array,
 };
 
-export default connect(mapStateToProps)(ParcelCard);
+export default connect(mapStateToProps, dispatchActionToProps)(ParcelCard);

@@ -15,3 +15,7 @@ export const RECEIVE_VENDORS = 'RECEIVE_VENDORS';
 
 // Sidebar
 export const TOGGLE_SIDEBAR = 'TOGGLE_SIDEBAR';
+
+// Notification
+export const OPEN_NOTIFICATION = 'OPEN_NOTIFICATION';
+export const CLOSE_NOTIFICATION = 'CLOSE_NOTIFICATION';

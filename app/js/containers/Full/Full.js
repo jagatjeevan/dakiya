@@ -21,6 +21,7 @@ import SimpleLineIcons from '../../views/Icons/SimpleLineIcons/';
 
 import ListParcel from '../../components/source/ListParcel';
 import AddParcel from '../../components/source/AddParcelPage';
+import Notification from '../../components/source/Notification';
 
 class Full extends Component {
   render() {
@@ -31,6 +32,7 @@ class Full extends Component {
           <Sidebar {...this.props} />
           <main className="main">
             <Breadcrumb />
+            <Notification />
             <div className="container-fluid">
               <Switch>
                 <Route path="/parcels" name="Parcels" component={ListParcel} />
