@@ -31,6 +31,13 @@ export function selectedEmployee(emp) {
   };
 }
 
+export function removeSelectedEmployee() {
+  return {
+    type: actionTypes.SELECTED_EMPLOYEE,
+    payload: {},
+  };
+}
+
 export function fetchEmployee(searchToken) {
   return ((dispatch) => {
     const Employee = Parse.Object.extend('Employee');

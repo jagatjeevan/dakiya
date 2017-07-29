@@ -4,8 +4,10 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import AutoSuggest from 'react-autosuggest';
 
+import InputGroup from './InputGroup';
+
 // Actions
-import { fetchEmployee, selectedEmployee, resetEmployeeList } from '../../actions/employees';
+import { fetchEmployee, selectedEmployee, resetEmployeeList, removeSelectedEmployee } from '../../actions/employees';
 import { savePackageAsync } from '../../actions/packages';
 import { fetchVendors } from '../../actions/vendors';
 import { showNotification, hideNotification } from '../../actions/notification';
@@ -19,6 +21,7 @@ function dispatchActionToProps(dispatch) {
     fetchVendors: bindActionCreators(fetchVendors, dispatch),
     showNotification: bindActionCreators(showNotification, dispatch),
     hideNotification: bindActionCreators(hideNotification, dispatch),
+    removeSelectedEmployee: bindActionCreators(removeSelectedEmployee, dispatch),
   };
 }
 
@@ -79,6 +82,7 @@ class AddParcel extends Component {
       awb: '',
       selectedVendorId: '',
     });
+    this.props.removeSelectedEmployee();
   }
 
   getVendors() {
@@ -101,19 +105,16 @@ class AddParcel extends Component {
   }
 
   handleSubmit(event) {
+    let vendorErrorHelpText;
     event.preventDefault();
-
-    if (this.props.selectedEmployee.objectId) {
-      if (this.state.awb !== '') {
-        this.props.savePackageAsync(this.props.selectedEmployee.objectId, this.state.selectedVendorId, this.state.awb);
-      } else {
-        alert("put awb number");
-      }
-      // TODO: JAGAT: give a notification to user about "AWB number" being empty.
-      return;
+    if(this.refs.email.validate() && this.refs.phone.validate() && this.refs.awb.validate() && this.state.selectedVendorId) {
+      this.props.savePackageAsync(this.props.selectedEmployee.objectId, this.state.selectedVendorId, this.state.awb);
     }
-    // TODO: JAGAT: give a notification to user about Selecting employee for the package.
-    alert('Please select the employee');
+    if (this.state.selectedVendorId === '') {
+      vendorErrorHelpText = (<div className="form-control-feedback">Select a Vendor</div>);
+    } else {
+      vendorErrorHelpText = '';
+    }
   }
 
   onChange(event, { newValue }) {
@@ -166,8 +167,10 @@ class AddParcel extends Component {
       placeholder: 'Enter name to start searching employee',
       value,
       onChange: this.onChange,
-      className: 'form-control',
+      className: 'react-autosuggest__input',
     };
+    const selectedEmployeeEmail = (this.props.selectedEmployee) ? this.props.selectedEmployee.email : "";
+    const selectedEmployeePhoneNumber = (this.props.selectedEmployee) ? this.props.selectedEmployee.phoneNumber : "";
     return (
       <div className="row add-parcel-form">
         <div className="col-lg-8 offset-lg-2">
@@ -177,44 +180,48 @@ class AddParcel extends Component {
             </div>
             <div className="card-block">
               <form onSubmit={this.handleSubmit}>
-                <div className="form-group">
-                  <AutoSuggest
-                    suggestions={suggestions}
-                    onSuggestionsFetchRequested={this.onSuggestionsFetchRequested}
-                    onSuggestionsClearRequested={this.onSuggestionsClearRequested}
-                    getSuggestionValue={getSuggestionValue}
-                    renderSuggestion={renderSuggestion}
-                    onSuggestionSelected={this.onSuggestionSelected}
-                    inputProps={inputProps}
-                  />
-                </div>
                 <div className="row">
                   <div className="col-lg-12">
                     <div className="form-group">
                       <div className="input-group">
-                        <span className="input-group-addon">Name / Phone Number</span>
-                        <input type="text" id="name-phone" name="name-phone" className="form-control" placeholder="Mike" value={this.props.selectedEmployee.name} readOnly />
+                        <span className="input-group-addon">Name</span>
+                        <div className="react-suggestion-container">
+                          <AutoSuggest
+                            suggestions={suggestions}
+                            onSuggestionsFetchRequested={this.onSuggestionsFetchRequested}
+                            onSuggestionsClearRequested={this.onSuggestionsClearRequested}
+                            getSuggestionValue={getSuggestionValue}
+                            renderSuggestion={renderSuggestion}
+                            onSuggestionSelected={this.onSuggestionSelected}
+                            inputProps={inputProps}
+                          />
+                        </div>
                         <span className="input-group-addon"><i className="fa fa-asterisk" /></span>
                       </div>
                     </div>
                   </div>
                   <div className="col-lg-12">
-                    <div className="form-group">
-                      <div className="input-group">
-                        <span className="input-group-addon">Email Address</span>
-                        <input type="email" id="email" name="email" className="form-control" placeholder="mike@gmail.com" value={this.props.selectedEmployee.email} readOnly />
-                        <span className="input-group-addon"><i className="fa fa-envelope" /></span>
-                      </div>
-                    </div>
+                    <InputGroup
+                      label="Email Address"
+                      placeholder="mike@gmail.com"
+                      type="email"
+                      ref="email"
+                      value={selectedEmployeeEmail}
+                      name="email"
+                      addonIcon=" fa-envelope"
+                      feedback="Type in the employee name above to search employee"
+                    />
                   </div>
                   <div className="col-lg-12">
-                    <div className="form-group">
-                      <div className="input-group">
-                        <span className="input-group-addon">Phone Number</span>
-                        <input type="text" id="phone" name="phone" className="form-control" placeholder="0987654321" value={this.props.selectedEmployee.phoneNumber} readOnly />
-                        <span className="input-group-addon"><i className="fa fa-phone" /></span>
-                      </div>
-                    </div>
+                    <InputGroup
+                      label="Phone Number"
+                      placeholder="0987654321"
+                      value={selectedEmployeePhoneNumber}
+                      name="phone"
+                      ref="phone"
+                      addonIcon=" fa-phone"
+                      feedback="Type in the employee name above to search employee"
+                    />
                   </div>
                   <div className="col-lg-12">
                     <div className="form-group">
@@ -224,13 +231,16 @@ class AddParcel extends Component {
                     </div>
                   </div>
                   <div className="col-lg-12">
-                    <div className="form-group">
-                      <div className="input-group">
-                        <span className="input-group-addon">AWB Number</span>
-                        <input type="text" id="awb" name="awb" className="form-control" value={this.state.awb} onChange={this.onAwbChange} />
-                        <span className="input-group-addon"><i className="fa fa-barcode" /></span>
-                      </div>
-                    </div>
+                    <InputGroup
+                      label="AWB Number"
+                      placeholder="AWB Number"
+                      value={this.state.awb}
+                      name="awb"
+                      ref="awb"
+                      addonIcon=" fa-barcode"
+                      feedback="This is the parcel number"
+                      onChange={this.onAwbChange}
+                    />
                   </div>
                   <div className="col-lg-12">
                     <div className="form-actions pull-right">
@@ -256,6 +266,7 @@ AddParcel.propTypes = {
   showNotification: PropTypes.func,
   hideNotification: PropTypes.func,
   fetchVendors: PropTypes.func,
+  removeSelectedEmployee: PropTypes.func,
   employees: PropTypes.array,
   vendors: PropTypes.object,
   selectedEmployee: PropTypes.object,
