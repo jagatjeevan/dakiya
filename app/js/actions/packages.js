@@ -1,5 +1,6 @@
 import Parse from './parseConfig';
 import * as actionTypes from '../util/actionsTypes';
+import * as notificationActions from './notification';
 
 function requestPackages() {
   return {
@@ -26,6 +27,20 @@ function savePackageComplete(pkg) {
     pkg,
   };
 }
+
+export function pickPackage(pkg) {
+  return {
+    type: actionTypes.PICK_PACKAGE,
+    pkg,
+  }
+}
+
+export function clearPickPackage() {
+  return {
+    type: actionTypes.CLEAR_PICK_PACKAGE,
+  }
+}
+
 
 const qp = { useMasterKey: true };
 const mapper = o => o.toJSON();
@@ -68,7 +83,6 @@ export const fetchPackages = (searchToken = '') => (
 
 export const savePackageAsync = (employeeObjectId, vendorObjectId, awpNo) => (
   (dispatch) => {
-    dispatch(savePackageBegin());
 
     const pkg = new Package();
     pkg.set('owner', Employee.createWithoutData(employeeObjectId)); // Link owner
@@ -79,11 +93,7 @@ export const savePackageAsync = (employeeObjectId, vendorObjectId, awpNo) => (
     pkg.save(null, {
       success(result) {
         // Execute any logic that should take place after the object is saved.
-        dispatch(savePackageComplete(result));
-        // TODO: Jagat: Show notification for saving the package successfully.
-
-        // TODO : Jagat : Change the redirect to react-redux-router
-        window.location.href = '/';
+        notificationActions.showNotification("Your parcel has been saved");
       },
       error(gameScore, error) {
         // Execute any logic that should take place if the save fails.
@@ -108,9 +118,6 @@ export const updatePackageAsync = packageObjectId => (
         p.save(null, qp)
           .then(() => {
             alert('Package updated succefully.');
-
-            // TODO : Jagat : Change the redirect to react-redux-router
-            window.location.href = '/';
           })
           .catch((error) => {
             /* eslint: no-alert:0 */

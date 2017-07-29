@@ -1,37 +1,54 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import { bindActionCreators } from 'redux';
+
 import { Dropdown, DropdownMenu, DropdownItem, Progress, Modal, ModalHeader, ModalBody, ModalFooter, Button } from 'reactstrap';
 
+import { pickPackage, clearPickPackage } from '../../actions/packages';
 
 function mapStateToProps(state) {
   return {
     packages: state.packages.items,
+    pickedPackage: state.packages.pickedPackage,
   };
 }
 
 function dispatchActionToProps(dispatch) {
   return {
-    
+    pickPackage: bindActionCreators(pickPackage, dispatch),
+    clearPickPackage: bindActionCreators(clearPickPackage, dispatch),
   };
 }
 
 export class ParcelCard extends React.Component {
   constructor() {
     super();
-    
     this.state = {
-      modal: false
+      modal: false,
+      parcelPassCode: '',
     };
 
     this.viewParcel = this.viewParcel.bind(this);
     this.viewParcels = this.viewParcels.bind(this);
-    this.toggle = this.toggle.bind(this);
+    this.pickPackage = this.pickPackage.bind(this);
     this.verifyPackage = this.verifyPackage.bind(this);
+    this.changeParcelPassCode = this.changeParcelPassCode.bind(this);
+    this.closeModal = this.closeModal.bind(this);
+  }
+
+  changeParcelPassCode(e) {
+    this.setState({ parcelPassCode: e.target.value });
+  }
+
+  closeModal() {
+    this.setState({ modal: false });
   }
 
   verifyPackage() {
-
+    if (this.state.parcelPassCode !== "") {
+      console.log(this.props.pickedPackage.objectId === this.state.parcelPassCode)
+    }
   }
 
   viewParcels() {
@@ -52,10 +69,12 @@ export class ParcelCard extends React.Component {
     ));
   }
 
-  toggle() {
+  pickPackage(pkg) {
     this.setState({
       modal: !this.state.modal
     });
+
+    this.props.pickPackage(pkg);
   }
 
   viewParcel() {
@@ -63,7 +82,7 @@ export class ParcelCard extends React.Component {
     return this.props.packages.map((parcel) => {
       const parcelStatus = (parcel.pickupDate) 
         ? (<div><b>Parcel delivered on</b> {parcel.pickupDate.iso}</div>) 
-        : (<button className="btn btn-primary" onClick={this.toggle}>Pick parcel</button>);
+        : (<button className="btn btn-primary" onClick={() => this.pickPackage(parcel)}>Pick parcel</button>);
 
       return (
         <tr key={parcel.objectId} className={parcelStatus}>
@@ -116,13 +135,14 @@ export class ParcelCard extends React.Component {
             <div className="form-group">
               <div className="input-group">
                 <span className="input-group-addon">PassCode</span>
-                <input type="text" id="parcel-code" name="parcel-code" className="form-control" />
+                <input type="text" id="parcel-code" name="parcel-code" className="form-control" onChange={this.changeParcelPassCode} value={this.state.parcelPassCode} />
                 <span className="input-group-addon"><i className="fa fa-envelope" /></span>
               </div>
             </div>
           </ModalBody>
           <ModalFooter>
             <Button color="primary" onClick={this.verifyPackage}>Verify Parcel</Button>
+            <Button color="danger" onClick={this.closeModal}>Close Modal</Button>
           </ModalFooter>
         </Modal>
       </div>

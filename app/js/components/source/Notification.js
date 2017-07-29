@@ -29,6 +29,8 @@ class Notification extends Component {
   }
 
   render() {
+    console.log(this.props.notificationContent);
+    console.log(this.props.notificationClass);
     let notificationClass;
     if (this.props.notificationContent !== '') {
       notificationClass = `notification open ${this.props.notificationClass}`;

@@ -89,7 +89,7 @@ class AddParcel extends Component {
     if (!this.props.vendors.isFetching && this.props.vendors.items.length) {
       return this.props.vendors.items.map(vendor => (<option value={vendor.objectId} key={vendor.objectId}>{vendor.name}</option>));
     }
-    return (<option value="">No Vendors available</option>);
+    return (<option value="" selected="selected">No Vendors available</option>);
   }
 
   onVendorSelected(event) {
