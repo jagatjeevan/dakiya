@@ -42,7 +42,7 @@ export class ParcelCard extends React.Component {
   }
 
   closeModal() {
-    this.setState({ modal: false });
+    this.setState({ modal: false, parcelPassCode: '' });
   }
 
   verifyPackage() {
