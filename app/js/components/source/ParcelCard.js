@@ -21,13 +21,17 @@ function dispatchActionToProps(dispatch) {
   };
 }
 
+const initialState = {
+  modal: false,
+  parcelPassCode: '',
+  pickedParcelVerifyStatus: '',
+  pickedParcelVerifyStatusHelpText: ''
+};
+
 export class ParcelCard extends React.Component {
   constructor() {
     super();
-    this.state = {
-      modal: false,
-      parcelPassCode: '',
-    };
+    this.state = initialState;
 
     this.viewParcel = this.viewParcel.bind(this);
     this.viewParcels = this.viewParcels.bind(this);
@@ -41,13 +45,26 @@ export class ParcelCard extends React.Component {
     this.setState({ parcelPassCode: e.target.value });
   }
 
+  resetState() {
+    this.setState(initialState);
+  }
+
   closeModal() {
-    this.setState({ modal: false, parcelPassCode: '' });
+    this.resetState();
   }
 
   verifyPackage() {
-    if (this.state.parcelPassCode !== "") {
-      console.log(this.props.pickedPackage.objectId === this.state.parcelPassCode)
+    if (this.state.parcelPassCode !== "" && (this.props.pickedPackage.objectId === this.state.parcelPassCode)) {
+      this.setState({
+        pickedParcelVerifyStatus: 'success',
+        pickedParcelVerifyStatusHelpText: '',
+      });
+      //TODO: Create an action to send the response.
+    } else {
+      this.setState({
+        pickedParcelVerifyStatus: 'danger',
+        pickedParcelVerifyStatusHelpText: 'Please enter the passcode sent to your email',
+      });
     }
   }
 
@@ -132,12 +149,13 @@ export class ParcelCard extends React.Component {
         <Modal isOpen={this.state.modal} toggle={this.toggle}>
           <ModalHeader toggle={this.toggle}>Verify your Parcel</ModalHeader>
           <ModalBody>
-            <div className="form-group">
+            <div className={`form-group has-${this.state.pickedParcelVerifyStatus}`}>
               <div className="input-group">
                 <span className="input-group-addon">PassCode</span>
-                <input type="text" id="parcel-code" name="parcel-code" className="form-control" onChange={this.changeParcelPassCode} value={this.state.parcelPassCode} />
+                <input type="text" id="parcel-code" name="parcel-code" className={`form-control form-control-${this.state.pickedParcelVerifyStatus}`} onChange={this.changeParcelPassCode} value={this.state.parcelPassCode} />
                 <span className="input-group-addon"><i className="fa fa-envelope" /></span>
               </div>
+              <div className="form-control-feedback">{this.state.pickedParcelVerifyStatusHelpText}</div>
             </div>
           </ModalBody>
           <ModalFooter>

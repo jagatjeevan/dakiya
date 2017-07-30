@@ -22,6 +22,13 @@ class Notification extends Component {
   constructor() {
     super();
     this.onCloseNotification = this.onCloseNotification.bind(this);
+    this.getNotificationContent = this.getNotificationContent.bind(this);
+  }
+
+  getNotificationContent() {
+    return {
+      __html: this.props.notificationContent
+    }
   }
 
   onCloseNotification() {
@@ -29,8 +36,6 @@ class Notification extends Component {
   }
 
   render() {
-    console.log(this.props.notificationContent);
-    console.log(this.props.notificationClass);
     let notificationClass;
     if (this.props.notificationContent !== '') {
       notificationClass = `notification open ${this.props.notificationClass}`;
@@ -39,9 +44,7 @@ class Notification extends Component {
     }
     return (
       <div className={notificationClass}>
-        <div className="notification-content">
-          {this.props.notificationContent}
-        </div>
+        <div className="notification-content" dangerouslySetInnerHTML={this.getNotificationContent()} />
         <i className="fa fa-times" onClick={this.onCloseNotification} />
       </div>
     );

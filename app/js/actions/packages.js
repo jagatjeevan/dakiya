@@ -41,6 +41,13 @@ export function clearPickPackage() {
   }
 }
 
+export function notificationUpdate(notificationContent, notificationClass) {
+  return {
+    type: actionTypes.OPEN_NOTIFICATION,
+    notificationContent,
+    notificationClass,
+  }
+}
 
 const qp = { useMasterKey: true };
 const mapper = o => o.toJSON();
@@ -92,13 +99,17 @@ export const savePackageAsync = (employeeObjectId, vendorObjectId, awpNo) => (
 
     pkg.save(null, {
       success(result) {
-        // Execute any logic that should take place after the object is saved.
-        notificationActions.showNotification("Your parcel has been saved");
+        const notificationContent = `Your parcel has been saved. <br /> You can see your parcel <a href="/">here</a>`;
+        const notificationClass = 'success';
+        dispatch(notificationUpdate(notificationContent, notificationClass));
       },
       error(gameScore, error) {
         // Execute any logic that should take place if the save fails.
         // error is a Parse.Error with an error code and message.
         /* eslint: no-alert:0 */
+        const notificationContent = `Failed to save the parcel. Please try again.`;
+        const notificationClass = 'failure';
+        dispatch(notificationUpdate(notificationContent, notificationClass));
         alert(`Failed to create new object, with error code: ${error.message}`);
       },
       useMasterKey: true,
