@@ -6,7 +6,7 @@ import { bindActionCreators } from 'redux';
 
 import { Dropdown, DropdownMenu, DropdownItem, Progress, Modal, ModalHeader, ModalBody, ModalFooter, Button } from 'reactstrap';
 
-import { pickPackage, clearPickPackage } from '../../actions/packages';
+import { pickPackage, clearPickPackage, updatePackageAsync } from '../../actions/packages';
 
 function mapStateToProps(state) {
   return {
@@ -19,6 +19,7 @@ function dispatchActionToProps(dispatch) {
   return {
     pickPackage: bindActionCreators(pickPackage, dispatch),
     clearPickPackage: bindActionCreators(clearPickPackage, dispatch),
+    updatePackageAsync: bindActionCreators(updatePackageAsync, dispatch),
   };
 }
 
@@ -61,6 +62,7 @@ export class ParcelCard extends React.Component {
         pickedParcelVerifyStatusHelpText: '',
       });
       //TODO: Create an action to send the response.
+      this.props.updatePackageAsync(this.props.pickedPackage.objectId)
     } else {
       this.setState({
         pickedParcelVerifyStatus: 'danger',
@@ -99,7 +101,7 @@ export class ParcelCard extends React.Component {
     let pickupDate;
     return this.props.packages.map((parcel) => {
       const parcelStatus = (parcel.pickupDate) 
-        ? (<div><b>Parcel delivered on</b> {parcel.pickupDate.iso}</div>) 
+        ? (<div><i>Picked on <Moment fromNow>{parcel.pickupDate.iso}</Moment> </i></div>)
         : (<button className="btn btn-primary" onClick={() => this.pickPackage(parcel)}>Pick parcel</button>);
 
       return (
@@ -125,7 +127,7 @@ export class ParcelCard extends React.Component {
               <Moment format="DD MMM 'YY hh:mm A">{parcel.createdAt}</Moment>
             </div>
           </td>
-          <td> {parcel.packageId} </td>
+          <td> <strong className="h5">{parcel.packageId}</strong>  </td>
           <td>
             {parcelStatus}
           </td>
