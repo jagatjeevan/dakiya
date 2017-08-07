@@ -1,5 +1,20 @@
 import React, { Component } from 'react';
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
 import { Dropdown, DropdownMenu, DropdownItem } from 'reactstrap';
+
+import { logout } from '../../actions/auth';
+
+function mapStateToProps(state) {
+  return {
+  };
+}
+
+function dispatchActionToProps(dispatch) {
+  return {
+    logout: bindActionCreators(logout, dispatch),
+  };
+}
 
 class Header extends Component {
 
@@ -58,7 +73,9 @@ class Header extends Component {
 
               <DropdownMenu className="dropdown-menu-right">
                 <DropdownItem header className="text-center"><strong>Settings</strong></DropdownItem>
-                <DropdownItem><i className="fa fa-lock" /> Logout</DropdownItem>
+                <DropdownItem>
+                <div onClick={() => this.props.logout()}><i className="fa fa-lock" /> Logout </div>
+                </DropdownItem>
               </DropdownMenu>
             </Dropdown>
           </li>
@@ -68,4 +85,4 @@ class Header extends Component {
   }
 }
 
-export default Header;
+export default connect(mapStateToProps, dispatchActionToProps)(Header);

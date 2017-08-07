@@ -23,8 +23,24 @@ import ListParcel from '../../components/source/ListParcel';
 import AddParcel from '../../components/source/AddParcelPage';
 import Notification from '../../components/source/Notification';
 
+import { connect } from 'react-redux';
+
+function mapStateToProps(state) {
+  return {
+    auth: state.auth,
+  };
+}
+
 class Full extends Component {
+
   render() {
+    const { from } = { from: { pathname: '/login' } }
+    if (this.props.auth.isLoggedIn === false) {
+      return (
+        <Redirect to={from}/>
+      )
+    }
+    
     return (
       <div className="app">
         <Header />
@@ -61,4 +77,4 @@ class Full extends Component {
   }
 }
 
-export default Full;
+export default connect(mapStateToProps)(Full);
