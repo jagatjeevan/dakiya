@@ -101,11 +101,11 @@ export class ParcelCard extends React.Component {
     let pickupDate;
     return this.props.packages.map((parcel) => {
       const parcelStatus = (parcel.pickupDate) 
-        ? (<div><i>Picked on <Moment fromNow>{parcel.pickupDate.iso}</Moment> </i></div>)
+        ? (<div><i>Picked <Moment fromNow>{parcel.pickupDate.iso}</Moment> </i></div>)
         : (<button className="btn btn-primary" onClick={() => this.pickPackage(parcel)}>Pick parcel</button>);
 
       return (
-        <tr key={parcel.objectId} className={parcelStatus}>
+        <tr key={parcel.objectId} className={(parcel.pickupDate)?"text-muted":""}>
           <td className="text-center">
             <div className="avatar">
               <img src={'img/avatars/1.jpg'} className="img-avatar" alt="admin@bootstrapmaster.com" />
