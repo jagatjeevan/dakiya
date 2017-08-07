@@ -81,6 +81,7 @@ export const fetchPackages = (searchToken = '') => (
     }
     query.include('owner');
     query.include('vendor');
+    query.descending("createdAt");
     query.find(qp).then((result) => {
       const data = result.map(mapper);
       dispatch(receivePackages(data));
