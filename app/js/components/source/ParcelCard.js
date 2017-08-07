@@ -1,4 +1,5 @@
 import React from 'react';
+import Moment from 'react-moment';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { bindActionCreators } from 'redux';
@@ -118,7 +119,12 @@ export class ParcelCard extends React.Component {
           <td className="text-center">
             <img src={parcel.vendor.icon} alt={parcel.vendor.name} className="vendor-icon" />
           </td>
-          <td> {parcel.createdAt} </td>
+          <td> 
+          <Moment fromNow>{parcel.createdAt}</Moment>
+          <div className="small text-muted">
+              <Moment format="DD MMM 'YY hh:mm A">{parcel.createdAt}</Moment>
+            </div>
+          </td>
           <td> {parcel.packageId} </td>
           <td>
             {parcelStatus}
