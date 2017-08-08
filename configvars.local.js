@@ -1,6 +1,6 @@
 window.config = {
   mountPath: "/",
-  apiBaseURL: "https://dakiya-1.herokuapp.com/parse",
+  apiBaseURL: "http://localhost:1337/parse",
   xParseApplicationId: "myAppId",
   xParseMasterKey: "myMasterKey"
 };
