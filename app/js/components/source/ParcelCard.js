@@ -126,7 +126,7 @@ export class ParcelCard extends React.Component {
           <td> 
           <Moment fromNow>{parcel.createdAt}</Moment>
           <div className="small text-muted">
-              <Moment format="DD MMM 'YY hh:mm A">{parcel.createdAt}</Moment>
+              <Moment format="DD MMM YY hh:mm A">{parcel.createdAt}</Moment>
             </div>
           </td>
           <td> <strong className="h5">{parcel.packageId}</strong>  </td>
