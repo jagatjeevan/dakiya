@@ -1,4 +1,4 @@
-import Parse from 'parse';
+import Parse from './parseConfig';
 import Constants from '../appConfig';
 import * as actionTypes from '../util/actionsTypes';
 
@@ -43,14 +43,19 @@ export const login = data => (
     const name = data.username,
       pswd = data.password;
 
+    
     dispatch(requestLogin());
+    console.log("last chance...")
     Parse.User.logIn(name, pswd, {
       success: function (user) {
         console.log("UserID: ", user.get('username'));
         dispatch(loginSuccess(user));
+        alert('Login success: ');
       },
       error: function (user, error) {
+        console.log("error: ", error);
         dispatch(loginFailure(error));
+        alert('Login failure: ', error);
       }
     });
   }

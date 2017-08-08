@@ -1,7 +1,54 @@
 import React, { Component } from 'react';
+import { Redirect } from 'react-router-dom';
+import PropTypes from 'prop-types';
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
+
+import { login } from '../../../actions/auth';
+
+function dispatchActionToProps(dispatch) {
+  return {
+    login: bindActionCreators(login, dispatch),
+  };
+}
+
+function mapStateToProps(state) {
+  return {
+    auth: state.auth,
+  };
+}
 
 class Login extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      username: "",
+      password: "",
+    };
+    this.handleLogin = this.handleLogin.bind(this);
+    this.handleChange = this.handleChange.bind(this);
+  }
+
+  handleChange(e) {
+    if(e.target.name === 'username') {
+      this.setState({ username: e.target.value });
+    } else if (e.target.name === 'password') {
+      this.setState({ password: e.target.value });
+    }
+  }
+
+  handleLogin(){
+    this.props.login(this.state);
+  }
+
   render() {
+    const { from } = { from: { pathname: '/parcels' } }
+    if (this.props.auth.isLoggedIn) {
+      return (
+        <Redirect to={from}/>
+      )
+    }
+
     return (
       <div className="app flex-row align-items-center">
         <div className="container">
@@ -14,15 +61,15 @@ class Login extends Component {
                     <p className="text-muted">Sign In to your account</p>
                     <div className="input-group mb-3">
                       <span className="input-group-addon"><i className="icon-user" /></span>
-                      <input type="text" className="form-control" placeholder="Username" />
+                      <input type="text" className="form-control" placeholder="Username" name="username" value={this.state.username} onChange={this.handleChange} />
                     </div>
                     <div className="input-group mb-4">
                       <span className="input-group-addon"><i className="icon-lock" /></span>
-                      <input type="password" className="form-control" placeholder="Password" />
+                      <input type="password" className="form-control" placeholder="Password" value={this.state.password} name="password" onChange={this.handleChange} />
                     </div>
                     <div className="row">
                       <div className="col-6">
-                        <button type="button" className="btn btn-primary px-4">Login</button>
+                        <button type="button" className="btn btn-primary px-4" onClick={this.handleLogin}>Login</button>
                       </div>
                       <div className="col-6 text-right">
                         <button type="button" className="btn btn-link px-0">Forgot password?</button>
@@ -48,4 +95,4 @@ class Login extends Component {
   }
 }
 
-export default Login;
+export default connect(mapStateToProps, dispatchActionToProps)(Login);
