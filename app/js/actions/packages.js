@@ -127,7 +127,8 @@ export const updatePackageAsync = packageObjectId => (
         p.set('pickupDate', new Date());
         p.save(null)
           .then(() => {
-            alert('Package updated succefully.');
+            // alert('Package updated succefully.');
+            dispatch(fetchPackages(''))
           })
           .catch((error) => {
             /* eslint: no-alert:0 */

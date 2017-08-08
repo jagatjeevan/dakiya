@@ -63,6 +63,8 @@ export class ParcelCard extends React.Component {
       });
       //TODO: Create an action to send the response.
       this.props.updatePackageAsync(this.props.pickedPackage.objectId)
+      
+      setTimeout(this.closeModal, 500)
     } else {
       this.setState({
         pickedParcelVerifyStatus: 'danger',
