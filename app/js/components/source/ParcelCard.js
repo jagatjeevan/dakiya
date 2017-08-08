@@ -102,7 +102,7 @@ export class ParcelCard extends React.Component {
     return this.props.packages.map((parcel) => {
       const parcelStatus = (parcel.pickupDate) 
         ? (<div><i>Picked <Moment fromNow>{parcel.pickupDate.iso}</Moment> </i></div>)
-        : (<button className="btn btn-primary" onClick={() => this.pickPackage(parcel)}>Pick parcel</button>);
+        : (<button className="btn btn-primary" onClick={() => this.pickPackage(parcel)}><strong>Pick </strong></button>);
 
       return (
         <tr key={parcel.objectId} className={(parcel.pickupDate)?"text-muted":""}>
