@@ -49,7 +49,6 @@ export function notificationUpdate(notificationContent, notificationClass) {
   }
 }
 
-const qp = { useMasterKey: true };
 const mapper = o => o.toJSON();
 const Package = Parse.Object.extend('Package');
 const Employee = Parse.Object.extend('Employee');
@@ -82,7 +81,7 @@ export const fetchPackages = (searchToken = '') => (
     query.include('owner');
     query.include('vendor');
     query.descending("createdAt");
-    query.find(qp).then((result) => {
+    query.find().then((result) => {
       const data = result.map(mapper);
       dispatch(receivePackages(data));
     });
@@ -112,8 +111,7 @@ export const savePackageAsync = (employeeObjectId, vendorObjectId, awpNo) => (
         const notificationClass = 'failure';
         dispatch(notificationUpdate(notificationContent, notificationClass));
         alert(`Failed to create new object, with error code: ${error.message}`);
-      },
-      useMasterKey: true,
+      }
     });
   }
 );
@@ -123,11 +121,11 @@ export const updatePackageAsync = packageObjectId => (
     dispatch(savePackageBegin());
 
     const query = new Parse.Query(Package);
-    query.get(packageObjectId, qp)
+    query.get(packageObjectId)
       .then((p) => {
         p.set('status', true);
         p.set('pickupDate', new Date());
-        p.save(null, qp)
+        p.save(null)
           .then(() => {
             alert('Package updated succefully.');
           })

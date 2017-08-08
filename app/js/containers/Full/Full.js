@@ -24,6 +24,10 @@ import AddParcel from '../../components/source/AddParcelPage';
 import Notification from '../../components/source/Notification';
 
 import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+
+import Parse from '../../actions/parseConfig';
+import { loginSuccess } from '../../actions/auth';
 
 function mapStateToProps(state) {
   return {
@@ -31,7 +35,20 @@ function mapStateToProps(state) {
   };
 }
 
+function dispatchActionToProps(dispatch) {
+  return {
+    loginSuccess: bindActionCreators(loginSuccess, dispatch),
+  };
+}
+
 class Full extends Component {
+
+  componentWillMount() {
+    const user = Parse.User.current();
+    if(user){
+      this.props.loginSuccess(user);
+    }
+  }
 
   render() {
     const { from } = { from: { pathname: '/login' } }
@@ -77,4 +94,4 @@ class Full extends Component {
   }
 }
 
-export default connect(mapStateToProps)(Full);
+export default connect(mapStateToProps, dispatchActionToProps)(Full);

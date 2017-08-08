@@ -58,8 +58,7 @@ app.use(mountPath, api);
 var data = {
   mountPath: process.env.DAKIYA_WEB_MOUNT || '/',
   apiBaseURL: PARSE_MOUNT,
-  xParseApplicationId: APP_ID,
-  xParseMasterKey: MASTER_KEY
+  xParseApplicationId: APP_ID
 }
 
 app.get('/configvars.js', function (req, res) {

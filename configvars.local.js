@@ -1,6 +1,5 @@
 window.config = {
   mountPath: "/",
   apiBaseURL: "http://localhost:1337/parse",
-  xParseApplicationId: "myAppId",
-  xParseMasterKey: "myMasterKey"
+  xParseApplicationId: "myAppId"
 };

@@ -8,7 +8,7 @@ function requestLogin() {
   };
 }
 
-function loginSuccess(user) {
+export function loginSuccess(user) {
   return {
     type: actionTypes.LOGIN_SUCCESS,
     user,

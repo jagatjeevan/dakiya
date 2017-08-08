@@ -1,15 +1,9 @@
-import Parse from 'parse';
+import Parse from './parseConfig';
 
 import * as actionTypes from '../util/actionsTypes';
 import Constants from '../appConfig';
 
 const mapper = o => o.toJSON();
-
-Parse.initialize(Constants.XParseApplicationId);
-Parse.masterKey = Constants.XParseMasterKey;
-Parse.serverURL = Constants.ApiBaseURL;
-
-const qp = { useMasterKey: true };
 
 export function updateEmployee(data) {
   return {
@@ -43,7 +37,7 @@ export function fetchEmployee(searchToken) {
     const Employee = Parse.Object.extend('Employee');
     const query = new Parse.Query(Employee);
     query.matches('name', searchToken, 'i');
-    query.find(qp).then((result) => {
+    query.find().then((result) => {
       const data = result.map(mapper);
       dispatch(updateEmployee(data));
     });
