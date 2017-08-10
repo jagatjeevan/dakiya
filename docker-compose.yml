@@ -1,0 +1,28 @@
+version: '2'
+services:
+  db:
+    image: "mongo"
+    volumes:
+      - ./data:/data/db
+  dakiya:
+    build: .
+    ports:
+      - "9001:9001"
+    volumes:
+      - ./logs:/app/logs
+    links:
+      - db
+    environment:
+      - PORT
+      - DATABASE_URI
+      - SERVER_URL
+      - DASHBOARD_USER
+      - DASHBOARD_PASSWORD
+
+
+
+
+
+
+
+

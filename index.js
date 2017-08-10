@@ -30,10 +30,7 @@ let ServerConfig = {
     serverURL       : SERVER_URL,
     verifyUserEmails: false,
     publicServerURL : SERVER_URL,
-    appName         : APP_NAME,
-    liveQuery       : {
-        classNames: ['Posts', 'Comments']
-    }
+    appName         : APP_NAME
 };
 
 
@@ -53,7 +50,7 @@ const mountPath = PARSE_MOUNT;
 app.use(mountPath, api);
 
 // Mount dakiya web app on root path
-// app.use('/', express.static(path.join(__dirname, '/build')));
+app.use('/', express.static(path.join(__dirname, '/build')));
 
 var data = {
   mountPath: process.env.DAKIYA_WEB_MOUNT || '/',

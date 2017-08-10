@@ -5,4 +5,5 @@ build
 .idea/
 .vscode/
 logs/
+data/
 stats
