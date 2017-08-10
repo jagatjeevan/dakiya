@@ -28,6 +28,7 @@ module.exports = {
           babelrc: false,
           presets: [
             'react',
+            'stage-2',
             ['es2015', {
               "modules": false
             }],
