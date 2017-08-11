@@ -4,7 +4,7 @@ node_js:
 services:
  - docker
 install:
- - yarn install --production
+ - yarn install --pure-lockfile
 script:
  - yarn build 
  - docker build -t sameerazazi87/dakiya:`echo $TRAVIS_BUILD_NUMBER` .
