@@ -35,11 +35,12 @@ This should open browser in a new tab.
 # Devbox setup
 1. `git clone git@github.com:jagatjeevan/dakiya.git`
 2. `yarn install`
-3. `docker-compose build`
-4. `docker-compose up -d`
-5. `docker-compose exec dakiya ./seed.sh`
-6. go to `http://localhost:9001/admin`
-7. login using `admin` & `admin123`
-8. create new `User` in admin panel.
-9. go to `http://localhost:9001/` and login using user credentials. 
+3. `yarn build`
+4. `docker-compose build`
+5. `docker-compose up -d`
+6. `docker-compose exec dakiya ./seed.sh`
+7. go to `http://localhost:9001/admin`
+8. login using `admin` & `admin123`
+9. create new `User` in admin panel.
+10. go to `http://localhost:9001/` and login using user credentials. 
 
