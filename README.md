@@ -1,4 +1,4 @@
-# dakiya
+# dakiya [![Build Status](https://travis-ci.org/jagatjeevan/dakiya.svg?branch=master)](https://travis-ci.org/jagatjeevan/dakiya)
 This is an internal project to Thoughtworks for automating parcel delivery system.
 
 # Tech stack
