@@ -5,7 +5,7 @@ services:
     volumes:
       - ./data:/data/db
   dakiya:
-    build: .
+    image: "sameerazazi87/dakiya:0.1-beta"
     ports:
       - "9001:9001"
     volumes:
