@@ -18,6 +18,7 @@ services:
       - SERVER_URL
       - DASHBOARD_USER
       - DASHBOARD_PASSWORD
+      - NODE_ENV=production
 
 
 
