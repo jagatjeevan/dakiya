@@ -7,9 +7,9 @@ install:
  - yarn install --pure-lockfile
 script:
  - yarn build 
- - docker build -t sameerazazi87/dakiya:`echo $TRAVIS_BUILD_NUMBER` .
- - docker tag sameerazazi87/dakiya:`echo $TRAVIS_BUILD_NUMBER` sameerazazi87/dakiya:latest
- - echo "sameerazazi87/dakiya:`echo $TRAVIS_BUILD_NUMBER`"
+ - docker build -t sameerazazi87/dakiya:build/`echo $TRAVIS_BUILD_NUMBER` .
+ - docker tag sameerazazi87/dakiya:build/`echo $TRAVIS_BUILD_NUMBER` sameerazazi87/dakiya:latest
+ - echo "sameerazazi87/dakiya:build/`echo $TRAVIS_BUILD_NUMBER`"
 after_success:
  - docker login -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD"
  - docker push sameerazazi87/dakiya
