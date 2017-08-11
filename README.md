@@ -14,15 +14,7 @@ git clone git@git.mckinsey-solutions.com:price/pricefrontend.git
 yarn install
 yarn dev
 ```
-
 This should open browser in a new tab.
-
-# Word cloud web
-- Package
-  - Delivered
-  - Pending
-- Fetch : from the server
-- Update : update the view on receiving from server.
 
 # Devbox setup
 1. `git clone git@github.com:jagatjeevan/dakiya.git`
