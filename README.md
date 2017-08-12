@@ -10,7 +10,7 @@ Please refer [here](https://github.com/jagatjeevan/react-setup/)
 
 Follow the instruction to get started.
 ```
-git clone git@git.mckinsey-solutions.com:price/pricefrontend.git
+git clone git@github.com:jagatjeevan/dakiya.git
 yarn install
 yarn dev
 ```

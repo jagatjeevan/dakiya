@@ -4,6 +4,9 @@ services:
     image: "mongo"
     volumes:
       - ./data:/data/db
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME
+      - MONGO_INITDB_ROOT_PASSWORD
   dakiya:
     image: "sameerazazi87/dakiya:0.1-beta"
     ports:
