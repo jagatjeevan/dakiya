@@ -38,7 +38,7 @@ function getSuggestionValue(suggestion) {
 }
 
 function renderSuggestion(suggestion) {
-  return `${suggestion.name} ${suggestion.phoneNumber}`;
+  return `${suggestion.name}`; 
 }
 
 class AddParcel extends Component {
@@ -107,7 +107,7 @@ class AddParcel extends Component {
   handleSubmit(event) {
     let vendorErrorHelpText;
     event.preventDefault();
-    if(this.refs.email.validate() && this.refs.phone.validate() && this.refs.awb.validate() && this.state.selectedVendorId) {
+    if(this.refs.email.validate() && this.refs.awb.validate() && this.state.selectedVendorId) {
       this.props.savePackageAsync(this.props.selectedEmployee.objectId, this.state.selectedVendorId, this.state.awb);
     }
     if (this.state.selectedVendorId === '') {
@@ -170,7 +170,6 @@ class AddParcel extends Component {
       className: 'react-autosuggest__input',
     };
     const selectedEmployeeEmail = (this.props.selectedEmployee) ? this.props.selectedEmployee.email : "";
-    const selectedEmployeePhoneNumber = (this.props.selectedEmployee) ? this.props.selectedEmployee.phoneNumber : "";
     return (
       <div className="row add-parcel-form">
         <div className="col-lg-8 offset-lg-2">
@@ -209,17 +208,6 @@ class AddParcel extends Component {
                       value={selectedEmployeeEmail}
                       name="email"
                       addonIcon=" fa-envelope"
-                      feedback="Type in the employee name above to search employee"
-                    />
-                  </div>
-                  <div className="col-lg-12">
-                    <InputGroup
-                      label="Phone Number"
-                      placeholder="0987654321"
-                      value={selectedEmployeePhoneNumber}
-                      name="phone"
-                      ref="phone"
-                      addonIcon=" fa-phone"
                       feedback="Type in the employee name above to search employee"
                     />
                   </div>

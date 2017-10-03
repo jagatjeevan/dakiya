@@ -116,11 +116,8 @@ export class ParcelCard extends React.Component {
           </td>
           <td>
             <div>{ parcel.owner.name }</div>
-            <div className="small text-muted">
-              { parcel.owner.phoneNumber }
-            </div>
           </td>
-          <td className="text-center">
+          <td cassName="text-center">
             <img src={parcel.vendor.icon} alt={parcel.vendor.name} className="vendor-icon" />
           </td>
           <td> 
