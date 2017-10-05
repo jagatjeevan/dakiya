@@ -22,6 +22,7 @@ import SimpleLineIcons from '../../views/Icons/SimpleLineIcons/';
 import ListParcel from '../../components/source/ListParcel';
 import AddParcel from '../../components/source/AddParcelPage';
 import Notification from '../../components/source/Notification';
+import SeedData from '../../components/source/SeedData';
 
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
@@ -71,6 +72,7 @@ class Full extends Component {
                 <Route path="/parcels" name="Parcels" component={ListParcel} />
                 <Route path="/addParcel" name="Parcels" component={AddParcel} />
                 <Route path="/dashboard" name="Dashboard" component={Dashboard} />
+                <Route path="/seeddata" name="Seed Data" component={SeedData} />
                 <Route path="/components/buttons" name="Buttons" component={Buttons} />
                 <Route path="/components/cards" name="Cards" component={Cards} />
                 <Route path="/components/forms" name="Forms" component={Forms} />
