@@ -65,10 +65,7 @@ export const fetchPackages = (searchToken = '') => (
       const ownerEmailQuery = new Parse.Query(Employee);
       ownerEmailQuery.contains('email', searchToken);
 
-      const ownerPhoneQuery = new Parse.Query(Employee);
-      ownerPhoneQuery.contains('phoneNumber', searchToken);
-
-      const compoundOwnerQuery = Parse.Query.or(ownerNameQuery, ownerEmailQuery, ownerPhoneQuery);
+      const compoundOwnerQuery = Parse.Query.or(ownerNameQuery, ownerEmailQuery);
 
       const packageIdQuery = new Parse.Query(Package);
       packageIdQuery.contains('packageId', searchToken);
