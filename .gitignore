@@ -7,3 +7,4 @@ build
 logs/
 data/
 stats
+app/js/jigsawConfig.js

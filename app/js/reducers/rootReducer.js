@@ -5,6 +5,7 @@ import vendors from './vendors';
 import sidebar from './sidebar';
 import notification from './notification';
 import auth from './auth';
+import seedData from './seedData';
 
 const rootReducer = combineReducers({
   packages,
@@ -13,6 +14,7 @@ const rootReducer = combineReducers({
   sidebar,
   notification,
   auth,
+  seedData,
 });
 
 export default rootReducer;

@@ -2,27 +2,44 @@ import Parse from './parseConfig';
 import * as actionTypes from '../util/actionsTypes';
 import * as notificationActions from './notification';
 import axios from 'axios';
+import { url } from '../jigsawConfig';
+import { authorizationToken } from '../jigsawConfig';
 
 let jigsawEmployeeList = [];
 
+function requestEmployeeData(pageNumber) {
+  return {
+    type: actionTypes.REQUEST_EMPLOYEE_DATA,
+    payload: pageNumber,
+  }
+}
+
+function receiveEmployeeData(pageNumber) {
+  return {
+    type: actionTypes.RECEIVE_EMPLOYEE_DATA,
+  }
+}
+
 function getPageCount(callback) {
-  axios.get("https://jigsaw.thoughtworks.net/api/people?working_office=Bangalore", {
-    headers: {"Authorization": ""}
+  axios.get(url, {
+    headers: {"Authorization": authorizationToken}
   }).then(function(response) {
       callback(response.headers['x-total-pages']);
   });
 }
 
-function getJigsawEmployeeList(totalPages, page=1) {
-  axios.get("https://jigsaw.thoughtworks.net/api/people?working_office=Bangalore&page="+page, {
-    headers: {"Authorization": ""}
+function getJigsawEmployeeList(totalPages, page=1, dispatch) {
+  dispatch(requestEmployeeData(page));
+
+  axios.get(url+"&page="+page, {
+    headers: {"Authorization": authorizationToken}
   }).then(function(response) {
-    console.log(response);
     jigsawEmployeeList = jigsawEmployeeList.concat(response.data);
     if(page < totalPages) {
-      return getJigsawEmployeeList(totalPages, page+1);
+      return getJigsawEmployeeList(totalPages, page+1, dispatch);
     }
     dumpInDatabase();
+    dispatch(receiveEmployeeData());
   });
 }
 
@@ -64,7 +81,7 @@ function dumpInDatabase() {
 export const updateEmployeeData = () => (
   (dispatch) => {
       getPageCount(function(pageCount) {
-      getJigsawEmployeeList(pageCount, 1)
+      getJigsawEmployeeList(pageCount, 1, dispatch);
     });
   }
 );

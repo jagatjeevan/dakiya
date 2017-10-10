@@ -20,6 +20,7 @@ function dispatchActionToProps(dispatch) {
 
 function mapStateToProps(state) {
   return {
+    seedData: state.seedData,
     sidebar: state.sidebar,
   };
 }
@@ -27,6 +28,7 @@ function mapStateToProps(state) {
 class SeedData extends Component {
   constructor(props) {
     super(props);
+    this.getStatus = this.getStatus.bind(this);
   }
 
   componentDidMount() {
@@ -34,12 +36,14 @@ class SeedData extends Component {
   }
 
   getStatus() {
-    let seedStatus = 'Seed data';
-    return (
-      <div>
-        {seedStatus}
-      </div>
-    );
+    let status = "";
+    if (this.props.seedData.isFetching) {
+      status = 'Fetching page ' + this.props.seedData.pageNumber;
+    }
+    else {
+      status = 'All pages are loaded';
+    }
+    return status;
   }
 
   render() {
@@ -53,6 +57,7 @@ class SeedData extends Component {
 }
 
 SeedData.propTypes = {
+  seedData: PropTypes.object,
   updateEmployeeData: PropTypes.func,
   sidebar: PropTypes.object,
 };

@@ -18,13 +18,14 @@ This should open browser in a new tab.
 
 # Devbox setup
 1. `git clone git@github.com:jagatjeevan/dakiya.git`
-2. `yarn install`
-3. `yarn build`
-4. `docker-compose build`
-5. `docker-compose up -d`
-6. `docker-compose exec dakiya ./seed.sh`
-7. go to `http://localhost:9001/admin`
-8. login using `admin` & `admin123`
-9. create new `User` in admin panel.
-10. go to `http://localhost:9001/` and login using user credentials. 
+2. `add jigsawConfig.js file in /app/js/  & export constants 'url' and 'authorizationToken' in that file with appropriate values`
+3. `yarn install`
+4. `yarn build`
+5. `docker-compose build`
+6. `docker-compose up -d`
+7. `docker-compose exec dakiya ./seed.sh`
+8. go to `http://localhost:9001/admin`
+9. login using `admin` & `admin123`
+10. create new `User` in admin panel.
+11. go to `http://localhost:9001/` and login using user credentials.
 
