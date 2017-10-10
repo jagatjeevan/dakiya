@@ -66,8 +66,8 @@ app.get('/configvars.js', function (req, res) {
 
 // Parse Dashboard
 const DASHBOARD_MOUNT    = process.env.DASHBOARD_MOUNT || '/admin';
-const DASHBOARD_USER     = process.env.DASHBOARD_USER;
-const DASHBOARD_PASSWORD = process.env.DASHBOARD_PASSWORD;
+const DASHBOARD_USER     = process.env.DASHBOARD_USER || 'admin';
+const DASHBOARD_PASSWORD = process.env.DASHBOARD_PASSWORD || 'admin123';
 if (DASHBOARD_USER) {
   console.log('registering parse dashboard...', DASHBOARD_MOUNT)
     const dashboard = new ParseDashboard({
