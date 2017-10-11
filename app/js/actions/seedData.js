@@ -44,10 +44,10 @@ function getJigsawEmployeeList(totalPages, page=1, dispatch) {
 }
 
 function dumpInDatabase() {
-  let excelSheetList = require('./raw.json');
+  let excelSheetList = require('../excelSheetCardData.json');
   
-  var employeeList = excelSheetList.map(x => Object.assign(x, jigsawEmployeeList.find(y => y.employeeId == x.EmpID)));
-  employeeList=employeeList.filter(x => x.preferredName);
+  var employeeList = excelSheetList.map(employee => Object.assign(employee, jigsawEmployeeList.find(jigsawEmployee => jigsawEmployee.employeeId == employee.EmpID)));
+  employeeList=employeeList.filter(employee => employee.preferredName);
 
   const Employee = Parse.Object.extend('Employee');
 
