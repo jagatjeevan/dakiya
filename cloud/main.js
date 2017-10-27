@@ -90,3 +90,17 @@ Parse.Cloud.afterSave("Package", function (request) {
     });
 });
 
+Parse.Cloud.beforeSave("CardSwipeLog", function (request, response) {
+  const CardSwipeLog = Parse.Object.extend('CardSwipeLog');
+  let query = new Parse.Query(CardSwipeLog);
+  query.find({
+    success: function (result) {
+      Parse.Object.destroyAll(result).then(
+        function (success) {
+         response.success();
+        }, function (error) {
+          response.error("internal server error");
+        });;
+    }
+  });
+});

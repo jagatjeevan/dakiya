@@ -6,6 +6,7 @@ import sidebar from './sidebar';
 import notification from './notification';
 import auth from './auth';
 import seedData from './seedData';
+import cardSwipe from './cardSwipe';
 
 const rootReducer = combineReducers({
   packages,
@@ -15,6 +16,7 @@ const rootReducer = combineReducers({
   notification,
   auth,
   seedData,
+  cardSwipe,
 });
 
 export default rootReducer;

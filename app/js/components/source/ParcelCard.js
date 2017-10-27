@@ -6,12 +6,13 @@ import { bindActionCreators } from 'redux';
 
 import { Dropdown, DropdownMenu, DropdownItem, Progress, Modal, ModalHeader, ModalBody, ModalFooter, Button } from 'reactstrap';
 
-import { pickPackage, clearPickPackage, updatePackageAsync } from '../../actions/packages';
+import { pickPackage, clearPickPackage, updatePackageAsync, verifyParcelForCardSwipe, clearCardSwipeLogs } from '../../actions/packages';
 
 function mapStateToProps(state) {
   return {
     packages: state.packages.items,
     pickedPackage: state.packages.pickedPackage,
+    cardSwipe: state.cardSwipe,
   };
 }
 
@@ -20,6 +21,7 @@ function dispatchActionToProps(dispatch) {
     pickPackage: bindActionCreators(pickPackage, dispatch),
     clearPickPackage: bindActionCreators(clearPickPackage, dispatch),
     updatePackageAsync: bindActionCreators(updatePackageAsync, dispatch),
+    verifyParcelForCardSwipe: bindActionCreators(verifyParcelForCardSwipe, dispatch),
   };
 }
 
@@ -62,8 +64,8 @@ export class ParcelCard extends React.Component {
         pickedParcelVerifyStatusHelpText: '',
       });
       //TODO: Create an action to send the response.
-      this.props.updatePackageAsync(this.props.pickedPackage.objectId)
-      
+      this.props.updatePackageAsync(this.props.pickedPackage.objectId, this.props.pickedPackage.owner.objectId)
+
       setTimeout(this.closeModal, 500)
     } else {
       this.setState({
@@ -92,22 +94,26 @@ export class ParcelCard extends React.Component {
   }
 
   pickPackage(pkg) {
-    this.setState({
-      modal: !this.state.modal
+    let object=this;
+    clearCardSwipeLogs().then(function (success) {
+      object.setState({
+        modal: !object.state.modal
+      }).catch(function (error) {
+        console.error("Oops! Something went wrong: " + error.message + " (" + error.code + ")");
+      });
     });
-
     this.props.pickPackage(pkg);
   }
 
   viewParcel() {
     let pickupDate;
     return this.props.packages.map((parcel) => {
-      const parcelStatus = (parcel.pickupDate) 
-        ? (<div><i>Picked <Moment fromNow>{parcel.pickupDate.iso}</Moment> </i></div>)
+      const parcelStatus = (parcel.pickupDate)
+        ? (<div><i>Picked by {parcel.pickedBy.name} <Moment fromNow>{parcel.pickupDate.iso}</Moment>  </i></div>)
         : (<button className="btn btn-primary" onClick={() => this.pickPackage(parcel)}><strong>Pick </strong></button>);
 
       return (
-        <tr key={parcel.objectId} className={(parcel.pickupDate)?"text-muted":""}>
+        <tr key={parcel.objectId} className={(parcel.pickupDate) ? "text-muted" : ""}>
           <td className="text-center">
             <div className="avatar">
               <img src={'img/avatars/1.jpg'} className="img-avatar" alt="admin@bootstrapmaster.com" />
@@ -115,14 +121,14 @@ export class ParcelCard extends React.Component {
             </div>
           </td>
           <td>
-            <div>{ parcel.owner.name }</div>
+            <div>{parcel.owner.name}</div>
           </td>
           <td cassName="text-center">
             <img src={parcel.vendor.icon} alt={parcel.vendor.name} className="vendor-icon" />
           </td>
-          <td> 
-          <Moment fromNow>{parcel.createdAt}</Moment>
-          <div className="small text-muted">
+          <td>
+            <Moment fromNow>{parcel.createdAt}</Moment>
+            <div className="small text-muted">
               <Moment format="DD MMM YY hh:mm A">{parcel.createdAt}</Moment>
             </div>
           </td>
@@ -136,6 +142,12 @@ export class ParcelCard extends React.Component {
   }
 
   render() {
+    if (this.state.modal && (this.props.cardSwipe.cardSwipeStatus == '' || this.props.cardSwipe.cardSwipeStatus == 'Invalid')) {
+      this.props.verifyParcelForCardSwipe(this.props.pickedPackage.objectId);
+    }
+
+    let cardSwipeStatus = this.props.cardSwipe.cardSwipeStatus == 'Invalid' ? 'Card is not linked to your profile. Please contact Admin.': '';
+
     return (
       <div className="parcel-card-container">
         <table className="table table-hover table-outline mb-0 hidden-sm-down">
@@ -150,23 +162,33 @@ export class ParcelCard extends React.Component {
             </tr>
           </thead>
           <tbody>
-            { this.viewParcel() }
+            {this.viewParcel()}
           </tbody>
         </table>
-        <Modal isOpen={this.state.modal} toggle={this.toggle}>
-          <ModalHeader toggle={this.toggle}>Verify your Parcel</ModalHeader>
+
+        <Modal className="custom-modal" isOpen={this.state.modal} toggle={this.toggle}>
+          <ModalHeader toggle={this.toggle}>Swipe your card or Enter passcode</ModalHeader>
           <ModalBody>
-            <div className={`form-group has-${this.state.pickedParcelVerifyStatus}`}>
-              <div className="input-group">
-                <span className="input-group-addon">PassCode</span>
-                <input type="text" id="parcel-code" name="parcel-code" className={`form-control form-control-${this.state.pickedParcelVerifyStatus}`} onChange={this.changeParcelPassCode} value={this.state.parcelPassCode} />
-                <span className="input-group-addon"><i className="fa fa-envelope" /></span>
+            <div className="container">
+              <div className="row">
+                <div className="col-md-4">
+                  <img id="card-reader-image" src={'img/card_reader.png'} alt="card reader image" />
+                  <span> {cardSwipeStatus} </span>
+                </div>
+                <div className="vertical-line"></div>
+                <div className={`col-md-7 form-group has-${this.state.pickedParcelVerifyStatus}`}>
+                  <div className="input-group">
+                    <span className="input-group-addon">PassCode</span>
+                    <input type="text" id="parcel-code" name="parcel-code" className={`form-control form-control-${this.state.pickedParcelVerifyStatus}`} onChange={this.changeParcelPassCode} value={this.state.parcelPassCode} />
+                    <span className="input-group-addon"><i className="fa fa-envelope" /></span>
+                  </div>
+                  <div className="form-control-feedback">{this.state.pickedParcelVerifyStatusHelpText}</div>
+                  <Button color="primary" onClick={this.verifyPackage}>Verify Parcel</Button>
+                </div>
               </div>
-              <div className="form-control-feedback">{this.state.pickedParcelVerifyStatusHelpText}</div>
             </div>
           </ModalBody>
           <ModalFooter>
-            <Button color="primary" onClick={this.verifyPackage}>Verify Parcel</Button>
             <Button color="danger" onClick={this.closeModal}>Close Modal</Button>
           </ModalFooter>
         </Modal>
@@ -177,6 +199,7 @@ export class ParcelCard extends React.Component {
 
 ParcelCard.propTypes = {
   packages: PropTypes.array,
+  cardSwipe: PropTypes.object,
 };
 
 export default connect(mapStateToProps, dispatchActionToProps)(ParcelCard);
