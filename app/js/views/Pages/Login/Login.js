@@ -30,14 +30,15 @@ class Login extends Component {
   }
 
   handleChange(e) {
-    if(e.target.name === 'username') {
+    if (e.target.name === 'username') {
       this.setState({ username: e.target.value });
     } else if (e.target.name === 'password') {
       this.setState({ password: e.target.value });
     }
   }
 
-  handleLogin(){
+  handleLogin(event) {
+    event.preventDefault();
     this.props.login(this.state);
   }
 
@@ -45,7 +46,7 @@ class Login extends Component {
     const { from } = { from: { pathname: '/parcels' } }
     if (this.props.auth.isLoggedIn) {
       return (
-        <Redirect to={from}/>
+        <Redirect to={from} />
       )
     }
 
@@ -56,26 +57,28 @@ class Login extends Component {
             <div className="col-md-8">
               <div className="card-group mb-0">
                 <div className="card p-4">
-                  <div className="card-block">
-                    <h1>Login</h1>
-                    <p className="text-muted">Sign In to your account</p>
-                    <div className="input-group mb-3">
-                      <span className="input-group-addon"><i className="icon-user" /></span>
-                      <input type="text" className="form-control" placeholder="Username" name="username" value={this.state.username} onChange={this.handleChange} />
-                    </div>
-                    <div className="input-group mb-4">
-                      <span className="input-group-addon"><i className="icon-lock" /></span>
-                      <input type="password" className="form-control" placeholder="Password" value={this.state.password} name="password" onChange={this.handleChange} />
-                    </div>
-                    <div className="row">
-                      <div className="col-6">
-                        <button type="button" className="btn btn-primary px-4" onClick={this.handleLogin}>Login</button>
+                  <form onSubmit={this.handleLogin}>
+                    <div className="card-block">
+                      <h1>Login</h1>
+                      <p className="text-muted">Sign In to your account</p>
+                      <div className="input-group mb-3">
+                        <span className="input-group-addon"><i className="icon-user" /></span>
+                        <input type="text" className="form-control" placeholder="Username" name="username" value={this.state.username} onChange={this.handleChange} />
                       </div>
-                      <div className="col-6 text-right">
-                        <button type="button" className="btn btn-link px-0">Forgot password?</button>
+                      <div className="input-group mb-4">
+                        <span className="input-group-addon"><i className="icon-lock" /></span>
+                        <input type="password" className="form-control" placeholder="Password" value={this.state.password} name="password" onChange={this.handleChange} />
+                      </div>
+                      <div className="row">
+                        <div className="col-6">
+                          <button type="submit" className="btn btn-primary px-4">Login</button>
+                        </div>
+                        <div className="col-6 text-right">
+                          <button type="button" className="btn btn-link px-0">Forgot password?</button>
+                        </div>
                       </div>
                     </div>
-                  </div>
+                  </form>
                 </div>
                 <div className="card card-inverse card-primary py-5 d-md-down-none" style={{ width: `${44}%` }}>
                   <div className="card-block text-center">
