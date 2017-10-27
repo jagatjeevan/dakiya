@@ -123,7 +123,7 @@ export class ParcelCard extends React.Component {
           <td>
             <div>{parcel.owner.name}</div>
           </td>
-          <td cassName="text-center">
+          <td className="text-center">
             <img src={parcel.vendor.icon} alt={parcel.vendor.name} className="vendor-icon" />
           </td>
           <td>
