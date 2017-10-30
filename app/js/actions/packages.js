@@ -76,7 +76,7 @@ export const fetchPackages = (searchToken = '') => (
       const compoundOwnerQuery = Parse.Query.or(ownerNameQuery, ownerEmailQuery);
 
       const packageIdQuery = new Parse.Query(Package);
-      packageIdQuery.contains('packageId', searchToken);
+      packageIdQuery.equalTo('packageId', Number(searchToken));
 
       const ownerQuery = new Parse.Query(Package);
       ownerQuery.matchesQuery('owner', compoundOwnerQuery);
