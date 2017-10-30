@@ -2,6 +2,12 @@ import Parse from './parseConfig';
 import * as actionTypes from '../util/actionsTypes';
 import * as notificationActions from './notification';
 
+export const filterParcelsBy = {
+  all: 'All',
+  delivered: 'Delivered',
+  unDelivered: 'Un Delivered',
+}
+
 function requestPackages() {
   return {
     type: actionTypes.REQUEST_PACKAGES,
@@ -62,7 +68,7 @@ const Employee = Parse.Object.extend('Employee');
 const Vendor = Parse.Object.extend('Vendor');
 const CardSwipeLog = Parse.Object.extend('CardSwipeLog');
 
-export const fetchPackages = (searchToken = '') => (
+export const fetchPackages = (searchToken = '', filterBy = filterParcelsBy.all) => (
   (dispatch) => {
     dispatch(requestPackages());
     let query = new Parse.Query(Package);
@@ -83,6 +89,14 @@ export const fetchPackages = (searchToken = '') => (
 
       query = Parse.Query.or(ownerQuery, packageIdQuery);
     }
+
+    if (filterBy == filterParcelsBy.unDelivered) {
+      query.equalTo('status', false);
+    }
+    else if (filterBy == filterParcelsBy.delivered) {
+      query.equalTo('status', true);
+    }
+
     query.include('owner');
     query.include('vendor');
     query.descending("createdAt");
