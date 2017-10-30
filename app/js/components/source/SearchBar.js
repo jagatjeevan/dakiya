@@ -3,9 +3,7 @@ import PropTypes from 'prop-types';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { Button, ButtonDropdown, DropdownToggle, DropdownMenu, DropdownItem } from 'reactstrap';
-
-// actions
-import { fetchPackages } from '../../actions/packages';
+import { fetchPackages, filterParcelsBy } from '../../actions/packages';
 
 function dispatchActionToProps(dispatch) {
   return {
@@ -25,8 +23,10 @@ export class SearchBar extends React.Component {
       error: false,
       errorMsg: '',
       timeoutToken: null,
+      filterParcelsBy: filterParcelsBy.all,
     };
     this.updateSearchInput = this.updateSearchInput.bind(this);
+    this.updateFilterForParcels = this.updateFilterForParcels.bind(this);
     this.search = this.search.bind(this);
     this.getError = this.getError.bind(this);
     this.setError = this.setError.bind(this);
@@ -40,12 +40,7 @@ export class SearchBar extends React.Component {
     this.setState({
       searchName: e.target.value,
     });
-
-    clearTimeout(this.state.timeoutToken);
-    const token = setTimeout(this.search, 500);
-    this.setState({
-      timeoutToken: token,
-    });
+    this.updateSearchResult();
   }
 
   setError(err, msg = '') {
@@ -55,12 +50,27 @@ export class SearchBar extends React.Component {
     });
   }
 
+  updateFilterForParcels(event) {
+    this.setState({
+      filterParcelsBy: event.target.innerText,
+    });
+    this.updateSearchResult();
+  }
+
+  updateSearchResult() {
+    clearTimeout(this.state.timeoutToken);
+    const token = setTimeout(this.search, 500);
+    this.setState({
+      timeoutToken: token,
+    });
+  }
+
   search() {
     const term = this.state.searchName;
     const shouldFetch = term.length === 0 || term.length >= 3;
     this.setError(shouldFetch);
     if (shouldFetch) {
-      this.props.fetchPackages(this.state.searchName);
+      this.props.fetchPackages(this.state.searchName, this.state.filterParcelsBy);
     } else {
       this.setError(true, 'Please enter more than 3 characters');
     }
@@ -74,11 +84,11 @@ export class SearchBar extends React.Component {
             <div className="input-group">
               <div className="input-group-btn">
                 <ButtonDropdown isOpen={this.state.first} toggle={() => { this.setState({ first: !this.state.first }); }}>
-                  <DropdownToggle caret color="primary">All</DropdownToggle>
+                  <DropdownToggle caret color="primary">{this.state.filterParcelsBy}</DropdownToggle>
                   <DropdownMenu>
-                    <DropdownItem>Un Delivered</DropdownItem>
-                    <DropdownItem>Delivered</DropdownItem>
-                    <DropdownItem>All</DropdownItem>
+                    <DropdownItem onClick={this.updateFilterForParcels}>{filterParcelsBy.unDelivered}</DropdownItem>
+                    <DropdownItem onClick={this.updateFilterForParcels}>{filterParcelsBy.delivered}</DropdownItem>
+                    <DropdownItem onClick={this.updateFilterForParcels}>{filterParcelsBy.all}</DropdownItem>
                   </DropdownMenu>
                 </ButtonDropdown>
               </div>

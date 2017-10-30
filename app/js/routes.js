@@ -16,6 +16,7 @@ const routes = {
   '/icons': 'Icons',
   '/icons/font-awesome': 'Font Awesome',
   '/icons/simple-line-icons': 'Simple Line Icons',
+  '/seeddata': 'SeedData',
   '/widgets': 'Widgets',
 };
 export default routes;

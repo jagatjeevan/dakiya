@@ -5,6 +5,7 @@ import { connect } from 'react-redux';
 import AutoSuggest from 'react-autosuggest';
 
 import InputGroup from './InputGroup';
+import SelectOption from './SelectOption';
 
 // Actions
 import { fetchEmployee, selectedEmployee, resetEmployeeList, removeSelectedEmployee } from '../../actions/employees';
@@ -38,7 +39,7 @@ function getSuggestionValue(suggestion) {
 }
 
 function renderSuggestion(suggestion) {
-  return `${suggestion.name}`; 
+  return `${suggestion.name}  ${suggestion.email}`; 
 }
 
 class AddParcel extends Component {
@@ -59,7 +60,6 @@ class AddParcel extends Component {
     this.onSuggestionSelected = this.onSuggestionSelected.bind(this);
     this.updateSelectedEmployee = this.updateSelectedEmployee.bind(this);
     this.onAwbChange = this.onAwbChange.bind(this);
-    this.getVendors = this.getVendors.bind(this);
     this.onVendorSelected = this.onVendorSelected.bind(this);
     this.resetForm = this.resetForm.bind(this);
   }
@@ -85,13 +85,6 @@ class AddParcel extends Component {
     this.props.removeSelectedEmployee();
   }
 
-  getVendors() {
-    if (!this.props.vendors.isFetching && this.props.vendors.items.length) {
-      return this.props.vendors.items.map(vendor => (<option value={vendor.objectId} key={vendor.objectId}>{vendor.name}</option>));
-    }
-    return (<option value="" selected="selected">No Vendors available</option>);
-  }
-
   onVendorSelected(event) {
     this.setState({
       selectedVendorId: event.target.value,
@@ -107,13 +100,8 @@ class AddParcel extends Component {
   handleSubmit(event) {
     let vendorErrorHelpText;
     event.preventDefault();
-    if(this.refs.email.validate() && this.refs.awb.validate() && this.state.selectedVendorId) {
+    if(this.refs.email.validate() && this.refs.vendor.validate() && this.refs.awb.validate()) {
       this.props.savePackageAsync(this.props.selectedEmployee.objectId, this.state.selectedVendorId, this.state.awb);
-    }
-    if (this.state.selectedVendorId === '') {
-      vendorErrorHelpText = (<div className="form-control-feedback">Select a Vendor</div>);
-    } else {
-      vendorErrorHelpText = '';
     }
   }
 
@@ -213,9 +201,14 @@ class AddParcel extends Component {
                   </div>
                   <div className="col-lg-12">
                     <div className="form-group">
-                      <select id="vendor" className="form-control" onChange={this.onVendorSelected}>
-                        {this.getVendors()}
-                      </select>
+                      <SelectOption
+                      id="vendor"
+                      ref="vendor"
+                      value={this.state.selectedVendorId}
+                      options={this.props.vendors}
+                      onChange={this.onVendorSelected}
+                      feedback="please select vendor"
+                      />
                     </div>
                   </div>
                   <div className="col-lg-12">

@@ -2,6 +2,12 @@ import Parse from './parseConfig';
 import * as actionTypes from '../util/actionsTypes';
 import * as notificationActions from './notification';
 
+export const filterParcelsBy = {
+  all: 'All',
+  delivered: 'Delivered',
+  unDelivered: 'Un Delivered',
+}
+
 function requestPackages() {
   return {
     type: actionTypes.REQUEST_PACKAGES,
@@ -49,12 +55,20 @@ export function notificationUpdate(notificationContent, notificationClass) {
   }
 }
 
+function swippedCardStatus(status) {
+  return {
+    type: actionTypes.SWIPPED_CARD_STATUS,
+    status,
+  }
+}
+
 const mapper = o => o.toJSON();
 const Package = Parse.Object.extend('Package');
 const Employee = Parse.Object.extend('Employee');
 const Vendor = Parse.Object.extend('Vendor');
+const CardSwipeLog = Parse.Object.extend('CardSwipeLog');
 
-export const fetchPackages = (searchToken = '') => (
+export const fetchPackages = (searchToken = '', filterBy = filterParcelsBy.all) => (
   (dispatch) => {
     dispatch(requestPackages());
     let query = new Parse.Query(Package);
@@ -68,13 +82,21 @@ export const fetchPackages = (searchToken = '') => (
       const compoundOwnerQuery = Parse.Query.or(ownerNameQuery, ownerEmailQuery);
 
       const packageIdQuery = new Parse.Query(Package);
-      packageIdQuery.contains('packageId', searchToken);
+      packageIdQuery.equalTo('packageId', Number(searchToken));
 
       const ownerQuery = new Parse.Query(Package);
       ownerQuery.matchesQuery('owner', compoundOwnerQuery);
 
       query = Parse.Query.or(ownerQuery, packageIdQuery);
     }
+
+    if (filterBy == filterParcelsBy.unDelivered) {
+      query.equalTo('status', false);
+    }
+    else if (filterBy == filterParcelsBy.delivered) {
+      query.equalTo('status', true);
+    }
+
     query.include('owner');
     query.include('vendor');
     query.descending("createdAt");
@@ -113,28 +135,89 @@ export const savePackageAsync = (employeeObjectId, vendorObjectId, awpNo) => (
   }
 );
 
-export const updatePackageAsync = packageObjectId => (
+export const updatePackageAsync = (packageObjectId, employeeObjectId) => (
   (dispatch) => {
-    dispatch(savePackageBegin());
-
-    const query = new Parse.Query(Package);
-    query.get(packageObjectId)
-      .then((p) => {
-        p.set('status', true);
-        p.set('pickupDate', new Date());
-        p.save(null)
-          .then(() => {
-            // alert('Package updated succefully.');
-            dispatch(fetchPackages(''))
-          })
-          .catch((error) => {
-            /* eslint: no-alert:0 */
-            alert(`Failed to update package, with error code: ${error.message}`);
-          });
-      })
-      .catch((error) => {
-        /* eslint: no-alert:0 */
-        alert(`Failed to get package, with error code: ${error.message}`);
-      });
+    updatePackage(packageObjectId, employeeObjectId, dispatch);
   }
 );
+
+function updatePackage(packageObjectId, employeeObjectId, dispatch) {
+  dispatch(savePackageBegin());
+  const query = new Parse.Query(Package);
+  query.get(packageObjectId)
+    .then((p) => {
+      p.set('status', true);
+      p.set('pickupDate', new Date());
+      p.set('pickedBy', Employee.createWithoutData(employeeObjectId));
+      p.save(null)
+        .then(() => {
+          dispatch(swippedCardStatus('Success'));
+          dispatch(fetchPackages(''));
+          dispatch(swippedCardStatus(''));
+        })
+        .catch((error) => {
+          /* eslint: no-alert:0 */
+          alert(`Failed to update package, with error code: ${error.message}`);
+        });
+    })
+    .catch((error) => {
+      /* eslint: no-alert:0 */
+      alert(`Failed to get package, with error code: ${error.message}`);
+    });
+}
+
+function findCardOwner(cardID) {
+  return new Promise(function (resolve, reject) {
+    let employee = new Parse.Query(Employee);
+    employee.equalTo('cardID', cardID);
+    employee.find({
+      success: function (result) {
+        if (result.length != 0) {
+          let cardOwnerObjectId = result.map(mapper)[0].objectId;
+          resolve(cardOwnerObjectId);
+        } else {
+          reject(result);
+        }
+      },
+      error: function (error) {
+        reject(error)
+      }
+    });
+  })
+}
+
+export const verifyParcelForCardSwipe = (pickedPackageId) => (
+  (dispatch) => {
+    let query = new Parse.Query(CardSwipeLog);
+    query.find().then((result) => {
+      if (result.length != 0) {
+        let swippedCardId = result.map(mapper)[0].cardID;
+        findCardOwner(swippedCardId).then(function (cardOwnerObjectId) {
+          updatePackage(pickedPackageId, cardOwnerObjectId, dispatch);
+        }).catch(function (error) {
+          dispatch(swippedCardStatus('Invalid'));
+        });
+      }
+      else {
+        dispatch(swippedCardStatus(''));
+      }
+    });
+  });
+
+export function clearCardSwipeLogs() {
+  return new Promise(function (resolve, reject) {
+    const CardSwipeLog = Parse.Object.extend('CardSwipeLog');
+    let query = new Parse.Query(CardSwipeLog);
+    query.find({
+      success: function (result) {
+        Parse.Object.destroyAll(result).then(
+          function (success) {
+            resolve(success);
+          }, function (error) {
+            reject(error);
+          }
+        );
+      }
+    });
+  })
+}
