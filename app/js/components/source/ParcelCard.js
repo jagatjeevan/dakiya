@@ -115,9 +115,8 @@ export class ParcelCard extends React.Component {
       return (
         <tr key={parcel.objectId} className={(parcel.pickupDate) ? "text-muted" : ""}>
           <td className="text-center">
-            <div className="avatar">
-              <img src={'img/avatars/1.jpg'} className="img-avatar" alt="admin@bootstrapmaster.com" />
-              <span className="avatar-status badge-success" />
+            <div className="avatar custom-avatar">
+              <span className="icon-user"></span>
             </div>
           </td>
           <td>
@@ -126,13 +125,13 @@ export class ParcelCard extends React.Component {
           <td className="text-center">
             <img src={parcel.vendor.icon} alt={parcel.vendor.name} className="vendor-icon" />
           </td>
-          <td>
+          <td className="text-center">
             <Moment fromNow>{parcel.createdAt}</Moment>
             <div className="small text-muted">
               <Moment format="DD MMM YY hh:mm A">{parcel.createdAt}</Moment>
             </div>
           </td>
-          <td> <strong className="h5">{parcel.packageId}</strong>  </td>
+          <td className="text-center"> <strong className="h5">{parcel.packageId}</strong>  </td>
           <td>
             {parcelStatus}
           </td>
@@ -156,8 +155,8 @@ export class ParcelCard extends React.Component {
               <th className="text-center"><i className="icon-people" /></th>
               <th>Reciever Details</th>
               <th className="text-center">Vendor</th>
-              <th>Recieved Date</th>
-              <th>Package Number</th>
+              <th className="text-center">Recieved Date</th>
+              <th className="text-center">Package Number</th>
               <th className="parcel-status-column">Action</th>
             </tr>
           </thead>

@@ -31,8 +31,8 @@ class Header extends Component {
 
   componentWillMount() {
     const user = Parse.User.current();
-    if(user){
-      this.setState({"username":user.getUsername()}) 
+    if (user) {
+      this.setState({ "username": user.getUsername() })
     }
   }
 
@@ -76,14 +76,14 @@ class Header extends Component {
           <li className="nav-item">
             <Dropdown isOpen={this.state.dropdownOpen} toggle={this.toggle}>
               <button onClick={this.toggle} className="nav-link dropdown-toggle" data-toggle="dropdown" type="button" aria-haspopup="true" aria-expanded={this.state.dropdownOpen}>
-                <img src={'https://scontent-sin6-2.xx.fbcdn.net/v/t1.0-1/p320x320/19554467_10156408251533378_8838470583531429260_n.jpg?oh=86c3bff5d27e5fba72d37469a70ddb40&oe=5A0CF294'} className="img-avatar" alt="admin@bootstrapmaster.com" />
+                <span className="icon-user img-avatar"></span>
                 <span className="d-md-down-none">{this.state.username}</span>
               </button>
 
               <DropdownMenu className="dropdown-menu-right">
                 <DropdownItem header className="text-center"><strong>Settings</strong></DropdownItem>
                 <DropdownItem>
-                <div onClick={() => this.props.logout()}><i className="fa fa-lock" /> Logout </div>
+                  <div onClick={() => this.props.logout()}><i className="fa fa-lock" /> Logout </div>
                 </DropdownItem>
               </DropdownMenu>
             </Dropdown>
