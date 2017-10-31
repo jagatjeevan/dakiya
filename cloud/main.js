@@ -39,52 +39,54 @@ var transporter = nodemailer.createTransport({
 });
 
 Parse.Cloud.afterSave("Package", function (request) {
-  var pkg = request.object;
-  var packageId = pkg.get('packageId');
-  var status = pkg.get('status');
-  var arrivalNotified = pkg.get('arrivalNotified') || false;
-  var collectionNotified = pkg.get('collectionNotified') || false;
+  const mapper = o => o.toJSON();
+  let query = new Parse.Query('Package');
+  query.equalTo('objectId', request.object.id);
+  query.include('owner');
+  query.include('vendor');
+  query.include('pickedBy');
+  query.find(qp).then((result) => {
+    const package = result.map(mapper)[0];
+    var passcode = package.objectId;
+    var arrivalNotified = package.arrivalNotified || false;
+    var collectionNotified = package.collectionNotified || false;
+    var mailOptions = {
+      from: process.env.SMTP_FROM_EMAIL,
+      to: package.owner.email
+    };
 
-  pkg.get('owner')
-    .fetch(qp)
-    .then(employee => {
-      var mailOptions = {
-        from: process.env.SMTP_FROM_EMAIL,
-        to: employee.get('email')
-      };
+    // Send package arrival notification
+    if (package.status == false && arrivalNotified == false) {
+      mailOptions.subject = utils.format(`Your parcel has arrived.`);
+      mailOptions.text = utils.format('Your parcel has arrived. Please pickup your parcel from security desk.\n\nParcel details:\nParcel Number : %s\nVendor : %s\nAWB Number : %s\nPasscode : %s\n\nUse either your access card or given passcode to collect your parcel from security desk.', package.packageId, package.vendor.name, package.awpNo, passcode);
 
-      // Send package arrival notification
-      if (status == false && arrivalNotified == false) {
-        mailOptions.subject = utils.format(`Your package (%s) has arrived.`, packageId);
-        mailOptions.text = 'Please pickup your package from security desk.'
+      transporter.sendMail(mailOptions, (error, info) => {
+        if (error) {
+          return console.log(error);
+        }
+        console.log('Parcel arrival message %s sent: %s', info.messageId, info.response);
 
-        transporter.sendMail(mailOptions, (error, info) => {
-          if (error) {
-            return console.log(error);
-          }
-          console.log('Package arrival message %s sent: %s', info.messageId, info.response);
+        package.set("arrivalNotified", true);
+        package.save(null, qp);
+      });
+    }
 
-          pkg.set("arrivalNotified", true);
-          pkg.save(null, qp);
-        });
-      }
+    // Send package collection notification
+    if (package.status && collectionNotified == false) {
+      mailOptions.subject = `Your parcel has been picked up.`;
+      mailOptions.text = utils.format('Your parcel has been collected from security desk by %s\n\nParcel details:\nParcel Number : %s\nVendor : %s\nAWB Number : %s', package.pickedBy.name, package.packageId, package.vendor.name, package.awpNo);
 
-      // Send package collection notification
-      if (status && collectionNotified == false) {
-        mailOptions.subject = utils.format(`Your package (%s) has been picked up.`, packageId);
-        mailOptions.text = 'Your package has been collected from security desk';
+      transporter.sendMail(mailOptions, (error, info) => {
+        if (error) {
+          return console.log(error);
+        }
+        console.log('Parcel picked up message %s sent: %s', info.messageId, info.response);
 
-        transporter.sendMail(mailOptions, (error, info) => {
-          if (error) {
-            return console.log(error);
-          }
-          console.log('Package arrival message %s sent: %s', info.messageId, info.response);
-
-          pkg.set("collectionNotified", true);
-          pkg.save(null, qp);
-        });
-      }
-    })
+        package.set("collectionNotified", true);
+        package.save(null, qp);
+      });
+    }
+  })
     .catch(err => {
       console.log("CloudCode::Package::afterSave::Error -->", err)
     });
@@ -97,7 +99,7 @@ Parse.Cloud.beforeSave("CardSwipeLog", function (request, response) {
     success: function (result) {
       Parse.Object.destroyAll(result).then(
         function (success) {
-         response.success();
+          response.success();
         }, function (error) {
           response.error("internal server error");
         });;
