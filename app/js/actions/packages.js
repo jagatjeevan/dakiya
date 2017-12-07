@@ -152,8 +152,10 @@ function updatePackage(packageObjectId, employeeObjectId, dispatch) {
       p.save(null)
         .then(() => {
           dispatch(swippedCardStatus('Success'));
-          dispatch(fetchPackages(''));
-          dispatch(swippedCardStatus(''));
+          setTimeout(function() {
+            dispatch(fetchPackages(''));
+            dispatch(swippedCardStatus('Default'));
+          }, 1000);
         })
         .catch((error) => {
           /* eslint: no-alert:0 */
@@ -186,20 +188,24 @@ function findCardOwner(cardID) {
   })
 }
 
-export const verifyParcelForCardSwipe = (pickedPackageId) => (
+export const verifyParcelForCardSwipe = (pickedPackage) => (
   (dispatch) => {
     let query = new Parse.Query(CardSwipeLog);
     query.find().then((result) => {
       if (result.length != 0) {
         let swippedCardId = result.map(mapper)[0].cardID;
         findCardOwner(swippedCardId).then(function (cardOwnerObjectId) {
-          updatePackage(pickedPackageId, cardOwnerObjectId, dispatch);
+          if(cardOwnerObjectId!=pickedPackage.owner.objectId){
+            dispatch(swippedCardStatus('Unauthorized'));
+            return;
+          }
+          updatePackage(pickedPackage.objectId, cardOwnerObjectId, dispatch);
         }).catch(function (error) {
           dispatch(swippedCardStatus('Invalid'));
         });
       }
       else {
-        dispatch(swippedCardStatus(''));
+        dispatch(swippedCardStatus('Default'));
       }
     });
   });

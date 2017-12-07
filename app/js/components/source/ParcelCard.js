@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { bindActionCreators } from 'redux';
 
-import { Dropdown, DropdownMenu, DropdownItem, Progress, Modal, ModalHeader, ModalBody, ModalFooter, Button } from 'reactstrap';
+import { Dropdown, DropdownMenu, DropdownItem, Progress, Modal, ModalHeader, ModalBody, ModalFooter, Button, Alert } from 'reactstrap';
 
 import { pickPackage, clearPickPackage, updatePackageAsync, verifyParcelForCardSwipe, clearCardSwipeLogs } from '../../actions/packages';
 
@@ -94,13 +94,13 @@ export class ParcelCard extends React.Component {
   }
 
   pickPackage(pkg) {
-    let object=this;
+    let object = this;
     clearCardSwipeLogs().then(function (success) {
       object.setState({
         modal: !object.state.modal
-      }).catch(function (error) {
-        console.error("Oops! Something went wrong: " + error.message + " (" + error.code + ")");
       });
+    }).catch(function (error) {
+      console.error("Oops! Something went wrong: " + error.message + " (" + error.code + ")");
     });
     this.props.pickPackage(pkg);
   }
@@ -115,9 +115,8 @@ export class ParcelCard extends React.Component {
       return (
         <tr key={parcel.objectId} className={(parcel.pickupDate) ? "text-muted" : ""}>
           <td className="text-center">
-            <div className="avatar">
-              <img src={'img/avatars/1.jpg'} className="img-avatar" alt="admin@bootstrapmaster.com" />
-              <span className="avatar-status badge-success" />
+            <div className="avatar custom-avatar">
+              <span className="icon-user"></span>
             </div>
           </td>
           <td>
@@ -126,13 +125,13 @@ export class ParcelCard extends React.Component {
           <td className="text-center">
             <img src={parcel.vendor.icon} alt={parcel.vendor.name} className="vendor-icon" />
           </td>
-          <td>
+          <td className="text-center">
             <Moment fromNow>{parcel.createdAt}</Moment>
             <div className="small text-muted">
               <Moment format="DD MMM YY hh:mm A">{parcel.createdAt}</Moment>
             </div>
           </td>
-          <td> <strong className="h5">{parcel.packageId}</strong>  </td>
+          <td className="text-center"> <strong className="h5">{parcel.packageId}</strong>  </td>
           <td>
             {parcelStatus}
           </td>
@@ -141,12 +140,29 @@ export class ParcelCard extends React.Component {
     });
   }
 
-  render() {
-    if (this.state.modal && (this.props.cardSwipe.cardSwipeStatus == '' || this.props.cardSwipe.cardSwipeStatus == 'Invalid')) {
-      this.props.verifyParcelForCardSwipe(this.props.pickedPackage.objectId);
-    }
+  showAlert() {
+    const alertColor = {
+      'Default': '',
+      'Success': 'success',
+      'Invalid': 'danger',
+      'Unauthorized': 'danger',
+    };
 
-    let cardSwipeStatus = this.props.cardSwipe.cardSwipeStatus == 'Invalid' ? 'Card is not linked to your profile. Please contact Admin.': '';
+    if (this.props.cardSwipe.cardSwipeStatus != 'Default') {
+      return (<div>
+        <Alert color={alertColor[this.props.cardSwipe.cardSwipeStatus]}>
+          <div className="text-center">
+            {this.props.cardSwipe.cardSwipeMessage}
+          </div>
+        </Alert>
+      </div>);
+    }
+  }
+
+  render() {
+    if (this.state.modal && (this.props.cardSwipe.cardSwipeStatus != 'Success')) {
+      this.props.verifyParcelForCardSwipe(this.props.pickedPackage);
+    }
 
     return (
       <div className="parcel-card-container">
@@ -156,8 +172,8 @@ export class ParcelCard extends React.Component {
               <th className="text-center"><i className="icon-people" /></th>
               <th>Reciever Details</th>
               <th className="text-center">Vendor</th>
-              <th>Recieved Date</th>
-              <th>Package Number</th>
+              <th className="text-center">Recieved Date</th>
+              <th className="text-center">Package Number</th>
               <th className="parcel-status-column">Action</th>
             </tr>
           </thead>
@@ -169,11 +185,11 @@ export class ParcelCard extends React.Component {
         <Modal className="custom-modal" isOpen={this.state.modal} toggle={this.toggle}>
           <ModalHeader toggle={this.toggle}>Swipe your card or Enter passcode</ModalHeader>
           <ModalBody>
+            {this.showAlert()}
             <div className="container">
               <div className="row">
                 <div className="col-md-4">
                   <img id="card-reader-image" src={'img/card_reader.png'} alt="card reader image" />
-                  <span> {cardSwipeStatus} </span>
                 </div>
                 <div className="vertical-line"></div>
                 <div className={`col-md-7 form-group has-${this.state.pickedParcelVerifyStatus}`}>

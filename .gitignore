@@ -7,5 +7,4 @@ build
 logs/
 data/
 stats
-app/js/jigsawConfig.js
 app/js/excelSheetCardData.json
