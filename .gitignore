@@ -7,4 +7,3 @@ build
 logs/
 data/
 stats
-app/js/excelSheetCardData.json
