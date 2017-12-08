@@ -1,4 +1,4 @@
-
+require('dotenv').config();
 const nodemailer = require('nodemailer');
 const utils = require('util');
 Parse.Cloud.define('hello', function (req, res) {
