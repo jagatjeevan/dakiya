@@ -48,7 +48,7 @@
     "json-loader": "^0.5.4",
     "moment": "^2.18.1",
     "node-normalize-scss": "^1.4.0",
-    "node-sass": "^4.5.0",
+    "node-sass": "^4.13.1",
     "precommit-hook": "^3.0.0",
     "prop-types": "^15.5.8",
     "react-addons-css-transition-group": "15.5.2",
