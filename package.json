@@ -80,7 +80,7 @@
     "express": "^4.15.2",
     "global": "^4.3.1",
     "node-schedule": "^1.2.5",
-    "nodemailer": "^4.0.1",
+    "nodemailer": "^6.6.1",
     "parse": "^1.10.0",
     "parse-dashboard": "^1.1.0",
     "parse-server": "*",
