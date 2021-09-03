@@ -83,7 +83,7 @@
     "nodemailer": "^4.0.1",
     "parse": "^1.10.0",
     "parse-dashboard": "^1.1.0",
-    "parse-server": "*",
+    "parse-server": "4.10.3",
     "rimraf": "^2.6.1"
   },
   "scripts": {
