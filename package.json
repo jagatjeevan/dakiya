@@ -77,13 +77,13 @@
   },
   "dependencies": {
     "dotenv": "^4.0.0",
-    "express": "^4.15.2",
+    "express": "^4.17.3",
     "global": "^4.3.1",
     "node-schedule": "^1.2.5",
     "nodemailer": "^4.0.1",
     "parse": "^1.10.0",
-    "parse-dashboard": "^1.1.0",
-    "parse-server": "*",
+    "parse-dashboard": "^2.0.0",
+    "parse-server": "5.5.2",
     "rimraf": "^2.6.1"
   },
   "scripts": {
