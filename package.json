@@ -83,8 +83,8 @@
     "nodemailer": "^4.0.1",
     "parse": "^1.10.0",
     "parse-dashboard": "^1.1.0",
-    "parse-server": "*",
-    "rimraf": "^2.6.1"
+    "parse-server": "4.3.0",
+    "rimraf": "^4.0.0"
   },
   "scripts": {
     "serve": "node index.js",
